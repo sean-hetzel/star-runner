@@ -43,6 +43,42 @@ class Play extends Component {
                 }
             },
             scene: {
+                // collectStar: function(player, star) {
+                //     console.log("collect start")
+
+                //     star.disableBody(true, true);
+
+                //     //  Add and update the score
+                //     score += 10;
+                //     scoreText.setText("Score: " + score);
+
+                //     if (stars.countActive(true) === 0) {
+                //         //  A new batch of stars to collect
+                //         stars.children.iterate(function(child) {
+                //             child.enableBody(true, child.x, 0, true, true);
+                //         });
+
+                //         var x =
+                //             player.x < 400
+                //                 ? Phaser.Math.Between(400, 800)
+                //                 : Phaser.Math.Between(0, 400);
+
+                //         var bomb = bombs.create(x, 16, "bomb");
+                //         bomb.setBounce(1);
+                //         bomb.setCollideWorldBounds(true);
+                //         bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+                //         bomb.allowGravity = false;
+                //     }
+                // },
+                // hitBomb: function(player, bomb) {
+                //     this.physics.pause();
+
+                //     player.setTint(0xff0000);
+
+                //     player.anims.play("turn");
+
+                //     gameOver = true;
+                // },
                 // extend: {
                 //     changeScore: null,
                 //     player: null,
@@ -65,9 +101,6 @@ class Play extends Component {
                 },
                 preload: function() {
 
-                    var nAssets = 5;
-                    var nLoaded = 0; // keep track
-
                     // Load in images and sprites
                     this.load.image("sky", "assets/sky.png");
                     this.textures.addBase64("sky", sky);
@@ -81,15 +114,6 @@ class Play extends Component {
                     this.load.image("bomb", "assets/bomb.png");
                     this.textures.addBase64("bomb", bomb);
 
-                    // this.load.image("dude", "assets/dude.png");
-                    // this.textures.addBase64("dude", dude)
-
-                    // dude = this.textures.addBase64("dude", dude);
-                    // this.load.spritesheet("dude", dude, {
-                    //     frameWidth: 32,
-                    //     frameHeight: 48
-                    // });
-
                     // method for a spritesheet
                     var dudeImg = new Image();
                     dudeImg.onload = () => {
@@ -97,17 +121,12 @@ class Play extends Component {
                             frameWidth: 32,
                             frameHeight: 48
                         });
-                        // check if assets are ready then call actual phaser create function
-                        // nLoaded++;
-                        // if (nLoaded >= nAssets) {
-                        //     var actualCreate = create.bind(this);
-                        //     actualCreate();
-                        // }
                     };
                     dudeImg.src = dude;
                 },
 
                 create: function() {
+
                     //  A simple background for our game
                     this.add.image(400, 300, "sky");
 
@@ -187,26 +206,68 @@ class Play extends Component {
                     this.physics.add.collider(player, platforms);
                     this.physics.add.collider(stars, platforms);
                     this.physics.add.collider(bombs, platforms);
-
+                    
+                    const collectStar = (player, star) => {
+                        console.log("collect start")
+    
+                        star.disableBody(true, true);
+    
+                        //  Add and update the score
+                        score += 10;
+                        scoreText.setText("Score: " + score);
+    
+                        if (stars.countActive(true) === 0) {
+                            //  A new batch of stars to collect
+                            stars.children.iterate(function(child) {
+                                child.enableBody(true, child.x, 0, true, true);
+                            });
+    
+                            var x =
+                                player.x < 400
+                                    ? Phaser.Math.Between(400, 800)
+                                    : Phaser.Math.Between(0, 400);
+    
+                            var bomb = bombs.create(x, 16, "bomb");
+                            bomb.setBounce(1);
+                            bomb.setCollideWorldBounds(true);
+                            bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+                            bomb.allowGravity = false;
+                        }
+                    }
+                    const hitBomb = (player, bomb) => {
+                        this.physics.pause();
+    
+                        player.setTint(0xff0000);
+    
+                        player.anims.play("turn");
+    
+                        gameOver = true;
+                    }
                     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
                     this.physics.add.overlap(
-                        player,
                         stars,
-                        this.collectStar,
+                        player,
+                        collectStar,
+                        // () => console.log("OVERLAP"),
                         null,
                         this
                     );
 
+
+                    console.log(this)
+                    console.log(player)
+
                     this.physics.add.collider(
                         player,
                         bombs,
-                        this.hitBomb,
+                        hitBomb,
                         null,
                         this
                     );
                 },
 
                 update: function() {
+
                     if (gameOver) {
                         return;
                     }
@@ -219,8 +280,7 @@ class Play extends Component {
                         player.setVelocityX(160);
 
                         player.anims.play("right", true);
-                    }
-                    else {
+                    } else {
                         player.setVelocityX(0);
 
                         player.anims.play("turn");
@@ -229,43 +289,82 @@ class Play extends Component {
                     if (cursors.up.isDown && player.body.touching.down) {
                         player.setVelocityY(-330);
                     }
-                }
-            },
-            collectStar: function(player, star) {
-                star.disableBody(true, true);
+                },
 
-                //  Add and update the score
-                score += 10;
-                scoreText.setText("Score: " + score);
+                // collectStar: function(player, star) {
+                //     console.log("collect start")
 
-                if (stars.countActive(true) === 0) {
-                    //  A new batch of stars to collect
-                    stars.children.iterate(function(child) {
-                        child.enableBody(true, child.x, 0, true, true);
-                    });
+                //     star.disableBody(true, true);
 
-                    var x =
-                        this.player.x < 400
-                            ? Phaser.Math.Between(400, 800)
-                            : Phaser.Math.Between(0, 400);
+                //     //  Add and update the score
+                //     score += 10;
+                //     scoreText.setText("Score: " + score);
 
-                    var bomb = bombs.create(x, 16, "bomb");
-                    bomb.setBounce(1);
-                    bomb.setCollideWorldBounds(true);
-                    bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-                    bomb.allowGravity = false;
-                }
-            },
-            hitBomb: function(player, bomb) {
-                this.physics.pause();
+                //     if (stars.countActive(true) === 0) {
+                //         //  A new batch of stars to collect
+                //         stars.children.iterate(function(child) {
+                //             child.enableBody(true, child.x, 0, true, true);
+                //         });
 
-                player.setTint(0xff0000);
+                //         var x =
+                //             player.x < 400
+                //                 ? Phaser.Math.Between(400, 800)
+                //                 : Phaser.Math.Between(0, 400);
 
-                player.anims.play("turn");
+                //         var bomb = bombs.create(x, 16, "bomb");
+                //         bomb.setBounce(1);
+                //         bomb.setCollideWorldBounds(true);
+                //         bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+                //         bomb.allowGravity = false;
+                //     }
+                // },
+                // hitBomb: function(player, bomb) {
+                //     this.physics.pause();
 
-                gameOver = true;
+                //     player.setTint(0xff0000);
+
+                //     player.anims.play("turn");
+
+                //     gameOver = true;
+                // }
             }
-        }
+        },
+        // collectStar: function(player, star) {
+        //     console.log("collect start")
+
+        //     star.disableBody(true, true);
+
+        //     //  Add and update the score
+        //     score += 10;
+        //     scoreText.setText("Score: " + score);
+
+        //     if (stars.countActive(true) === 0) {
+        //         //  A new batch of stars to collect
+        //         stars.children.iterate(function(child) {
+        //             child.enableBody(true, child.x, 0, true, true);
+        //         });
+
+        //         var x =
+        //             player.x < 400
+        //                 ? Phaser.Math.Between(400, 800)
+        //                 : Phaser.Math.Between(0, 400);
+
+        //         var bomb = bombs.create(x, 16, "bomb");
+        //         bomb.setBounce(1);
+        //         bomb.setCollideWorldBounds(true);
+        //         bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+        //         bomb.allowGravity = false;
+        //     }
+        // },
+        // hitBomb: function(player, bomb) {
+        //     this.physics.pause();
+
+        //     player.setTint(0xff0000);
+
+        //     player.anims.play("turn");
+
+        //     gameOver = true;
+        // },
     };
 
     render() {
