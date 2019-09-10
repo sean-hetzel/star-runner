@@ -1,6 +1,12 @@
-import React, { Component } from 'react'
-import Phaser from 'phaser'
-import { IonPhaser } from '@ion-phaser/react'
+import React, { Component } from "react";
+import Phaser from "phaser";
+import { IonPhaser } from "@ion-phaser/react";
+import bomb from "../assets/bomb.png";
+import dude from "../assets/dude.png";
+import platform from "../assets/platform.png";
+import sky from "../assets/sky.png";
+import star from "../assets/star.png";
+
 // import IonPhaserComponent from "@ion-phaser/react/dist/types/components/IonPhaser";
 
 const gameWidth = 800;
@@ -37,64 +43,47 @@ class Play extends Component {
                 }
             },
             scene: {
-                extend: {
-                    changeScore: null,
-                    player: null,
-                    enemies: null,
-                    healthpoints: null,
-                    moveKeys: null
-                },
-                collectStar: function(player, star) {
-                    star.disableBody(true, true);
-
-                    //  Add and update the score
-                    score += 10;
-                    scoreText.setText("Score: " + score);
-
-                    if (stars.countActive(true) === 0) {
-                        //  A new batch of stars to collect
-                        stars.children.iterate(function(child) {
-                            child.enableBody(true, child.x, 0, true, true);
-                        });
-
-                        var x =
-                            player.x < 400
-                                ? Phaser.Math.Between(400, 800)
-                                : Phaser.Math.Between(0, 400);
-
-                        var bomb = bombs.create(x, 16, "bomb");
-                        bomb.setBounce(1);
-                        bomb.setCollideWorldBounds(true);
-                        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-                        bomb.allowGravity = false;
-                    }
-                },
-                hitBomb: function(player, bomb) {
-                    this.physics.pause();
-
-                    player.setTint(0xff0000);
-
-                    player.anims.play("turn");
-
-                    gameOver = true;
-                },
+                // extend: {
+                //     changeScore: null,
+                //     player: null,
+                //     enemies: null,
+                //     healthpoints: null,
+                //     moveKeys: null
+                // stars: null,
+                // bombs: null,
+                // platforms: null,
+                // cursors: null,
+                // score: 0,
+                // gameOver: false,
+                // scoreText: null
 
                 init: function() {
                     //For Testing Purposes
-                    // console.log(this.scene)
-                    // console.log(this.game)
-                    // console.log('this', this)
+                    console.log(this.scene);
+                    console.log(this.game);
+                    console.log("this", this);
                 },
                 preload: function() {
                     // Load in images and sprites
                     this.load.image("sky", "assets/sky.png");
+                    this.textures.addBase64("sky", sky);
+
                     this.load.image("ground", "assets/platform.png");
+                    this.textures.addBase64("platform", platform)
+
                     this.load.image("star", "assets/star.png");
+                    this.textures.addBase64("star", star)
+
                     this.load.image("bomb", "assets/bomb.png");
-                    this.load.spritesheet("dude", "assets/dude.png", {
-                        frameWidth: 32,
-                        frameHeight: 48
-                    });
+                    this.textures.addBase64("bomb", bomb)
+                    this.load.spritesheet(
+                        "dude",
+                        "/Users/flatironschool/Development/star-runner/assets/dude.png",
+                        {
+                            frameWidth: 32,
+                            frameHeight: 48
+                        }
+                    );
                 },
 
                 create: function() {
@@ -196,29 +185,64 @@ class Play extends Component {
                     );
                 },
 
-                update: function(time, delta) {
+                update: function() {
                     if (gameOver) {
                         return;
                     }
 
                     if (cursors.left.isDown) {
-                        player.setVelocityX(-160);
+                        this.player.setVelocityX(-160);
 
-                        player.anims.play("left", true);
+                        this.player.anims.play("left", true);
                     } else if (cursors.right.isDown) {
-                        player.setVelocityX(160);
+                        this.player.setVelocityX(160);
 
-                        player.anims.play("right", true);
-                    } else {
-                        player.setVelocityX(0);
-
-                        player.anims.play("turn");
+                        this.player.anims.play("right", true);
                     }
+                    // else {
+                    //     this.player.setVelocityX(0);
 
-                    if (cursors.up.isDown && player.body.touching.down) {
-                        player.setVelocityY(-330);
+                    //     this.player.anims.play("turn");
+                    // }
+
+                    if (cursors.up.isDown && this.player.body.touching.down) {
+                        this.player.setVelocityY(-330);
                     }
                 }
+            },
+            collectStar: function(player, star) {
+                star.disableBody(true, true);
+
+                //  Add and update the score
+                score += 10;
+                scoreText.setText("Score: " + score);
+
+                if (stars.countActive(true) === 0) {
+                    //  A new batch of stars to collect
+                    stars.children.iterate(function(child) {
+                        child.enableBody(true, child.x, 0, true, true);
+                    });
+
+                    var x =
+                        this.player.x < 400
+                            ? Phaser.Math.Between(400, 800)
+                            : Phaser.Math.Between(0, 400);
+
+                    var bomb = bombs.create(x, 16, "bomb");
+                    bomb.setBounce(1);
+                    bomb.setCollideWorldBounds(true);
+                    bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+                    bomb.allowGravity = false;
+                }
+            },
+            hitBomb: function(player, bomb) {
+                this.physics.pause();
+
+                player.setTint(0xff0000);
+
+                player.anims.play("turn");
+
+                gameOver = true;
             }
         }
     };
