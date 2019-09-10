@@ -43,56 +43,6 @@ class Play extends Component {
                 }
             },
             scene: {
-                // collectStar: function(player, star) {
-                //     console.log("collect start")
-
-                //     star.disableBody(true, true);
-
-                //     //  Add and update the score
-                //     score += 10;
-                //     scoreText.setText("Score: " + score);
-
-                //     if (stars.countActive(true) === 0) {
-                //         //  A new batch of stars to collect
-                //         stars.children.iterate(function(child) {
-                //             child.enableBody(true, child.x, 0, true, true);
-                //         });
-
-                //         var x =
-                //             player.x < 400
-                //                 ? Phaser.Math.Between(400, 800)
-                //                 : Phaser.Math.Between(0, 400);
-
-                //         var bomb = bombs.create(x, 16, "bomb");
-                //         bomb.setBounce(1);
-                //         bomb.setCollideWorldBounds(true);
-                //         bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-                //         bomb.allowGravity = false;
-                //     }
-                // },
-                // hitBomb: function(player, bomb) {
-                //     this.physics.pause();
-
-                //     player.setTint(0xff0000);
-
-                //     player.anims.play("turn");
-
-                //     gameOver = true;
-                // },
-                // extend: {
-                //     changeScore: null,
-                //     player: null,
-                //     enemies: null,
-                //     healthpoints: null,
-                //     moveKeys: null
-                // stars: null,
-                // bombs: null,
-                // platforms: null,
-                // cursors: null,
-                // score: 0,
-                // gameOver: false,
-                // scoreText: null
-
                 init: function() {
                     //For Testing Purposes
                     console.log(this.scene);
@@ -100,7 +50,6 @@ class Play extends Component {
                     console.log("this", this);
                 },
                 preload: function() {
-
                     // Load in images and sprites
                     this.load.image("sky", "assets/sky.png");
                     this.textures.addBase64("sky", sky);
@@ -126,7 +75,6 @@ class Play extends Component {
                 },
 
                 create: function() {
-
                     //  A simple background for our game
                     this.add.image(400, 300, "sky");
 
@@ -206,43 +154,48 @@ class Play extends Component {
                     this.physics.add.collider(player, platforms);
                     this.physics.add.collider(stars, platforms);
                     this.physics.add.collider(bombs, platforms);
-                    
+
                     const collectStar = (player, star) => {
-                        console.log("collect start")
-    
+                        console.log("collect start");
+
                         star.disableBody(true, true);
-    
+
                         //  Add and update the score
                         score += 10;
                         scoreText.setText("Score: " + score);
-    
+
                         if (stars.countActive(true) === 0) {
                             //  A new batch of stars to collect
                             stars.children.iterate(function(child) {
                                 child.enableBody(true, child.x, 0, true, true);
                             });
-    
+
                             var x =
                                 player.x < 400
                                     ? Phaser.Math.Between(400, 800)
                                     : Phaser.Math.Between(0, 400);
-    
+
                             var bomb = bombs.create(x, 16, "bomb");
                             bomb.setBounce(1);
                             bomb.setCollideWorldBounds(true);
-                            bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+                            bomb.setVelocity(
+                                Phaser.Math.Between(-200, 200),
+                                20
+                            );
                             bomb.allowGravity = false;
                         }
-                    }
+                    };
+
                     const hitBomb = (player, bomb) => {
                         this.physics.pause();
-    
+
                         player.setTint(0xff0000);
-    
+
                         player.anims.play("turn");
-    
+
                         gameOver = true;
-                    }
+                    };
+
                     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
                     this.physics.add.overlap(
                         stars,
@@ -252,10 +205,6 @@ class Play extends Component {
                         null,
                         this
                     );
-
-
-                    console.log(this)
-                    console.log(player)
 
                     this.physics.add.collider(
                         player,
@@ -267,7 +216,6 @@ class Play extends Component {
                 },
 
                 update: function() {
-
                     if (gameOver) {
                         return;
                     }
@@ -289,82 +237,9 @@ class Play extends Component {
                     if (cursors.up.isDown && player.body.touching.down) {
                         player.setVelocityY(-330);
                     }
-                },
-
-                // collectStar: function(player, star) {
-                //     console.log("collect start")
-
-                //     star.disableBody(true, true);
-
-                //     //  Add and update the score
-                //     score += 10;
-                //     scoreText.setText("Score: " + score);
-
-                //     if (stars.countActive(true) === 0) {
-                //         //  A new batch of stars to collect
-                //         stars.children.iterate(function(child) {
-                //             child.enableBody(true, child.x, 0, true, true);
-                //         });
-
-                //         var x =
-                //             player.x < 400
-                //                 ? Phaser.Math.Between(400, 800)
-                //                 : Phaser.Math.Between(0, 400);
-
-                //         var bomb = bombs.create(x, 16, "bomb");
-                //         bomb.setBounce(1);
-                //         bomb.setCollideWorldBounds(true);
-                //         bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-                //         bomb.allowGravity = false;
-                //     }
-                // },
-                // hitBomb: function(player, bomb) {
-                //     this.physics.pause();
-
-                //     player.setTint(0xff0000);
-
-                //     player.anims.play("turn");
-
-                //     gameOver = true;
-                // }
+                }
             }
-        },
-        // collectStar: function(player, star) {
-        //     console.log("collect start")
-
-        //     star.disableBody(true, true);
-
-        //     //  Add and update the score
-        //     score += 10;
-        //     scoreText.setText("Score: " + score);
-
-        //     if (stars.countActive(true) === 0) {
-        //         //  A new batch of stars to collect
-        //         stars.children.iterate(function(child) {
-        //             child.enableBody(true, child.x, 0, true, true);
-        //         });
-
-        //         var x =
-        //             player.x < 400
-        //                 ? Phaser.Math.Between(400, 800)
-        //                 : Phaser.Math.Between(0, 400);
-
-        //         var bomb = bombs.create(x, 16, "bomb");
-        //         bomb.setBounce(1);
-        //         bomb.setCollideWorldBounds(true);
-        //         bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-        //         bomb.allowGravity = false;
-        //     }
-        // },
-        // hitBomb: function(player, bomb) {
-        //     this.physics.pause();
-
-        //     player.setTint(0xff0000);
-
-        //     player.anims.play("turn");
-
-        //     gameOver = true;
-        // },
+        }
     };
 
     render() {
@@ -372,7 +247,6 @@ class Play extends Component {
 
         return (
             <>
-                <h1>Playing!</h1>
                 <IonPhaser
                     id="phaserGame"
                     game={game}
