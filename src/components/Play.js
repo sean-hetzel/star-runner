@@ -64,26 +64,47 @@ class Play extends Component {
                     console.log("this", this);
                 },
                 preload: function() {
+
+                    var nAssets = 5;
+                    var nLoaded = 0; // keep track
+
                     // Load in images and sprites
                     this.load.image("sky", "assets/sky.png");
                     this.textures.addBase64("sky", sky);
 
                     this.load.image("ground", "assets/platform.png");
-                    this.textures.addBase64("platform", platform)
+                    this.textures.addBase64("ground", platform);
 
                     this.load.image("star", "assets/star.png");
-                    this.textures.addBase64("star", star)
+                    this.textures.addBase64("star", star);
 
                     this.load.image("bomb", "assets/bomb.png");
-                    this.textures.addBase64("bomb", bomb)
-                    this.load.spritesheet(
-                        "dude",
-                        "/Users/flatironschool/Development/star-runner/assets/dude.png",
-                        {
+                    this.textures.addBase64("bomb", bomb);
+
+                    // this.load.image("dude", "assets/dude.png");
+                    // this.textures.addBase64("dude", dude)
+
+                    // dude = this.textures.addBase64("dude", dude);
+                    // this.load.spritesheet("dude", dude, {
+                    //     frameWidth: 32,
+                    //     frameHeight: 48
+                    // });
+
+                    // method for a spritesheet
+                    var dudeImg = new Image();
+                    dudeImg.onload = () => {
+                        this.textures.addSpriteSheet("dude", dudeImg, {
                             frameWidth: 32,
                             frameHeight: 48
-                        }
-                    );
+                        });
+                        // check if assets are ready then call actual phaser create function
+                        // nLoaded++;
+                        // if (nLoaded >= nAssets) {
+                        //     var actualCreate = create.bind(this);
+                        //     actualCreate();
+                        // }
+                    };
+                    dudeImg.src = dude;
                 },
 
                 create: function() {
