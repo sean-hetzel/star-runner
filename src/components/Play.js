@@ -212,22 +212,22 @@ class Play extends Component {
                     }
 
                     if (cursors.left.isDown) {
-                        this.player.setVelocityX(-160);
+                        player.setVelocityX(-160);
 
-                        this.player.anims.play("left", true);
+                        player.anims.play("left", true);
                     } else if (cursors.right.isDown) {
-                        this.player.setVelocityX(160);
+                        player.setVelocityX(160);
 
-                        this.player.anims.play("right", true);
+                        player.anims.play("right", true);
                     }
-                    // else {
-                    //     this.player.setVelocityX(0);
+                    else {
+                        player.setVelocityX(0);
 
-                    //     this.player.anims.play("turn");
-                    // }
+                        player.anims.play("turn");
+                    }
 
-                    if (cursors.up.isDown && this.player.body.touching.down) {
-                        this.player.setVelocityY(-330);
+                    if (cursors.up.isDown && player.body.touching.down) {
+                        player.setVelocityY(-330);
                     }
                 }
             },
