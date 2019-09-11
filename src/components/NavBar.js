@@ -20,6 +20,7 @@ class NavBar extends React.Component {
                 <Link className="brk-btn" to="/profile">
                     Profile
                 </Link>
+                <div id="red_line"></div>
             </nav>
         );
     }
