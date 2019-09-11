@@ -1,63 +1,7 @@
-/* .App {
-  text-align: center;
-} */
-
-/* .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-/* ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
-} */
-
-/* li {
-  float: left;
-} */
-
 h1 {
     color: white;
 }
 
-/* li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-} */
-
-/* li a:hover {
-  background-color: #111;
-} */
 body {
     font-family: "Vcr Osd Mono";
     /* src: local('Vcr Osd Mono'), url(./fonts/Vcr_Osd_Mono.ttf) format('ttf'); */
@@ -81,31 +25,14 @@ h2{
 #star_runner_logo {
     font-family: "Alien Encounters";
     font-size: 4em;
-    /* margin-top: -.3em; */
-    /* margin-left: .5em; */
     margin-right: 1em;
     color: white;
     text-decoration: none;
 }
-/* a {
-  min-width: 218px;
-  color: #d5402b ;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 51px;
-  text-transform: uppercase;
-  display: inline-block;
-  border: 1px solid #d5402b;
-  position: relative;
-  overflow: hidden;
-  text-decoration: none;
-  text-align: center;
-  cursor: pointer;
-  -ms-transform: skewX(-45deg);
-  -webkit-transform: skewX(-45deg);
-  transform: skewX(-45deg);
-  margin-left: 2em;
-} */
+
+.home_info {
+  text-align: left;
+}
 
 .brk-btn {
     font-size: 20px;
@@ -152,3 +79,4 @@ h2{
 .brk-btn:hover::after {
     left: 80%;
 }
+

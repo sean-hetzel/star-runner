@@ -2,7 +2,13 @@ import React, { Component } from "react";
 
 class Profile extends React.Component {
     render() {
-        return <h1>PROFILE</h1>;
+        return (
+            <>
+                return <h1>PROFILE</h1>;<div id="stars"></div>
+                <div id="stars2"></div>
+                <div id="stars3"></div>
+            </>
+        );
     }
 }
 
