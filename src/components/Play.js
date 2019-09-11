@@ -9,39 +9,27 @@ import jets from "../assets/blue.png";
 import flares from "../assets/yellow.png";
 import face from "../assets/metalface78x92.png";
 
-// import IonPhaserComponent from "@ion-phaser/react/dist/types/components/IonPhaser";
-
-const gameWidth = 800;
-const gameHeight = 600;
-
-// let star;
-// let bigStar;
-// let ship;
-// let bullet;
-// let jets;
-// let flares;
-// let face;
-let cursors;
-let score = 0;
-let gameOver = false;
-let scoreText;
+const mapWidth = 20000; // 3200
+const mapHeight = 800; // 600
+console.log("map width: ", mapWidth);
+console.log("map height: ", mapHeight);
 
 class Play extends Component {
     state = {
         redirect: false,
         initialize: true,
         game: {
-            width: gameWidth,
-            height: gameHeight,
-            type: Phaser.WEBGL,
+            type: Phaser.AUTO,
+            width: 1920,
+            height: mapHeight,
             physics: {
                 default: "impact",
                 impact: {
                     setBounds: {
                         x: 0,
                         y: 0,
-                        width: 3200,
-                        height: 600,
+                        width: mapWidth,
+                        height: mapHeight,
                         thickness: 32
                     }
                 }
@@ -56,11 +44,6 @@ class Play extends Component {
                     bullets: null,
                     lastFired: 0,
                     text: null
-                    // createBulletEmitter: this.createBulletEmitter,
-                    // createStarfield: this.createStarfield,
-                    // createLandscape: this.createLandscape,
-                    // createAliens: this.createAliens,
-                    // createThrustEmitter: this.createThrustEmitter
                 },
 
                 init: function() {
@@ -151,7 +134,7 @@ class Play extends Component {
                     });
 
                     //  The world is 3200 x 600 in size
-                    this.cameras.main.setBounds(0, 0, 3200, 600);
+                    this.cameras.main.setBounds(0, 0, mapWidth, mapHeight);
 
                     //  The miniCam is 400px wide, so can display the whole world at a zoom of 0.2
                     // this.minimap = this.cameras.add(200, 10, 400, 100).setZoom(0.2);
@@ -180,8 +163,8 @@ class Play extends Component {
 
                     this.text = this.add
                         .text(10, 10, "", {
-                            font: "16px Courier",
-                            fill: "#00ff00"
+                            font: "20px Alien Encounters",
+                            fill: "#ff0000"
                         })
                         .setDepth(1)
                         .setScrollFactor(0);
@@ -218,15 +201,20 @@ class Play extends Component {
 
                         var group = this.add.group({
                             key: "star",
-                            frameQuantity: 256
+                            frameQuantity: 5000
                         });
 
                         group.createMultiple({
                             key: "bigStar",
-                            frameQuantity: 32
+                            frameQuantity: 100
                         });
 
-                        var rect = new Phaser.Geom.Rectangle(0, 0, 3200, 550);
+                        var rect = new Phaser.Geom.Rectangle(
+                            0,
+                            0,
+                            mapWidth,
+                            800
+                        );
 
                         Phaser.Actions.RandomRectangle(
                             group.getChildren(),
@@ -237,7 +225,7 @@ class Play extends Component {
                             var sf = Math.max(0.3, Math.random());
 
                             if (child.texture.key === "bigStar") {
-                                sf = 0.2;
+                                sf = 0.1;
                             }
 
                             child.setScrollFactor(sf);
@@ -246,52 +234,52 @@ class Play extends Component {
                         }, this);
                     };
 
-                    const createLandscape = () => {
-                        //  Draw a random 'landscape'
+                    // const createLandscape = () => {
+                    //     //  Draw a random 'landscape'
 
-                        var landscape = this.add.graphics();
+                    //     var landscape = this.add.graphics();
 
-                        landscape.fillStyle(0x008800, 1);
-                        landscape.lineStyle(2, 0x00ff00, 1);
+                    //     landscape.fillStyle(0x008800, 1);
+                    //     landscape.lineStyle(2, 0x00ff00, 1);
 
-                        landscape.beginPath();
+                    //     landscape.beginPath();
 
-                        var maxY = 550;
-                        var minY = 400;
+                    //     var maxY = 550;
+                    //     var minY = 400;
 
-                        var x = 0;
-                        var y = maxY;
-                        var range = 0;
+                    //     var x = 0;
+                    //     var y = maxY;
+                    //     var range = 0;
 
-                        var up = true;
+                    //     var up = true;
 
-                        landscape.moveTo(0, 600);
-                        landscape.lineTo(0, 550);
+                    //     landscape.moveTo(0, mapHeight);
+                    //     landscape.lineTo(0, 550);
 
-                        do {
-                            //  How large is this 'side' of the mountain?
-                            range = Phaser.Math.Between(20, 100);
+                    //     do {
+                    //         //  How large is this 'side' of the mountain?
+                    //         range = Phaser.Math.Between(20, 100);
 
-                            if (up) {
-                                y = Phaser.Math.Between(y, minY);
-                                up = false;
-                            } else {
-                                y = Phaser.Math.Between(y, maxY);
-                                up = true;
-                            }
+                    //         if (up) {
+                    //             y = Phaser.Math.Between(y, minY);
+                    //             up = false;
+                    //         } else {
+                    //             y = Phaser.Math.Between(y, maxY);
+                    //             up = true;
+                    //         }
 
-                            landscape.lineTo(x + range, y);
+                    //         landscape.lineTo(x + range, y);
 
-                            x += range;
-                        } while (x < 3100);
+                    //         x += range;
+                    //     } while (x < 3100);
 
-                        landscape.lineTo(3200, maxY);
-                        landscape.lineTo(3200, 600);
-                        landscape.closePath();
+                    //     landscape.lineTo(mapWidth, maxY);
+                    //     landscape.lineTo(mapWidth, mapHeight);
+                    //     landscape.closePath();
 
-                        landscape.strokePath();
-                        landscape.fillPath();
-                    };
+                    //     landscape.strokePath();
+                    //     landscape.fillPath();
+                    // };
 
                     const createAliens = () => {
                         //  Create some random aliens moving slowly around
@@ -332,7 +320,7 @@ class Play extends Component {
                         }
                     };
                     createStarfield();
-                    createLandscape();
+                    // createLandscape();
                     createAliens();
                     createThrustEmitter();
                     createBulletEmitter();
@@ -401,7 +389,7 @@ class Play extends Component {
                         }
                     }, this);
 
-                    this.text.setText(this.player.vel.x);
+                    this.text.setText(`ACCELERATION: ${this.player.vel.x}`);
 
                     //  Position the center of the camera on the player
                     //  We -400 because the camera width is 800px and
