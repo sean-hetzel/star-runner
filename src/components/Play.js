@@ -9,7 +9,7 @@ import jets from "../assets/blue.png";
 import flares from "../assets/yellow.png";
 import face from "../assets/metalface78x92.png";
 
-const mapWidth = 20000; // 3200
+const mapWidth = 40000; // 3200
 const mapHeight = 800; // 600
 console.log("map width: ", mapWidth);
 console.log("map height: ", mapHeight);
@@ -156,7 +156,7 @@ class Play extends Component {
                         .setDepth(1);
                     this.player
                         .setMaxVelocity(1000)
-                        .setFriction(800, 600)
+                        .setFriction(400, 300)
                         .setPassiveCollision();
 
                     this.cursors = this.input.keyboard.createCursorKeys();
@@ -201,12 +201,12 @@ class Play extends Component {
 
                         var group = this.add.group({
                             key: "star",
-                            frameQuantity: 5000
+                            frameQuantity: mapWidth / 4
                         });
 
                         group.createMultiple({
                             key: "bigStar",
-                            frameQuantity: 100
+                            frameQuantity: mapWidth / 200
                         });
 
                         var rect = new Phaser.Geom.Rectangle(
@@ -296,8 +296,8 @@ class Play extends Component {
 
                         this.anims.create(config);
 
-                        for (var i = 0; i < 32; i++) {
-                            var x = Phaser.Math.Between(100, 3100);
+                        for (var i = 0; i < mapWidth / 400; i++) {
+                            var x = Phaser.Math.Between(100, mapWidth);
                             var y = Phaser.Math.Between(100, 300);
 
                             var face = this.impact.add
@@ -330,19 +330,18 @@ class Play extends Component {
                     this.thrust.setPosition(this.player.x, this.player.y);
 
                     if (this.cursors.left.isDown) {
-                        this.player.setAccelerationX(-800);
+                        this.player.setAccelerationX(-1200);
                         this.player.flipX = true;
                     } else if (this.cursors.right.isDown) {
-                        this.player.setAccelerationX(800);
+                        this.player.setAccelerationX(1200);
                         this.player.flipX = false;
                     } else {
                         this.player.setAccelerationX(0);
                     }
-
                     if (this.cursors.up.isDown) {
-                        this.player.setAccelerationY(-800);
+                        this.player.setAccelerationY(-1200);
                     } else if (this.cursors.down.isDown) {
-                        this.player.setAccelerationY(800);
+                        this.player.setAccelerationY(1200);
                     } else {
                         this.player.setAccelerationY(0);
                     }
@@ -389,7 +388,9 @@ class Play extends Component {
                         }
                     }, this);
 
-                    this.text.setText(`ACCELERATION: ${this.player.vel.x}`);
+                    this.text.setText(
+                        `ACCELERATION: ${this.player.vel.x * 500} kph`
+                    );
 
                     //  Position the center of the camera on the player
                     //  We -400 because the camera width is 800px and
@@ -413,6 +414,7 @@ class Play extends Component {
                     game={game}
                     initialize={initialize}
                 />
+                <div id="red_line_button"></div>
             </>
         );
     }
