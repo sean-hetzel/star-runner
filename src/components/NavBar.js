@@ -12,7 +12,7 @@ class NavBar extends React.Component {
                     Home
                 </Link>
                 <Link className="brk-btn" to="/play">
-                    Play
+                    Fly
                 </Link>
                 <Link className="brk-btn" to="/scores">
                     Stats

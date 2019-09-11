@@ -9,7 +9,8 @@ import "./App.css";
 
 class App extends Component {
 	state = {
-		userName: ""
+		userName: "",
+		comments: []
 	}
 	
   
