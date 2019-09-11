@@ -33,9 +33,6 @@ class Home extends React.Component {
                 <Link className="brk-btn" to="/play">
                     Fly
                 </Link>
-                <div id="stars"></div>
-                <div id="stars2"></div>
-                <div id="stars3"></div>
             </>
         );
     }

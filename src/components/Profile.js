@@ -4,7 +4,8 @@ class Profile extends React.Component {
     render() {
         return (
             <>
-                return <h1>PROFILE</h1>;<div id="stars"></div>
+                <h1>PROFILE</h1>
+                <div id="stars"></div>
                 <div id="stars2"></div>
                 <div id="stars3"></div>
             </>
