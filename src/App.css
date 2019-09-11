@@ -1,6 +1,6 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
 /* .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -44,7 +44,7 @@
 } */
 
 h1 {
-  color: white;
+    color: white;
 }
 
 /* li a {
@@ -59,10 +59,33 @@ h1 {
   background-color: #111;
 } */
 body {
-  font-family: Arial;
-  text-align: center;
-  padding-top: 2em;
-  background-color: #222;
+    font-family: "Vcr Osd Mono";
+    /* src: local('Vcr Osd Mono'), url(./fonts/Vcr_Osd_Mono.ttf) format('ttf'); */
+    text-align: center;
+    padding-top: 2em;
+    background-color: black;
+}
+
+#nav_bar {
+    margin-bottom: 2em;
+}
+
+h2{
+  font-family: "Vcr Osd Mono";
+  color: white;
+  margin-left: 10%;
+  margin-right: 10%;
+
+}
+
+#star_runner_logo {
+    font-family: "Alien Encounters";
+    font-size: 4em;
+    /* margin-top: -.3em; */
+    /* margin-left: .5em; */
+    margin-right: 1em;
+    color: white;
+    text-decoration: none;
 }
 /* a {
   min-width: 218px;
@@ -85,47 +108,47 @@ body {
 } */
 
 .brk-btn {
-  font-size: 18px;
-  font-weight: 400;
-  position: relative;
-  background: none;
-  color: red;
-  text-transform: uppercase;
-  text-decoration: none;
-  border: 0.2em solid red;
-  padding: 0.5em 1em;
-  margin-left: 2em;
+    font-size: 20px;
+    font-weight: 400;
+    position: relative;
+    background: none;
+    color: red;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 0.2em solid red;
+    padding: 0.5em 1em;
+    margin-left: 1em;
+    margin-right: 1em;
 }
 .brk-btn::before {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 10%;
-  background: #222;
-  height: 0.3em;
-  right: 20%;
-  top: -0.21em;
-  transform: skewX(-45deg);
-  -webkit-transition: all 0.45s cubic-bezier(0.86, 0, 0.07, 1);
-  transition: all 0.20s cubic-bezier(0.86, 0, 0.07, 1);
+    content: "";
+    display: block;
+    position: absolute;
+    width: 10%;
+    background: black;
+    height: 0.3em;
+    right: 20%;
+    top: -0.21em;
+    transform: skewX(-45deg);
+    -webkit-transition: all 0.45s cubic-bezier(0.86, 0, 0.07, 1);
+    transition: all 0.2s cubic-bezier(0.86, 0, 0.07, 1);
 }
 .brk-btn::after {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 10%;
-  background: #222;
-  height: 0.3em;
-  left: 20%;
-  bottom: -0.25em;
-  transform: skewX(45deg);
-  -webkit-transition: all 0.45 cubic-bezier(0.86, 0, 0.07, 1);
-  transition: all 0.20s cubic-bezier(0.86, 0, 0.07, 1);
+    content: "";
+    display: block;
+    position: absolute;
+    width: 10%;
+    background: black;
+    height: 0.3em;
+    left: 20%;
+    bottom: -0.25em;
+    transform: skewX(45deg);
+    -webkit-transition: all 0.45 cubic-bezier(0.86, 0, 0.07, 1);
+    transition: all 0.2s cubic-bezier(0.86, 0, 0.07, 1);
 }
 .brk-btn:hover::before {
-  right: 80%;
+    right: 80%;
 }
 .brk-btn:hover::after {
-  left: 80%;
+    left: 80%;
 }
-
