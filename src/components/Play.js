@@ -253,7 +253,7 @@ class Play extends Component {
 
                         this.anims.create(config);
 
-                        for (var i = 0; i < mapWidth / 400; i++) {
+                        for (var i = 0; i < mapWidth / 200; i++) {
                             var x = Phaser.Math.Between(100, mapWidth);
                             var y = Phaser.Math.Between(100, 300);
 

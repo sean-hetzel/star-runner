@@ -5,6 +5,9 @@ class Home extends React.Component {
     render() {
         return (
             <>
+                {/* <div id="stars"></div>
+                <div id="stars2"></div>
+                <div id="stars3"></div> */}
                 <h4 className="home_info">STAR DATE: JULY 2, 2154</h4>
                 <h4 className="home_info">LOGS: PRE-FLIGHT BREIF</h4>
                 <h4 className="home_info">STATUS: URGENT</h4>
@@ -13,9 +16,9 @@ class Home extends React.Component {
                 <h1>WELCOME PILOT</h1>
                 <h2>
                     The off world colonies need your help. The replicants are
-                    cutting off supply lines and endangering millions. Your mission is to
-                    deliver critical releif supplies to Arcadia 234 and
-                    eliminate any hostile replicants along the way.{" "}
+                    cutting off supply lines and endangering millions. Your
+                    mission is to deliver critical releif supplies to Arcadia
+                    234 and eliminate any hostile replicants along the way.{" "}
                 </h2>
                 <br></br>
 
