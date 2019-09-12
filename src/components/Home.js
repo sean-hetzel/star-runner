@@ -16,17 +16,22 @@ class Home extends React.Component {
                 <h1>WELCOME PILOT</h1>
                 <h2>
                     The off world colonies need your help. The replicants are
-                    cutting off supply lines and endangering millions. Your
+                    cutting off supply lines and terrorizing millions. Your
                     mission is to deliver critical releif supplies to Arcadia
-                    234 and eliminate any hostile replicants along the way.{" "}
+                    234 and eliminate any replicants along the way.{" "}
                 </h2>
                 <br></br>
-
                 <h1>CONTROLS:</h1>
-                <h2>
-                    FLY UP ▲ | FLY DOWN ▼ | FLY BACKWARD ◄ | FLY FORWARD ► |
-                    SHOOT ⎵
-                </h2>
+                <h2 id="cont_desc_1">FLY UP </h2>
+                <h2 id="up_arrow">▲</h2>
+                <h2 id="cont_desc_2"> | FLY DOWN </h2>
+                <h2 id="down_arrow">▼</h2>
+                <h2 id="cont_desc_3"> | FLY BACKWARD </h2>
+                <h2 id="left_arrow">◄</h2>
+                <h2 id="cont_desc_4"> | FLY FORWARD </h2>
+                <h2 id="right_arrow">►</h2>
+                <h2 id="cont_desc_5"> | SHOOT</h2>
+                <h2 id="space_bar"> ⎵</h2>
                 <br></br>
                 <h1>Good luck out there. You'll need it.</h1>
                 <br></br>

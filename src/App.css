@@ -32,17 +32,84 @@ h4 {
 
 #red_line_top {
     background-color: red;
+    position: relative;
     margin-top: 2px;
     padding: 2px;
 }
 
 #red_line_button {
     background-color: red;
+    position: relative;
     padding: 2px;
 }
 
 .home_info {
     text-align: left;
+}
+
+#cont_desc_1 {
+    display: inline;
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+#cont_desc_2 {
+  display: inline;
+  margin-left: 0%;
+  margin-right: 0%;
+}
+
+#cont_desc_3 {
+  display: inline;
+  margin-left: 0%;
+  margin-right: 0%;
+}
+
+#cont_desc_4 {
+  display: inline;
+  margin-left: 0%;
+  margin-right: 0%;
+}
+
+#cont_desc_5 {
+  display: inline;
+  margin-left: 0%;
+  margin-right: 0%;
+}
+
+#up_arrow {
+    color: red;
+    display: inline;
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+#down_arrow {
+    color: red;
+    display: inline;
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+#left_arrow {
+    color: red;
+    display: inline;
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+#right_arrow {
+    color: red;
+    display: inline;
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+#space_bar {
+    color: red;
+    display: inline;
+    margin-left: 0%;
+    margin-right: 0%;
 }
 
 .brk-btn {
@@ -3688,9 +3755,14 @@ html {
 
 @keyframes animStar {
     from {
-        transform: translateY(-200px);
+        transform: translateY(-50px);
     }
     to {
-        transform: translateY(-2000px);
+        transform: translateY(-500px);
     }
+}
+
+#phaserGame {
+    position: relative;
+    z-index: 100;
 }
