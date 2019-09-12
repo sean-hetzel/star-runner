@@ -8,6 +8,7 @@ import bullet from "../assets/bullet6.png";
 import jets from "../assets/blue.png";
 import flares from "../assets/yellow.png";
 import face from "../assets/metalface78x92.png";
+import { delay } from "q";
 
 const mapWidth = 40000; // 3200
 const mapHeight = 800; // 600
@@ -43,7 +44,9 @@ class Play extends Component {
                     flares: null,
                     bullets: null,
                     lastFired: 0,
-                    text: null
+                    text: null,
+                    timer: 0,
+                    damage: 0
                 },
 
                 init: function() {
@@ -139,8 +142,8 @@ class Play extends Component {
                     //  The miniCam is 400px wide, so can display the whole world at a zoom of 0.2
                     // this.minimap = this.cameras.add(200, 10, 400, 100).setZoom(0.2);
                     // this.minimap.setBackgroundColor(0x002244);
-                    // this.minimap.scrollX = 1600;
-                    // this.minimap.scrollY = 300;
+                    // this.minimap.scrollX = mapWidth;
+                    // this.minimap.scrollY = mapHeight;
 
                     //  Bullets
 
@@ -168,6 +171,7 @@ class Play extends Component {
                         })
                         .setDepth(1)
                         .setScrollFactor(0);
+
                     const createBulletEmitter = () => {
                         this.flares = this.add
                             .particles("flares")
@@ -234,53 +238,6 @@ class Play extends Component {
                         }, this);
                     };
 
-                    // const createLandscape = () => {
-                    //     //  Draw a random 'landscape'
-
-                    //     var landscape = this.add.graphics();
-
-                    //     landscape.fillStyle(0x008800, 1);
-                    //     landscape.lineStyle(2, 0x00ff00, 1);
-
-                    //     landscape.beginPath();
-
-                    //     var maxY = 550;
-                    //     var minY = 400;
-
-                    //     var x = 0;
-                    //     var y = maxY;
-                    //     var range = 0;
-
-                    //     var up = true;
-
-                    //     landscape.moveTo(0, mapHeight);
-                    //     landscape.lineTo(0, 550);
-
-                    //     do {
-                    //         //  How large is this 'side' of the mountain?
-                    //         range = Phaser.Math.Between(20, 100);
-
-                    //         if (up) {
-                    //             y = Phaser.Math.Between(y, minY);
-                    //             up = false;
-                    //         } else {
-                    //             y = Phaser.Math.Between(y, maxY);
-                    //             up = true;
-                    //         }
-
-                    //         landscape.lineTo(x + range, y);
-
-                    //         x += range;
-                    //     } while (x < 3100);
-
-                    //     landscape.lineTo(mapWidth, maxY);
-                    //     landscape.lineTo(mapWidth, mapHeight);
-                    //     landscape.closePath();
-
-                    //     landscape.strokePath();
-                    //     landscape.fillPath();
-                    // };
-
                     const createAliens = () => {
                         //  Create some random aliens moving slowly around
 
@@ -302,9 +259,10 @@ class Play extends Component {
 
                             var face = this.impact.add
                                 .sprite(x, y, "face")
-                                .play("metaleyes");
+                                .play("metaleyes").setTypeA().setCheckAgainstA().setActiveCollision().setMaxVelocity(300);
 
-                            face.setLiteCollision()
+
+                            face.setActiveCollision()
                                 .setBounce(1)
                                 .setBodyScale(0.5);
                             face.setVelocity(
@@ -319,11 +277,36 @@ class Play extends Component {
                             }
                         }
                     };
+
+                    // this.player.setTypeA().setCheckAgainstB().setActiveCollision().setMaxVelocity(300);
+                    // this.face.setTypeB().setCheckAgainstA().setFixedCollision();
+
+                    const hitAstroid = (player, face, axis) => {
+                        // player.gameObject.tint = 0xff0000;
+                        // delay(10000);
+                        // player.gameObject.tint = 0x0000ff;
+
+                        this.damage += 1000
+                        console.log(this.damage)
+                    };
+
+                    // this.physics.add.overlap(
+                    //     this.player,
+                    //     face,
+                    //     hitAstroid,
+                    //     null,
+                    //     this
+                    // );
+                    this.player.setCollideCallback(hitAstroid, this);
+
                     createStarfield();
                     // createLandscape();
                     createAliens();
                     createThrustEmitter();
                     createBulletEmitter();
+
+                    this.timer = this.time.addEvent({ delay: 100000, callbackScope: this });
+
                 },
 
                 update: function(time, delta) {
@@ -389,16 +372,21 @@ class Play extends Component {
                     }, this);
 
                     this.text.setText(
-                        `ACCELERATION: ${this.player.vel.x * 500} kph`
+                        `VELOCITY: ${this.player.vel.x * 500}\nTime: `  + `${Math.floor(this.timer.getElapsed())}\nDamage: ` + `${this.damage}`
                     );
 
                     //  Position the center of the camera on the player
                     //  We -400 because the camera width is 800px and
                     //  we want the center of the camera on the player, not the left-hand side of it
                     this.cameras.main.scrollX = this.player.x - 400;
+                    // this.cameras.main.startFollow(this.player, true, 0.02, 0.02);
+
 
                     //  And this camera is 400px wide, so -200
-                    // this.minimap.scrollX = Phaser.Math.Clamp(this.player.x - 200, 800, 2000);
+                    // this.minimap.scrollX = Phaser.Math.Clamp(this.player.x - 200, 800, mapWidth);
+                    // console.log(Math.floor(this.timer.getElapsed()))
+                    // this.info.setText('\nTime: ' + Math.floor(this.timer.getElapsed()));
+
                 }
             }
         }
