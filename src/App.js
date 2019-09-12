@@ -13,18 +13,33 @@ import Profile from "./components/Profile";
 import Scores from "./components/Scores";
 import "./App.css";
 
+const API = "http://localhost:3000/api/v1/scores";
+const SC = require("soundcloud");
+
 class App extends Component {
     state = {
-        userName: "",
-        comments: []
+        scores: []
     };
+
+    componentDidMount() {
+        fetch(API)
+            .then(resp => resp.json())
+            .then(json => this.setState({ scores: json }, console.log(json)));
+        SC.initialize({
+            client_id: "YOUR_CLIENT_ID",
+            redirect_uri: "https://example.com/callback"
+		});
+		SC.stream('https://soundcloud.com/user-487117060/sets/space-runner').then(function(player){
+			player.play();
+		  });
+    }
 
     render() {
         return (
             <Router>
-                {/* <div id="stars"></div>
+                <div id="stars"></div>
                 <div id="stars2"></div>
-                <div id="stars3"></div> */}
+                <div id="stars3"></div>
                 <Navbar />
                 <Route path="/" exact component={Home} />
                 <Route
@@ -34,7 +49,7 @@ class App extends Component {
                 />
                 <Route
                     path="/scores"
-                    render={props => <Scores {...props} user={this.state} />}
+                    render={props => <Scores scores={this.state.scores} />}
                 />
                 <Route path="/play" component={Play} />
                 <Route render={() => <Redirect to="/" />} />

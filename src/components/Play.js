@@ -8,6 +8,7 @@ import bullet from "../assets/bullet6.png";
 import jets from "../assets/blue.png";
 import flares from "../assets/yellow.png";
 import face from "../assets/metalface78x92.png";
+import planet from "../assets/city1.png";
 import { delay } from "q";
 
 const mapWidth = 40000; // 3200
@@ -46,7 +47,10 @@ class Play extends Component {
                     lastFired: 0,
                     text: null,
                     timer: 0,
-                    damage: 0
+                    damage: 0,
+                    score: 0,
+                    gameOver: false,
+                    endZone: null
                 },
 
                 init: function() {
@@ -65,6 +69,9 @@ class Play extends Component {
                     this.load.image("ship", "assets/sprites/shmup-ship2.png");
                     this.textures.addBase64("ship", ship);
 
+                    this.load.image("planet", "assets/city1.png");
+                    this.textures.addBase64("planet", planet)
+
                     this.load.image(
                         "bullet",
                         "assets/sprites/bullets/bullet6.png"
@@ -77,6 +84,7 @@ class Play extends Component {
                     this.load.image("flares", "assets/particles/yellow.png");
                     this.textures.addBase64("flares", flares);
 
+
                     var faceImg = new Image();
                     faceImg.onload = () => {
                         this.textures.addSpriteSheet("face", faceImg, {
@@ -88,6 +96,8 @@ class Play extends Component {
                 },
 
                 create: function() {
+                    const cityPlanet = this.impact.add.sprite(200,200, planet)
+
                     let Bullet = new Phaser.Class({
                         Extends: Phaser.GameObjects.Image,
 
@@ -102,6 +112,7 @@ class Play extends Component {
 
                             this.speed = 0;
                             this.born = 0;
+
                         },
 
                         fire: function(player) {
@@ -307,9 +318,28 @@ class Play extends Component {
 
                     this.timer = this.time.addEvent({ delay: 100000, callbackScope: this });
 
+                    // const endZone = this.game.scene.zone(
+                    //     38000,
+                    //     400,
+                    //     10,
+                    //     800
+                    // ).setPassiveCollision()
+
+                    // const crossEndZone = (player, endZone, axis) => {
+                    //     console.log("GAME ENDED")
+                    // }
+
+                    // // let endZone = Phaser.GameObjects.zone(38000, 400, 10, 800)
+                    
+                    // endZone.setCollideCallback(crossEndZone, this)
+
                 },
 
                 update: function(time, delta) {
+                    if (this.gameOver) {
+                        
+                        return;
+                    }
                     this.thrust.setPosition(this.player.x, this.player.y);
 
                     if (this.cursors.left.isDown) {
@@ -371,8 +401,10 @@ class Play extends Component {
                         }
                     }, this);
 
+                    let timeElapsed = Math.floor(this.timer.getElapsed());
+
                     this.text.setText(
-                        `VELOCITY: ${this.player.vel.x * 500}\nTime: `  + `${Math.floor(this.timer.getElapsed())}\nDamage: ` + `${this.damage}`
+                        `VELOCITY: ${this.player.vel.x * 500}\nTime: `  + `${timeElapsed}\nDamage: ` + `${this.damage}\nScore: ` + `${this.score}`
                     );
 
                     //  Position the center of the camera on the player
@@ -386,7 +418,8 @@ class Play extends Component {
                     // this.minimap.scrollX = Phaser.Math.Clamp(this.player.x - 200, 800, mapWidth);
                     // console.log(Math.floor(this.timer.getElapsed()))
                     // this.info.setText('\nTime: ' + Math.floor(this.timer.getElapsed()));
-
+                    this.score = timeElapsed + this.damage;
+                    console.log("score: ", this.score)
                 }
             }
         }
@@ -403,6 +436,7 @@ class Play extends Component {
                     initialize={initialize}
                 />
                 <div id="red_line_button"></div>
+                
             </>
         );
     }
