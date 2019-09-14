@@ -15,11 +15,20 @@ class NavBar extends React.Component {
                     Fly
                 </Link>
                 <Link className="brk-btn" to="/scores">
-                    Stats
+                    Rank
                 </Link>
                 <Link className="brk-btn" to="/profile">
                     Profile
                 </Link>
+                <iframe
+                    id="soundcloud"
+                    width="300"
+                    height="80"
+                    scrolling="no"
+                    frameborder="no"
+                    allow="no"
+                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/862763829&color=%23000000&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
+                ></iframe>
                 <div id="red_line_top"></div>
             </nav>
         );

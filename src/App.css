@@ -6,13 +6,18 @@ body {
     font-family: "Vcr Osd Mono";
     /* src: local('Vcr Osd Mono'), url(./fonts/Vcr_Osd_Mono.ttf) format('ttf'); */
     text-align: center;
-    padding-top: 2em;
+    margin-top: 1em;
     background-color: black;
 }
 
 /* #nav_bar {
     margin-bottom: 2em;
 } */
+
+#soundcloud{
+  float: right;
+  margin-top: -1em;
+}
 
 h2,
 h4 {
@@ -54,27 +59,27 @@ h4 {
 }
 
 #cont_desc_2 {
-  display: inline;
-  margin-left: 0%;
-  margin-right: 0%;
+    display: inline;
+    margin-left: 0%;
+    margin-right: 0%;
 }
 
 #cont_desc_3 {
-  display: inline;
-  margin-left: 0%;
-  margin-right: 0%;
+    display: inline;
+    margin-left: 0%;
+    margin-right: 0%;
 }
 
 #cont_desc_4 {
-  display: inline;
-  margin-left: 0%;
-  margin-right: 0%;
+    display: inline;
+    margin-left: 0%;
+    margin-right: 0%;
 }
 
 #cont_desc_5 {
-  display: inline;
-  margin-left: 0%;
-  margin-right: 0%;
+    display: inline;
+    margin-left: 0%;
+    margin-right: 0%;
 }
 
 #up_arrow {
@@ -82,6 +87,7 @@ h4 {
     display: inline;
     margin-left: 0%;
     margin-right: 0%;
+    position: relative;
 }
 
 #down_arrow {
@@ -89,6 +95,7 @@ h4 {
     display: inline;
     margin-left: 0%;
     margin-right: 0%;
+    position: relative;
 }
 
 #left_arrow {
@@ -96,6 +103,7 @@ h4 {
     display: inline;
     margin-left: 0%;
     margin-right: 0%;
+    position: relative;
 }
 
 #right_arrow {
@@ -103,6 +111,7 @@ h4 {
     display: inline;
     margin-left: 0%;
     margin-right: 0%;
+    position: relative;
 }
 
 #space_bar {
@@ -110,6 +119,7 @@ h4 {
     display: inline;
     margin-left: 0%;
     margin-right: 0%;
+    position: relative;
 }
 
 .brk-btn {
@@ -3758,7 +3768,7 @@ html {
         transform: translateY(-50px);
     }
     to {
-        transform: translateY(-500px);
+        transform: translateY(-550px);
     }
 }
 

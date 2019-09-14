@@ -17,7 +17,7 @@ class Home extends React.Component {
                 <h2>
                     The off world colonies need your help. The replicants are
                     cutting off supply lines and terrorizing millions. Your
-                    mission is to deliver critical releif supplies to Arcadia
+                    mission is to deliver critical relief supplies to Arcadia
                     234 and eliminate any replicants along the way.{" "}
                 </h2>
                 <br></br>
@@ -32,7 +32,7 @@ class Home extends React.Component {
                 <h2 id="right_arrow">►</h2>
                 <h2 id="cont_desc_5"> | SHOOT</h2>
                 <h2 id="space_bar"> ⎵</h2>
-                <br></br>
+                <br></br><br></br><br></br>
                 <h1>Good luck out there. You'll need it.</h1>
                 <br></br>
                 <br></br>
