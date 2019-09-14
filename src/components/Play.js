@@ -22,7 +22,7 @@ class Play extends Component {
         initialize: true,
         game: {
             type: Phaser.AUTO,
-            width: 1920,
+            width: "100%",
             height: mapHeight,
             physics: {
                 default: "impact",
@@ -316,7 +316,7 @@ class Play extends Component {
                     createThrustEmitter();
                     createBulletEmitter();
 
-                    this.timer = this.time.addEvent({ delay: 100000, callbackScope: this });
+                    this.timer = this.time.addEvent({ delay: 1000000, callbackScope: this });
 
                     // const endZone = this.game.scene.zone(
                     //     38000,
