@@ -12,7 +12,7 @@ import planet from "../assets/city1.png";
 import { delay } from "q";
 
 const mapWidth = 40000; // 3200
-const mapHeight = 800; // 600
+const mapHeight = 700; // 600
 console.log("map width: ", mapWidth);
 console.log("map height: ", mapHeight);
 
@@ -31,7 +31,7 @@ class Play extends Component {
                         x: 0,
                         y: 0,
                         width: mapWidth,
-                        height: mapHeight,
+                        height: 700,
                         thickness: 32
                     }
                 }
@@ -228,7 +228,7 @@ class Play extends Component {
                             0,
                             0,
                             mapWidth,
-                            800
+                            1000
                         );
 
                         Phaser.Actions.RandomRectangle(
