@@ -8,6 +8,7 @@ class Scores extends React.Component {
                 {this.props.scores.map(user => {
                     return <> <h1>{user.display_name} {user.high_score}</h1></>;
                 })}
+                
             </>
         );
     }

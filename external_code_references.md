@@ -2,11 +2,9 @@
 by: yourpalnurav
 https://codepen.io/yourpalnurav/pen/LqNmzL
 
-# starts:
-by: Saransh Sinha
-    @screenshake
-    linkedin.com/in/saranshsinha
-https://codepen.io/saransh/pen/BKJun
+# stars:
+by: Keith Clark
+https://codepen.io/keithclark/pen/zqcEd
 
 # game:
 by: Phaser 3 examples
