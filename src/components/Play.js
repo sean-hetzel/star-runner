@@ -11,6 +11,7 @@ import face from "../assets/metalface78x92.png";
 import planet from "../assets/city1.png";
 import { delay } from "q";
 
+
 const mapWidth = 40000; // 3200
 const mapHeight = 700; // 600
 console.log("map width: ", mapWidth);
@@ -177,7 +178,7 @@ class Play extends Component {
 
                     this.text = this.add
                         .text(10, 10, "", {
-                            font: "20px Alien Encounters",
+                            font: "20px Orbitron",
                             fill: "#ff0000"
                         })
                         .setDepth(1)
@@ -298,7 +299,7 @@ class Play extends Component {
                         // player.gameObject.tint = 0x0000ff;
 
                         this.damage += 1000
-                        console.log(this.damage)
+                        // console.log(this.damage)
                     };
 
                     // this.physics.add.overlap(
@@ -419,7 +420,7 @@ class Play extends Component {
                     // console.log(Math.floor(this.timer.getElapsed()))
                     // this.info.setText('\nTime: ' + Math.floor(this.timer.getElapsed()));
                     this.score = timeElapsed + this.damage;
-                    console.log("score: ", this.score)
+                    // console.log("score: ", this.score)
                 }
             }
         }
@@ -430,6 +431,7 @@ class Play extends Component {
 
         return (
             <>
+                    {/* <div id="black_box"></div> */}
                 <IonPhaser
                     id="phaserGame"
                     game={game}
@@ -437,6 +439,7 @@ class Play extends Component {
                 />
                 <div id="red_line_button"></div>
                 
+
             </>
         );
     }

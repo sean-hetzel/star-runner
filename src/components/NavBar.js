@@ -23,9 +23,9 @@ class NavBar extends React.Component {
                 <iframe
                     id="soundcloud"
                     width="300"
-                    height="80"
+                    height="95"
                     scrolling="no"
-                    frameborder="no"
+                    frameBorder="no"
                     allow="no"
                     src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/862763829&color=%23000000&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
                 ></iframe>
