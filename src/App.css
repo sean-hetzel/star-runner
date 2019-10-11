@@ -1,4 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Orbitron:700);
+@font-face { font-family: Alien Encounters; 
+    src: url(./assets/Alien-Encounters-Italic.ttf); }
 h1 {
     color: white;
 }
@@ -35,7 +37,7 @@ h4 {
 }
 
 #star_runner_logo {
-    font-family: "Alien Encounters";
+    font-family: Alien Encounters;
     font-size: 4em;
     margin-right: 1em;
     color: white;
@@ -45,7 +47,7 @@ h4 {
 #red_line_top {
     background-color: red;
     position: relative;
-    margin-top: 8px;
+    margin-top: 16px;
     padding: 2px;
 }
 
