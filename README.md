@@ -1,3 +1,32 @@
+# STAR RUNNER
+
+80s inspired space shooter game built with the Phaser game engine. Players fly through an asteroid field in a race against time. Do you have what it takes?
+
+`Not online yet`
+
+![STAR RUNNER](star-runner-screenshot-2.PNG)
+
+# Usage
+
+Users can:
+
+1. Play the game.
+2. Submit their score.
+3. View high scores.
+
+# Roadmap
+
+Finish it.
+
+# Support
+
+seanhetzel1@gmail.com
+
+# Contributing
+
+Contributions welcome
+
+# installation:
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
