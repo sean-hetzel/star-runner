@@ -18,15 +18,28 @@ Users can:
 
 Finish it.
 
+# Attributions
+1. Buttons<br>
+yourpalnurav<br>
+https://codepen.io/yourpalnurav/pen/LqNmzL
+
+2. Stars<br>
+Keith Clark<br>
+https://codepen.io/keithclark/pen/zqcEd
+
+3. Game<br>
+Phaser 3 examples<br>
+https://phaser.io/examples/v3/view/games/defenda/test
+
 # Support
 
 seanhetzel1@gmail.com
 
 # Contributing
 
-Contributions welcome
+Contributions welcome.
 
-# installation:
+# Installation:
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
