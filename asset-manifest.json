@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/star-runner/static/css/main.8701f824.chunk.css",
+    "main.js": "/star-runner/static/js/main.d4446d9a.chunk.js",
+    "main.js.map": "/star-runner/static/js/main.d4446d9a.chunk.js.map",
+    "runtime~main.js": "/star-runner/static/js/runtime~main.cd4c522d.js",
+    "runtime~main.js.map": "/star-runner/static/js/runtime~main.cd4c522d.js.map",
+    "static/js/2.3f90203a.chunk.js": "/star-runner/static/js/2.3f90203a.chunk.js",
+    "static/js/2.3f90203a.chunk.js.map": "/star-runner/static/js/2.3f90203a.chunk.js.map",
+    "static/js/3.08e27028.chunk.js": "/star-runner/static/js/3.08e27028.chunk.js",
+    "static/js/3.08e27028.chunk.js.map": "/star-runner/static/js/3.08e27028.chunk.js.map",
+    "static/js/4.f3828da0.chunk.js": "/star-runner/static/js/4.f3828da0.chunk.js",
+    "static/js/4.f3828da0.chunk.js.map": "/star-runner/static/js/4.f3828da0.chunk.js.map",
+    "static/js/5.d4a59185.chunk.js": "/star-runner/static/js/5.d4a59185.chunk.js",
+    "static/js/5.d4a59185.chunk.js.map": "/star-runner/static/js/5.d4a59185.chunk.js.map",
+    "static/js/6.e5d6a55b.chunk.js": "/star-runner/static/js/6.e5d6a55b.chunk.js",
+    "static/js/6.e5d6a55b.chunk.js.map": "/star-runner/static/js/6.e5d6a55b.chunk.js.map",
+    "static/js/7.7f8f58c8.chunk.js": "/star-runner/static/js/7.7f8f58c8.chunk.js",
+    "static/js/7.7f8f58c8.chunk.js.map": "/star-runner/static/js/7.7f8f58c8.chunk.js.map",
+    "static/js/8.8adea2b9.chunk.js": "/star-runner/static/js/8.8adea2b9.chunk.js",
+    "static/js/8.8adea2b9.chunk.js.map": "/star-runner/static/js/8.8adea2b9.chunk.js.map",
+    "index.html": "/star-runner/index.html",
+    "precache-manifest.0355bc37b6f6fa967cd8389da9219f3f.js": "/star-runner/precache-manifest.0355bc37b6f6fa967cd8389da9219f3f.js",
+    "service-worker.js": "/star-runner/service-worker.js",
+    "static/css/main.8701f824.chunk.css.map": "/star-runner/static/css/main.8701f824.chunk.css.map",
+    "static/media/App.css": "/star-runner/static/media/Alien-Encounters-Italic.6db268c1.ttf",
+    "static/media/blue.png": "/star-runner/static/media/blue.431b99d2.png",
+    "static/media/city1.png": "/star-runner/static/media/city1.7f78896d.png",
+    "static/media/github-logo-red.png": "/star-runner/static/media/github-logo-red.fddd4e2e.png",
+    "static/media/yellow.png": "/star-runner/static/media/yellow.11752848.png"
+  }
+}
