@@ -13,7 +13,8 @@ import Profile from "./components/Profile";
 import Scores from "./components/Scores";
 import "./App.css";
 
-const API = "http://localhost:3000/api/v1/scores";
+// const API = "http://localhost:3000/api/v1/scores";
+const API = "https://agile-atoll-75530.herokuapp.com/api/v1/scores"
 
 class App extends Component {
     state = {
