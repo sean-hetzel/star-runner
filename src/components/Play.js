@@ -61,13 +61,13 @@ class Play extends Component {
                     console.log("this", this);
                 },
                 preload: function() {
-                    this.load.image("star", "assets/demoscene/star2.png");
+                    this.load.image("star", "assets/star2.png");
                     this.textures.addBase64("star", star);
 
-                    this.load.image("bigStar", "assets/demoscene/star3.png");
+                    this.load.image("bigStar", "assets/star3.png");
                     this.textures.addBase64("bigStar", bigStar);
 
-                    this.load.image("ship", "assets/sprites/shmup-ship2.png");
+                    this.load.image("ship", "assets/shmup-ship2.png");
                     this.textures.addBase64("ship", ship);
 
                     this.load.image("planet", "assets/city1.png");
@@ -75,14 +75,14 @@ class Play extends Component {
 
                     this.load.image(
                         "bullet",
-                        "assets/sprites/bullets/bullet6.png"
+                        "assets/bullet6.png"
                     );
                     this.textures.addBase64("bullet", bullet);
 
-                    this.load.image("jets", "assets/particles/blue.png");
+                    this.load.image("jets", "assets/blue.png");
                     this.textures.addBase64("jets", jets);
 
-                    this.load.image("flares", "assets/particles/yellow.png");
+                    this.load.image("flares", "assets/yellow.png");
                     this.textures.addBase64("flares", flares);
 
 
