@@ -1,43 +1,47 @@
 {
-  "name": "star-runner",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@ion-phaser/react": "^1.2.0",
-    "phaser": "^3.19.0",
-    "react": "^16.9.0",
-    "react-bootstrap": "^1.0.0-beta.12",
-    "react-dom": "^16.9.0",
-    "react-phaser": "^0.1.6",
-    "react-router": "^5.0.1",
-    "react-router-dom": "^5.0.1",
-    "react-script-tag": "^1.1.2",
-    "react-scripts": "3.1.1",
-    "react-window-size": "^1.2.2",
-    "soundcloud": "^3.3.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "url-loader": "^2.1.0"
-  }
+    "homepage": "https://seanhetzel.github.io/star-runner",
+    "name": "star-runner",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@ion-phaser/react": "^1.2.0",
+        "gh-pages": "^2.1.1",
+        "phaser": "^3.19.0",
+        "react": "^16.9.0",
+        "react-bootstrap": "^1.0.0-beta.12",
+        "react-dom": "^16.9.0",
+        "react-phaser": "^0.1.6",
+        "react-router": "^5.0.1",
+        "react-router-dom": "^5.0.1",
+        "react-script-tag": "^1.1.2",
+        "react-scripts": "3.1.1",
+        "react-window-size": "^1.2.2",
+        "soundcloud": "^3.3.2"
+    },
+    "scripts": {
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "gh-pages": "^2.1.1"
+    }
 }

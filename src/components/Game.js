@@ -406,7 +406,7 @@ class Game extends Component {
                     let timeElapsed = Math.floor(this.timer.getElapsed());
 
                     this.text.setText(
-                        `VELOCITY: ${this.player.vel.x * 500}\nTime: `  + `${timeElapsed}\nDamage: ` + `${this.damage}\nScore: ` + `${this.score}`
+                        `ACCELERATION, m/s/s >> ${(this.player.vel.x * 50).toLocaleString()}\nTIME ELAPSED >> `  + `${timeElapsed.toLocaleString()}\nDAMAGE >> ` + `${this.damage.toLocaleString()}\nPENALTY >> ` + `${this.score.toLocaleString()}`
                     );
 
                     //  Position the center of the camera on the player

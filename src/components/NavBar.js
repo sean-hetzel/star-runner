@@ -18,9 +18,9 @@ class NavBar extends React.Component {
                 <Link className="brk-btn" to="/scores">
                     Rank
                 </Link>
-                <Link className="brk-btn" to="/profile">
+                {/* <Link className="brk-btn" to="/profile">
                     Profile
-                </Link>
+                </Link> */}
                 
                 <iframe
                     id="soundcloud"
@@ -34,6 +34,7 @@ class NavBar extends React.Component {
                 <a
                     href="https://github.com/Seanhetzel/star-runner"
                     target="_blank"
+                    rel="noopener noreferrer"
                     id="github_logo"
                 >
                     <img
