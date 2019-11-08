@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import Navbar from "./components/NavBar";
 import Home from "./components/Home";
-import Play from "./components/Play";
+import Game from "./components/Game";
 import Profile from "./components/Profile";
 import Scores from "./components/Scores";
 import "./App.css";
@@ -48,7 +48,7 @@ class App extends Component {
                     path="/scores"
                     render={props => <Scores scores={this.state.scores} />}
                 />
-                <Route path="/play" component={Play} />
+                <Route path="/game" component={Game} />
                 <Route render={() => <Redirect to="/" />} />
             </Router>
         );

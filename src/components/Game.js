@@ -10,6 +10,7 @@ import flares from "../assets/yellow.png";
 import face from "../assets/metalface78x92.png";
 import planet from "../assets/city1.png";
 import { delay } from "q";
+import PreLoader from "./PreLoader";
 
 
 const mapWidth = 40000; // 3200
@@ -17,7 +18,7 @@ const mapHeight = 700; // 600
 console.log("map width: ", mapWidth);
 console.log("map height: ", mapHeight);
 
-class Play extends Component {
+class Game extends Component {
     state = {
         redirect: false,
         initialize: true,
@@ -438,10 +439,9 @@ class Play extends Component {
                     initialize={initialize}
                 />
                 <div id="red_line_button"></div>
-                
 
             </>
         );
     }
 }
-export default Play;
+export default Game;
