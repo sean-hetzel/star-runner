@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "cc72327e78f967c529d2c950d5cc7496",
+    "revision": "cc99a6fa15f586a8724e861ca809249e",
     "url": "/star-runner/index.html"
   },
   {
-    "revision": "8a7c59d50a4c47705982",
-    "url": "/star-runner/static/css/main.8701f824.chunk.css"
+    "revision": "befff9c473b6b217f25a",
+    "url": "/star-runner/static/css/main.63380651.chunk.css"
   },
   {
     "revision": "36fbbd619b8c1ad99c53",
@@ -36,8 +36,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/star-runner/static/js/8.8adea2b9.chunk.js"
   },
   {
-    "revision": "8a7c59d50a4c47705982",
-    "url": "/star-runner/static/js/main.8db76e91.chunk.js"
+    "revision": "befff9c473b6b217f25a",
+    "url": "/star-runner/static/js/main.7bd1c108.chunk.js"
   },
   {
     "revision": "a9ba5e418f97e57f1910",
