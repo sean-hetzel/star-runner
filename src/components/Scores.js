@@ -1,6 +1,15 @@
 import React, { Component } from "react";
+import PreLoader from "./PreLoader";
+
+const hideLoader = () => document.getElementById("pre_loader").style.display = "none";
 
 class Scores extends React.Component {
+
+    componentDidMount(){
+        if(this.props.loaded === true){
+            hideLoader()
+        }
+    }
 
     renderTableData(i) {
         return this.props.scores.map(score => {
@@ -31,6 +40,7 @@ class Scores extends React.Component {
                         {this.renderTableData(i)}
                     </tbody>
                 </table>
+                <PreLoader/>
             </>
         );
     }

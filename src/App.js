@@ -13,43 +13,85 @@ import Profile from "./components/Profile";
 import Scores from "./components/Scores";
 import "./App.css";
 
-// const API = "http://localhost:3000/api/v1/scores";
-const API = "https://agile-atoll-75530.herokuapp.com/api/v1/scores"
+const API = "https://agile-atoll-75530.herokuapp.com/api/v1/scores";
+
+// const stars = document.getElementById("space");
+
+const hideStars = () => (document.getElementById("star_field").style.display = "none");
+
+const showStars = () => (document.getElementById("star_field").style.display = "block");
 
 class App extends Component {
-    state = {
-        scores: []
-    };
+    constructor() {
+        super();
+        this.state = {
+            scores: [],
+            loaded: false,
+            hideStars: false
+        };
+    }
+
+    toggleStars = () => {
+        console.log("toggled stars")
+        this.setState({hideStars: !this.state.hideStars});
+        if (this.state.hideStars === true) {
+            hideStars()
+            console.log("stars should be hidded")
+        } else {
+            showStars();
+            console.log("stars should not be hidden")
+        }
+    }
 
     componentDidMount() {
         fetch(API)
             .then(resp => resp.json())
-            .then(json => this.setState({ scores: json }, console.log(json)));
+            .then(json =>
+                this.setState(
+                    { scores: json },
+                    // hideLoader(),
+                    this.setState({ loaded: true }),
+                    console.log(json)
+                )
+            );
     }
 
     render() {
+        console.log("app state", this.state)
+
         return (
             <Router>
-                {/* <div id="space">
+                <div id="star_field">
                     <div className="stars"></div>
                     <div className="stars"></div>
                     <div className="stars"></div>
                     <div className="stars"></div>
                     <div className="stars"></div>
-                </div> */}
+                </div>
                 <Navbar />
 
                 <Route path="/" exact component={Home} />
                 <Route
-                    path="/profile"
-                    exact
-                    render={props => <Profile {...props} user={this.state} />}
+                    path="/scores"
+                    // exact
+                    render={props => (
+                        <Scores
+                            {...props}
+                            loaded={this.state.loaded}
+                            scores={this.state.scores}
+                            toggleStars={this.toggleStars}
+                        />
+                    )}
                 />
                 <Route
-                    path="/scores"
-                    render={props => <Scores scores={this.state.scores} />}
+                    path="/game"
+                    exact
+                    render={props => (
+                        <Game {...props} toggleStars={this.toggleStars} />
+                    )}
+                    // component={Game}
+                    // toggleStars={this.toggleStars}
                 />
-                <Route path="/game" component={Game} />
                 <Route render={() => <Redirect to="/" />} />
             </Router>
         );

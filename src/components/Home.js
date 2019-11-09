@@ -5,13 +5,13 @@ class Home extends React.Component {
     render() {
         return (
             <>
-                <div id="space">
+                {/* <div id="space">
                     <div className="stars"></div>
                     <div className="stars"></div>
                     <div className="stars"></div>
                     <div className="stars"></div>
                     <div className="stars"></div>
-                </div>
+                </div> */}
                 <h4 className="home_info">STAR DATE: JULY 2, 2154</h4>
                 <h4 className="home_info">LOGS: PRE-FLIGHT BREIF</h4>
                 <h4 className="home_info">STATUS: URGENT</h4>
