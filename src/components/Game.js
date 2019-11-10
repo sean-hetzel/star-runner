@@ -19,6 +19,7 @@ console.log("map width: ", mapWidth);
 console.log("map height: ", mapHeight);
 
 class Game extends Component {
+    
     componentDidMount(){
         this.props.toggleStars()
     }

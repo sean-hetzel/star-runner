@@ -49,12 +49,15 @@ table {
     width: 50em;
     margin-left: auto;
     margin-right: auto;
+    z-index: 3;
 }
 
 td,
 th {
     color: white;
     font-size: 24pt;
+    position: relative;
+    z-index: 3;
 }
 
 th {
@@ -230,6 +233,7 @@ html {
     bottom: 0;
     left: 0;
     right: 0;
+    display: block;
 }
 
 .stars {
@@ -311,6 +315,7 @@ html {
     height: 200px;
     text-align: center;
     font-size: 10px;
+    z-index: 3;
 }
 
 .sk-wave .sk-rect {
@@ -372,4 +377,14 @@ html {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+}
+
+#not_found{
+    margin-top: 2em;
+    color: red;
+    font-size: 80pt;
+}
+
+#lost{
+    font-size: 40pt;
 }
