@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import {
     HashRouter as Router,
     Route,
-    Link,
-    Redirect,
     Switch
 } from "react-router-dom";
 import Navbar from "./components/NavBar";
@@ -16,14 +14,6 @@ import NotFound from "./components/NotFound";
 
 const API = "https://agile-atoll-75530.herokuapp.com/api/v1/scores";
 
-// const stars = document.getElementById("space");
-
-const hideStars = () =>
-    (document.getElementById("star_field").style.display = "none");
-
-const showStars = () =>
-    (document.getElementById("star_field").style.display = "block");
-
 class App extends Component {
     constructor() {
         super();
@@ -34,16 +24,12 @@ class App extends Component {
         };
     }
 
-    toggleStars = () => {
-        console.log("toggled stars");
-        this.setState({ hideStars: !this.state.hideStars });
-        if (this.state.hideStars === true) {
-            hideStars();
-            console.log("stars should be hidded");
-        } else {
-            showStars();
-            console.log("stars should not be hidden");
-        }
+    hideStars = () => {
+        document.getElementById("star_field").style.visibility = "hidden";
+    };
+
+    showStars = () => {
+        document.getElementById("star_field").style.visibility = "visible";
     };
 
     componentDidMount() {
@@ -63,7 +49,20 @@ class App extends Component {
                 <StarField />
                 <Navbar />
                 <Switch>
-                    <Route path="/" exact component={Home} />
+                    <Route
+                        path="/"
+                        exact
+                        render={props => (
+                            <Home {...props} showStars={this.showStars} />
+                        )}
+                    />
+                    <Route
+                        path="/game"
+                        exact
+                        render={props => (
+                            <Game {...props} hideStars={this.hideStars} />
+                        )}
+                    />
                     <Route
                         path="/scores"
                         exact
@@ -72,15 +71,8 @@ class App extends Component {
                                 {...props}
                                 loaded={this.state.loaded}
                                 scores={this.state.scores}
-                                toggleStars={this.toggleStars}
+                                showStars={this.showStars}
                             />
-                        )}
-                    />
-                    <Route
-                        path="/game"
-                        exact
-                        render={props => (
-                            <Game {...props} toggleStars={this.toggleStars} />
                         )}
                     />
                     <Route path="*" component={NotFound} />

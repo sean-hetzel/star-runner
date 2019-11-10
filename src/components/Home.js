@@ -2,16 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 class Home extends React.Component {
+
+    componentDidMount() {
+        this.props.showStars();
+    }
+    
     render() {
         return (
             <>
-                {/* <div id="space">
-                    <div className="stars"></div>
-                    <div className="stars"></div>
-                    <div className="stars"></div>
-                    <div className="stars"></div>
-                    <div className="stars"></div>
-                </div> */}
                 <h4 className="home_info">STAR DATE: JULY 2, 2154</h4>
                 <h4 className="home_info">LOGS: PRE-FLIGHT BREIF</h4>
                 <h4 className="home_info">STATUS: URGENT</h4>

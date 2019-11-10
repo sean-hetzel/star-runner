@@ -222,8 +222,7 @@ html {
     z-index: 2;
 }
 
-/* Stars 
-------------------------------------- */
+/* Stars ------------------------------------- */
 
 #star_field,
 .stars {
@@ -233,7 +232,6 @@ html {
     bottom: 0;
     left: 0;
     right: 0;
-    display: block;
 }
 
 .stars {
@@ -291,6 +289,8 @@ html {
         transform: scale(3.5);
     }
 }
+
+/* Stars End ------------------------------------- */
 
 /* #black_box{
   background-color: black;
