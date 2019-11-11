@@ -31,6 +31,10 @@ https://codepen.io/keithclark/pen/zqcEd
 Phaser 3 examples<br>
 https://phaser.io/examples/v3/view/games/defenda/test
 
+4. Loading Bar<br>
+Scott Westover
+https://gamedevacademy.org/creating-a-preloading-screen-in-phaser-3/
+
 # Support
 
 seanhetzel1@gmail.com

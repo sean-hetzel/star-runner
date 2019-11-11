@@ -9,9 +9,6 @@ import jets from "../assets/blue.png";
 import flares from "../assets/yellow.png";
 import face from "../assets/metalface78x92.png";
 import planet from "../assets/city1.png";
-import { delay } from "q";
-import PreLoader from "./PreLoader";
-
 
 const mapWidth = 40000; // 3200
 const mapHeight = 700; // 600
@@ -19,9 +16,8 @@ console.log("map width: ", mapWidth);
 console.log("map height: ", mapHeight);
 
 class Game extends Component {
-
-    componentDidMount(){
-        this.props.hideStars()
+    componentDidMount() {
+        this.props.hideStars();
     }
 
     state = {
@@ -67,6 +63,49 @@ class Game extends Component {
                     console.log("this", this);
                 },
                 preload: function() {
+        
+                    // loading screen start
+                    let width = this.cameras.main.width;
+                    let height = this.cameras.main.height;
+
+                    let progressBar = this.add.graphics();
+                    
+                    let loadingText = this.make.text({
+                        x: width / 2,
+                        y: height / 2 - 100,
+                        text: "Loading...",
+                        style: {
+                            font: "20px Orbitron",
+                            fill: "#ff0000"
+                        }
+                    });
+                    loadingText.setOrigin(0.5, 0.5);
+
+                    let percentText = this.make.text({
+                        x: width / 2,
+                        y: height / 2 - 5,
+                        text: "0%",
+                        style: {
+                            font: "18px Orbitron",
+                            fill: "#ff0000"
+                        }
+                    });
+                    percentText.setOrigin(0.5, 0.5);
+
+                    this.load.on("progress", function(value) {
+                        percentText.setText(parseInt(value * 100) + "%");
+                        progressBar.clear();
+                        progressBar.fillStyle(0xff0000, 1);
+                        progressBar.fillRect((width/2)-250, 280, 500 * value, 30);
+                    });
+
+                    this.load.on("complete", function() {
+                        progressBar.destroy();
+                        loadingText.destroy();
+                        percentText.destroy();
+                    });
+                    // end loading screen
+
                     this.load.image("star", "assets/star2.png");
                     this.textures.addBase64("star", star);
 
@@ -77,12 +116,9 @@ class Game extends Component {
                     this.textures.addBase64("ship", ship);
 
                     this.load.image("planet", "assets/city1.png");
-                    this.textures.addBase64("planet", planet)
+                    this.textures.addBase64("planet", planet);
 
-                    this.load.image(
-                        "bullet",
-                        "assets/bullet6.png"
-                    );
+                    this.load.image("bullet", "assets/bullet6.png");
                     this.textures.addBase64("bullet", bullet);
 
                     this.load.image("jets", "assets/blue.png");
@@ -90,7 +126,6 @@ class Game extends Component {
 
                     this.load.image("flares", "assets/yellow.png");
                     this.textures.addBase64("flares", flares);
-
 
                     var faceImg = new Image();
                     faceImg.onload = () => {
@@ -103,7 +138,7 @@ class Game extends Component {
                 },
 
                 create: function() {
-                    const cityPlanet = this.impact.add.sprite(200,200, planet)
+                    const cityPlanet = this.impact.add.sprite(200, 200, planet);
 
                     let Bullet = new Phaser.Class({
                         Extends: Phaser.GameObjects.Image,
@@ -119,7 +154,6 @@ class Game extends Component {
 
                             this.speed = 0;
                             this.born = 0;
-
                         },
 
                         fire: function(player) {
@@ -277,8 +311,11 @@ class Game extends Component {
 
                             var face = this.impact.add
                                 .sprite(x, y, "face")
-                                .play("metaleyes").setTypeA().setCheckAgainstA().setActiveCollision().setMaxVelocity(300);
-
+                                .play("metaleyes")
+                                .setTypeA()
+                                .setCheckAgainstA()
+                                .setActiveCollision()
+                                .setMaxVelocity(300);
 
                             face.setActiveCollision()
                                 .setBounce(1)
@@ -304,10 +341,9 @@ class Game extends Component {
                         // delay(10000);
                         // player.gameObject.tint = 0x0000ff;
 
-                        this.damage += 1000
+                        this.damage += 1000;
                         // console.log(this.damage)
-                        this.cameras.main.flash(500, '25', '000', '000', true)
-
+                        this.cameras.main.flash(500, "25", "000", "000", true);
                     };
 
                     // this.physics.add.overlap(
@@ -325,7 +361,10 @@ class Game extends Component {
                     createThrustEmitter();
                     createBulletEmitter();
 
-                    this.timer = this.time.addEvent({ delay: 1000000, callbackScope: this });
+                    this.timer = this.time.addEvent({
+                        delay: 1000000,
+                        callbackScope: this
+                    });
 
                     // const endZone = this.game.scene.zone(
                     //     38000,
@@ -339,14 +378,12 @@ class Game extends Component {
                     // }
 
                     // // let endZone = Phaser.GameObjects.zone(38000, 400, 10, 800)
-                    
-                    // endZone.setCollideCallback(crossEndZone, this)
 
+                    // endZone.setCollideCallback(crossEndZone, this)
                 },
 
                 update: function(time, delta) {
                     if (this.gameOver) {
-                        
                         return;
                     }
                     this.thrust.setPosition(this.player.x, this.player.y);
@@ -410,10 +447,20 @@ class Game extends Component {
                         }
                     }, this);
 
+                    function time_convert(num) {
+                        const seconds = Math.floor(num / 1000);
+                        const miliSeconds = num % 1000;
+                        return `${seconds.toLocaleString()}:${miliSeconds}`;
+                    }
                     let timeElapsed = Math.floor(this.timer.getElapsed());
 
                     this.text.setText(
-                        `ACCELERATION, m/s/s >> ${(this.player.vel.x * 50).toLocaleString()}\nTIME ELAPSED >> `  + `${timeElapsed.toLocaleString()}\nDAMAGE >> ` + `${this.damage.toLocaleString()}\nPENALTY >> ` + `${this.score.toLocaleString()}`
+                        `ACCELERATION, m/s/s >> ${(
+                            this.player.vel.x * 50
+                        ).toLocaleString()}\nTIME ELAPSED, SECONDS >> ` +
+                            `${time_convert(timeElapsed)}\nDAMAGE >> ` +
+                            `${this.damage.toLocaleString()}\nPENALTY >> ` +
+                            `${this.score.toLocaleString()}`
                     );
 
                     //  Position the center of the camera on the player
@@ -421,7 +468,6 @@ class Game extends Component {
                     //  we want the center of the camera on the player, not the left-hand side of it
                     this.cameras.main.scrollX = this.player.x - 400;
                     // this.cameras.main.startFollow(this.player, true, 0.02, 0.02);
-
 
                     //  And this camera is 400px wide, so -200
                     // this.minimap.scrollX = Phaser.Math.Clamp(this.player.x - 200, 800, mapWidth);
@@ -439,14 +485,13 @@ class Game extends Component {
 
         return (
             <>
-                    {/* <div id="black_box"></div> */}
+                {/* <div id="black_box"></div> */}
                 <IonPhaser
                     id="phaserGame"
                     game={game}
                     initialize={initialize}
                 />
                 <div id="red_line_button"></div>
-
             </>
         );
     }
