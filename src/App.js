@@ -4,12 +4,12 @@ import {
     Route,
     Switch
 } from "react-router-dom";
+import "./App.css";
+import StarField from "./components/StarField";
 import Navbar from "./components/NavBar";
 import Home from "./components/Home";
 import Game from "./components/Game";
 import Scores from "./components/Scores";
-import "./App.css";
-import StarField from "./components/StarField";
 import NotFound from "./components/NotFound";
 
 const API = "https://agile-atoll-75530.herokuapp.com/api/v1/scores";
@@ -20,7 +20,6 @@ class App extends Component {
         this.state = {
             scores: [],
             loaded: false,
-            hideStars: false
         };
     }
 

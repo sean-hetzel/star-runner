@@ -306,6 +306,8 @@ class Game extends Component {
 
                         this.damage += 1000
                         // console.log(this.damage)
+                        this.cameras.main.flash(500, '25', '000', '000', true)
+
                     };
 
                     // this.physics.add.overlap(
