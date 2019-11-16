@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/star-runner/static/css/main.0cce7095.chunk.css",
-    "main.js": "/star-runner/static/js/main.9f3458ec.chunk.js",
-    "main.js.map": "/star-runner/static/js/main.9f3458ec.chunk.js.map",
+    "main.js": "/star-runner/static/js/main.0ed2b431.chunk.js",
+    "main.js.map": "/star-runner/static/js/main.0ed2b431.chunk.js.map",
     "runtime~main.js": "/star-runner/static/js/runtime~main.84b3aaa1.js",
     "runtime~main.js.map": "/star-runner/static/js/runtime~main.84b3aaa1.js.map",
     "static/js/2.ed38a1da.chunk.js": "/star-runner/static/js/2.ed38a1da.chunk.js",
@@ -20,7 +20,7 @@
     "static/js/8.7f75c138.chunk.js": "/star-runner/static/js/8.7f75c138.chunk.js",
     "static/js/8.7f75c138.chunk.js.map": "/star-runner/static/js/8.7f75c138.chunk.js.map",
     "index.html": "/star-runner/index.html",
-    "precache-manifest.3bd2f5e773929569d7dc38763edb4239.js": "/star-runner/precache-manifest.3bd2f5e773929569d7dc38763edb4239.js",
+    "precache-manifest.17ef5a4d463fce6aa387c1fa02a8b531.js": "/star-runner/precache-manifest.17ef5a4d463fce6aa387c1fa02a8b531.js",
     "service-worker.js": "/star-runner/service-worker.js",
     "static/css/main.0cce7095.chunk.css.map": "/star-runner/static/css/main.0cce7095.chunk.css.map",
     "static/media/App.css": "/star-runner/static/media/Alien-Encounters-Italic.6db268c1.ttf",
