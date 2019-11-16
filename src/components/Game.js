@@ -7,7 +7,7 @@ import ship from "../assets/shmup-ship2.png";
 import bullet from "../assets/bullet6.png";
 import jets from "../assets/blue.png";
 import flares from "../assets/yellow.png";
-import face from "../assets/asteroid.png";
+import asteroid from "../assets/asteroid.png";
 import planet from "../assets/city1.png";
 import spaceStation from "../assets/space-station-sprite-sheet.png";
 
@@ -136,17 +136,17 @@ class Game extends Component {
           this.load.image("flares", "assets/yellow.png");
           this.textures.addBase64("flares", flares);
 
-          this.load.image("face", "assets/asteroid.png");
-          this.textures.addBase64("face", face);
+          this.load.image("asteroid", "assets/asteroid.png");
+          this.textures.addBase64("asteroid", asteroid);
 
           // const faceImg = new Image();
           // faceImg.onload = () => {
-          //   this.textures.addSpriteSheet("face", faceImg, {
+          //   this.textures.addSpriteSheet("asteroid", faceImg, {
           //     frameWidth: 78,
           //     frameHeight: 92
           //   });
           // };
-          // faceImg.src = face;
+          // faceImg.src = asteroid;
 
           // this.load.image("spaceStation", "assets/space-station-sprite-sheet.png")
           // this.textures.addBase64("spaceStation", spaceStation)
@@ -235,7 +235,7 @@ class Game extends Component {
           this.bullets = this.add.group({
             classType: Bullet,
             runChildUpdate: true
-          })
+          });
 
           // this.startZone = this.impact.add.sprite(1250, 350, "spaceStation").setDepth(1);
           // this.add.image(0,0, "spaceStation")
@@ -251,16 +251,18 @@ class Game extends Component {
           };
 
           this.anims.create(config);
+
           this.spaceStation = this.impact.add
-            .sprite(1250, 350, "spaceStation")
-            .setDepth(1)
+            .sprite(1686, 350, "spaceStation")
+            // .play("lights")
+            .setDepth(1);
 
           // var spaceStation = this.add.sprite(1250, 350, "spaceStation");
           // this.spaceStation.anims.play("lights");
 
           // var config = {
           //   key: "metaleyes",
-          //   frames: this.anims.generateFrameNumbers("face", {
+          //   frames: this.anims.generateFrameNumbers("asteroid", {
           //     start: 0,
           //     end: 4
           //   }),
@@ -289,28 +291,34 @@ class Game extends Component {
             .setScrollFactor(0);
 
           const createBulletEmitter = () => {
-            this.flares = this.add.particles("flares").setDepth(2).createEmitter({
-              x: 100,
-              y: 350,
-              angle: { min: 170, max: 190 },
-              scale: { start: 0.4, end: 0.2 },
-              blendMode: "ADD",
-              lifespan: 500,
-              on: false
-            });
+            this.flares = this.add
+              .particles("flares")
+              .setDepth(2)
+              .createEmitter({
+                x: 100,
+                y: 350,
+                angle: { min: 170, max: 190 },
+                scale: { start: 0.4, end: 0.2 },
+                blendMode: "ADD",
+                lifespan: 500,
+                on: false
+              });
           };
           // this.flares.setDepth(2)
 
           const createThrustEmitter = () => {
-            this.thrust = this.add.particles("jets").setDepth(2).createEmitter({
-              x: 100,
-              y: 350,
-              angle: { min: 160, max: 200 },
-              scale: { start: 0.2, end: 0 },
-              blendMode: "ADD",
-              lifespan: 600,
-              on: false
-            });
+            this.thrust = this.add
+              .particles("jets")
+              .setDepth(2)
+              .createEmitter({
+                x: 100,
+                y: 350,
+                angle: { min: 160, max: 200 },
+                scale: { start: 0.2, end: 0 },
+                blendMode: "ADD",
+                lifespan: 600,
+                on: false
+              });
           };
           const createStarfield = () => {
             //  Starfield background
@@ -349,7 +357,7 @@ class Game extends Component {
 
             var config = {
               key: "metaleyes",
-              frames: this.anims.generateFrameNumbers("face", {
+              frames: this.anims.generateFrameNumbers("asteroid", {
                 start: 0,
                 end: 4
               }),
@@ -359,42 +367,43 @@ class Game extends Component {
 
             this.anims.create(config);
 
-            for (var i = 0; i < mapWidth / 500; i++) {
+            for (var i = 0; i < mapWidth / 300; i++) {
               var x = Phaser.Math.Between(4000, mapWidth);
               var y = Phaser.Math.Between(100, 300);
-              let a = Phaser.Math.Between(0, 360)
+              let angle = Phaser.Math.Between(0, 360);
+              let size = Phaser.Math.Between(1, 3);
 
-              var face = this.impact.add
-                .sprite(x, y, "face")
+              var asteroid = this.impact.add
+                .sprite(x, y, "asteroid")
                 // .play("metaleyes")
                 .setTypeA()
                 .setCheckAgainstA()
                 .setActiveCollision()
                 .setMaxVelocity(300);
 
-              face
+              asteroid
                 .setActiveCollision()
                 .setBounce(1)
-                .setBodyScale(0.5);
-              face.setVelocity(
+                .setBodyScale(size * 0.25);
+              asteroid.setVelocity(
                 Phaser.Math.Between(20, 60),
                 Phaser.Math.Between(20, 60)
               );
 
-              face.angle = a
+              asteroid.angle = angle;
 
               if (Math.random() > 0.5) {
-                face.vel.x *= -1;
+                asteroid.vel.x *= -1;
               } else {
-                face.vel.y *= -1;
+                asteroid.vel.y *= -1;
               }
             }
           };
 
           // this.player.setTypeA().setCheckAgainstB().setActiveCollision().setMaxVelocity(300);
-          // this.face.setTypeB().setCheckAgainstA().setFixedCollision();
+          // this.asteroid.setTypeB().setCheckAgainstA().setFixedCollision();
 
-          const hitAstroid = (player, face, axis) => {
+          const hitAstroid = (player, asteroid, axis) => {
             // player.gameObject.tint = 0xff0000;
             // delay(10000);
             // player.gameObject.tint = 0x0000ff;
@@ -406,7 +415,7 @@ class Game extends Component {
 
           // this.physics.add.overlap(
           //     this.player,
-          //     face,
+          //     asteroid,
           //     hitAstroid,
           //     null,
           //     this
@@ -482,7 +491,7 @@ class Game extends Component {
             var bullet = this.bullets.get();
             bullet.setActive(true);
             bullet.setVisible(true);
-            bullet.setDepth(1)
+            bullet.setDepth(1);
 
             if (bullet) {
               bullet.fire(this.player);
