@@ -3,7 +3,7 @@ import Phaser from "phaser";
 import { IonPhaser } from "@ion-phaser/react";
 import star from "../assets/star-1.png";
 import redGiant from "../assets/star-2.png";
-import ship from "../assets/shmup-ship2.png";
+import ship from "../assets/spaceship-4a.png";
 import bullet from "../assets/bullet6.png";
 import jets from "../assets/blue.png";
 import flares from "../assets/yellow.png";
@@ -196,7 +196,7 @@ class Game extends Component {
             },
 
             fire: function(player) {
-              this.setPosition(player.x, player.y);
+              this.setPosition(player.x + 100, player.y); // 100 cuz account for ship length
 
               if (player.flipX) {
                 //  Facing left
@@ -274,7 +274,10 @@ class Game extends Component {
           // this.add.image(0,0, "spaceStation")
           //  Add a player ship
 
-          this.player = this.impact.add.sprite(100, 350, "ship").setDepth(3);
+          this.player = this.impact.add
+            .sprite(200, 350, "ship")
+            .setBodyScale(0.6) 
+            .setDepth(3);
           this.player
             .setMaxVelocity(1000)
             .setFriction(400, 300)
@@ -295,12 +298,12 @@ class Game extends Component {
               .particles("flares")
               .setDepth(2)
               .createEmitter({
-                x: 100,
+                x: 200,
                 y: 350,
                 angle: { min: 170, max: 190 },
                 scale: { start: 0.4, end: 0.2 },
                 blendMode: "ADD",
-                lifespan: 500,
+                lifespan: 20,
                 on: false
               });
           };
@@ -311,7 +314,7 @@ class Game extends Component {
               .particles("jets")
               .setDepth(2)
               .createEmitter({
-                x: 100,
+                x: 200,
                 y: 350,
                 angle: { min: 160, max: 200 },
                 scale: { start: 0.2, end: 0 },
@@ -367,11 +370,11 @@ class Game extends Component {
 
             this.anims.create(config);
 
-            for (var i = 0; i < mapWidth / 300; i++) {
+            for (var i = 0; i < mapWidth / 400; i++) {
               var x = Phaser.Math.Between(4000, mapWidth);
               var y = Phaser.Math.Between(100, 300);
               let angle = Phaser.Math.Between(0, 360);
-              let size = Phaser.Math.Between(1, 3);
+              let size = Phaser.Math.Between(1, 2);
 
               var asteroid = this.impact.add
                 .sprite(x, y, "asteroid")
@@ -452,9 +455,10 @@ class Game extends Component {
           if (this.gameOver) {
             return;
           }
-          this.thrust.setPosition(this.player.x, this.player.y);
+          this.thrust.setPosition(this.player.x - 80, this.player.y); // 80 cuz account for ship length
 
           if (this.cursors.left.isDown) {
+            this.thrust.setPosition(this.player.x + 80, this.player.y);
             this.player.setAccelerationX(-1200);
             this.player.flipX = true;
           } else if (this.cursors.right.isDown) {
