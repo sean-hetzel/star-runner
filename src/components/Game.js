@@ -160,6 +160,15 @@ class Game extends Component {
           };
           spaceStationImg.src = spaceStation;
 
+          // this.load.spritesheet(
+          //   'spaceStation',
+          //   '../assets/space-station-sprite-sheet.png',
+          //   {
+          //     frameWidth:3372,
+          //     frameHeight:700
+          //   }
+          // );
+
           // this.load.spritesheet("spaceStation", "assets/space-station-sprite-sheet.png", {
           //   frameWidth: 3372,
           //   frameHeight: 700,
@@ -254,7 +263,7 @@ class Game extends Component {
 
           this.spaceStation = this.impact.add
             .sprite(1686, 350, "spaceStation")
-            // .play("lights")
+            .play("lights")
             .setDepth(1);
 
           // var spaceStation = this.add.sprite(1250, 350, "spaceStation");
@@ -557,10 +566,10 @@ class Game extends Component {
         {/* <div id="black_box"></div> */}
         <IonPhaser id="phaserGame" game={game} initialize={initialize} />
         <div id="red_line_button"></div>
+        <div className="stripe-1"></div>
+        <div id="red_line_button"></div>
       </>
     );
   }
 }
 export default Game;
-
-// https://www.pinterest.com/pin/249809110567742369/

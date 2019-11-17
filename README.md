@@ -35,6 +35,10 @@ https://phaser.io/examples/v3/view/games/defenda/test
 Scott Westover
 https://gamedevacademy.org/creating-a-preloading-screen-in-phaser-3/
 
+5. Red Stripes<br>
+Chris Coyier
+https://codepen.io/chriscoyier/pen/dDhHe
+
 # Support
 
 seanhetzel1@gmail.com

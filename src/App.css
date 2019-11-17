@@ -389,3 +389,14 @@ html {
     font-size: 40pt;
 }
 
+.stripe-1 {
+    color: white;
+    background: repeating-linear-gradient(
+      -55deg,
+      red,
+      red 80px,
+      black 80px,
+      black 160px
+    );
+    height: 50px;
+  }
