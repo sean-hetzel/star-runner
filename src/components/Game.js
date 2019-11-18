@@ -151,23 +151,23 @@ class Game extends Component {
           // this.load.image("spaceStation", "assets/space-station-sprite-sheet.png")
           // this.textures.addBase64("spaceStation", spaceStation)
 
-          const spaceStationImg = new Image();
-          spaceStationImg.onload = () => {
-            this.textures.addSpriteSheet("spaceStation", spaceStationImg, {
-              frameWidth: 3372,
-              frameHeight: 700
-            });
-          };
-          spaceStationImg.src = spaceStation;
+          // const spaceStationImg = new Image();
+          // spaceStationImg.onload = () => {
+          //   this.textures.addSpriteSheet("spaceStation", spaceStationImg, {
+          //     frameWidth: 3372,
+          //     frameHeight: 700
+          //   });
+          // };
+          // spaceStationImg.src = spaceStation;
 
-          // this.load.spritesheet(
-          //   'spaceStation',
-          //   '../assets/space-station-sprite-sheet.png',
-          //   {
-          //     frameWidth:3372,
-          //     frameHeight:700
-          //   }
-          // );
+          this.load.spritesheet(
+            'spaceStation',
+            spaceStation,
+            {
+              frameWidth:3372,
+              frameHeight:700
+            }
+          );
 
           // this.load.spritesheet("spaceStation", "assets/space-station-sprite-sheet.png", {
           //   frameWidth: 3372,
@@ -263,7 +263,7 @@ class Game extends Component {
 
           this.spaceStation = this.impact.add
             .sprite(1686, 350, "spaceStation")
-            .play("lights")
+            // .play("lights")
             .setDepth(1);
 
           // var spaceStation = this.add.sprite(1250, 350, "spaceStation");
