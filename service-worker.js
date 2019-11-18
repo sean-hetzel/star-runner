@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/star-runner/precache-manifest.cc2c2bb41f860eca42c7abe063d04ef1.js"
+  "/star-runner/precache-manifest.74b53dbba530c86a483e0de7297b08af.js"
 );
 
 self.addEventListener('message', (event) => {
