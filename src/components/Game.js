@@ -8,8 +8,10 @@ import bullet from "../assets/bullet6.png";
 import jets from "../assets/blue.png";
 import flares from "../assets/yellow.png";
 import asteroid from "../assets/asteroid.png";
-import planet from "../assets/city1.png";
 import spaceStation from "../assets/space-station-sprite-sheet.png";
+import crash from "../assets/crash.wav";
+import machineGun from "../assets/machineGun.wav";
+import rocket from "../assets/rocket.wav";
 
 const mapWidth = 40000; // 3200
 const mapHeight = 700; // 600
@@ -28,12 +30,6 @@ class Game extends Component {
       type: Phaser.AUTO,
       width: "100%",
       height: mapHeight,
-      // scale: {
-      //     parent: 'yourgamediv',
-      //     mode: Phaser.Scale.FIT,
-      //     width: "100%",
-      //     height: window.innerHeight
-      // },
       physics: {
         default: "impact",
         impact: {
@@ -112,20 +108,14 @@ class Game extends Component {
           });
           // end loading screen
 
-          this.load.image("star", "assets/star2.png");
+          this.load.image("star", "assets/star-1.png");
           this.textures.addBase64("star", star);
 
-          this.load.image("redGiant", "assets/star3.png");
+          this.load.image("redGiant", "assets/star-2.png");
           this.textures.addBase64("redGiant", redGiant);
 
-          this.load.image("ship", "assets/shmup-ship2.png");
+          this.load.image("ship", "assets/ship.png");
           this.textures.addBase64("ship", ship);
-
-          // this.load.image("spaceStation", "assets/space-station-1.png");
-          // this.textures.addBase64("spaceStation", spaceStation);
-
-          this.load.image("planet", "assets/city1.png");
-          this.textures.addBase64("planet", planet);
 
           this.load.image("bullet", "assets/bullet6.png");
           this.textures.addBase64("bullet", bullet);
@@ -139,61 +129,15 @@ class Game extends Component {
           this.load.image("asteroid", "assets/asteroid.png");
           this.textures.addBase64("asteroid", asteroid);
 
-          // const faceImg = new Image();
-          // faceImg.onload = () => {
-          //   this.textures.addSpriteSheet("asteroid", faceImg, {
-          //     frameWidth: 78,
-          //     frameHeight: 92
-          //   });
-          // };
-          // faceImg.src = asteroid;
+          this.load.spritesheet("spaceStation", spaceStation, {
+            frameWidth: 3372,
+            frameHeight: 700
+          });
 
-          // this.load.image("spaceStation", "assets/space-station-sprite-sheet.png")
-          // this.textures.addBase64("spaceStation", spaceStation)
-
-          // const spaceStationImg = new Image();
-          // spaceStationImg.onload = () => {
-          //   this.textures.addSpriteSheet("spaceStation", spaceStationImg, {
-          //     frameWidth: 3372,
-          //     frameHeight: 700
-          //   });
-          // };
-          // spaceStationImg.src = spaceStation;
-
-          this.load.spritesheet(
-            'spaceStation',
-            spaceStation,
-            {
-              frameWidth:3372,
-              frameHeight:700
-            }
-          );
-
-          // this.load.spritesheet("spaceStation", "assets/space-station-sprite-sheet.png", {
-          //   frameWidth: 3372,
-          //   frameHeight: 700,
-          //   endFrame: 6
-          // });
-
-          // this.load.spritesheet("spaceStation", "assets/space-station-sprite-sheet.png", {
-          //   frameWidth: 3372,
-          //   frameHeight: 700,
-          //   endFrame: 6
-          // });
-
-          // let startZone = new Image();
-          // startZone.onload = () => {
-          //   this.textures.addSpriteSheet("spaceStation", startZone, {
-          //     frameWidth: 3372,
-          //     frameHeight: 700
-          //   });
-          // };
-          // startZone.src = spaceStation;
+          // this.load.audio("rocket", "assets/rocket.wav")
         },
 
         create: function() {
-          // const cityPlanet = this.impact.add.sprite(200, 200, planet);
-
           let Bullet = new Phaser.Class({
             Extends: Phaser.GameObjects.Image,
 
@@ -263,7 +207,12 @@ class Game extends Component {
 
           this.spaceStation = this.impact.add
             .sprite(1686, 350, "spaceStation")
-            // .play("lights")
+            .play("lights")
+            .setDepth(1);
+
+          this.finishLine = this.impact.add
+            .sprite(mapWidth - 1686, 350, "spaceStation")
+            .play("lights")
             .setDepth(1);
 
           // var spaceStation = this.add.sprite(1250, 350, "spaceStation");
@@ -285,7 +234,7 @@ class Game extends Component {
 
           this.player = this.impact.add
             .sprite(200, 350, "ship")
-            .setBodyScale(0.6) 
+            .setBodyScale(0.6)
             .setDepth(3);
           this.player
             .setMaxVelocity(1000)
@@ -296,6 +245,14 @@ class Game extends Component {
 
           this.text = this.add
             .text(10, 10, "", {
+              font: "20px Orbitron",
+              fill: "#ff0000"
+            })
+            .setDepth(3)
+            .setScrollFactor(0);
+
+          this.levelComplete = this.add
+            .text(this.cameras.main.width / 2 - 100, 350 - 100, "", {
               font: "20px Orbitron",
               fill: "#ff0000"
             })
@@ -419,10 +376,10 @@ class Game extends Component {
             // player.gameObject.tint = 0xff0000;
             // delay(10000);
             // player.gameObject.tint = 0x0000ff;
-
-            this.damage += 1000;
-            // console.log(this.damage)
-            this.cameras.main.flash(500, "25", "000", "000", true);
+            if (this.gameOver === false) {
+              this.damage += 1000;
+              this.cameras.main.flash(500, "25", "000", "000", true);
+            }
           };
 
           // this.physics.add.overlap(
@@ -458,11 +415,44 @@ class Game extends Component {
           // // let endZone = Phaser.GameObjects.zone(38000, 400, 10, 800)
 
           // endZone.setCollideCallback(crossEndZone, this)
+
+          // this.sound.add("rocket")
         },
 
         update: function(time, delta) {
           if (this.gameOver) {
             return;
+          }
+          function time_convert(num) {
+            const seconds = Math.floor(num / 1000);
+            const miliSeconds = num % 1000;
+            return `${seconds.toLocaleString()}:${miliSeconds
+              .toLocaleString()
+              .substr(0, 2)}`;
+          }
+          let timeElapsed = Math.floor(this.timer.getElapsed());
+
+          this.text.setText(
+            `ACCELERATION, m/s/s >> ${(
+              this.player.vel.x * 50
+            ).toLocaleString()}\nTIME ELAPSED, SECONDS >> ` +
+              `${time_convert(timeElapsed)}\nDAMAGE >> ` +
+              `${this.damage.toLocaleString()}\nPENALTY >> ` +
+              `${this.penalty.toLocaleString()}\n` +
+              `${this.player.x}`
+          );
+          if (this.player.x > mapWidth - 2000) {
+            this.gameOver = true;
+            this.levelComplete.setText(
+              `> Mission Acomplished <\n\n1,000,000\n- TIME >> ` +
+                `${time_convert(timeElapsed)}\n- DAMAGE >> ` +
+                `${this.damage.toLocaleString()}\n- PENALTY >> ` +
+                `${this.penalty.toLocaleString()}\n` +
+                `------------------------\n` +
+                `Score >> ${(1000000 - this.penalty).toLocaleString()}\n` +
+                `\nEnter Your Name: __________` +
+                `Submit`
+            );
           }
           this.thrust.setPosition(this.player.x - 80, this.player.y); // 80 cuz account for ship length
 
@@ -471,6 +461,7 @@ class Game extends Component {
             this.player.setAccelerationX(-1200);
             this.player.flipX = true;
           } else if (this.cursors.right.isDown) {
+            // this.sound.play("rocket")
             this.player.setAccelerationX(1200);
             this.player.flipX = false;
           } else {
@@ -522,24 +513,6 @@ class Game extends Component {
               this.flares.emitParticle(1);
             }
           }, this);
-
-          function time_convert(num) {
-            const seconds = Math.floor(num / 1000);
-            const miliSeconds = num % 1000;
-            return `${seconds.toLocaleString()}:${miliSeconds
-              .toLocaleString()
-              .substr(0, 2)}`;
-          }
-          let timeElapsed = Math.floor(this.timer.getElapsed());
-
-          this.text.setText(
-            `ACCELERATION, m/s/s >> ${(
-              this.player.vel.x * 50
-            ).toLocaleString()}\nTIME ELAPSED, SECONDS >> ` +
-              `${time_convert(timeElapsed)}\nDAMAGE >> ` +
-              `${this.damage.toLocaleString()}\nPENALTY >> ` +
-              `${this.penalty.toLocaleString()}`
-          );
 
           //  Position the center of the camera on the player
           //  We -400 because the camera width is 800px and
