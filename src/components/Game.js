@@ -9,6 +9,9 @@ import jets from "../assets/blue.png";
 import flares from "../assets/yellow.png";
 import asteroid from "../assets/asteroid.png";
 import spaceStation from "../assets/space-station-sprite-sheet.png";
+import mars from "../assets/mars.png";
+import saturn from "../assets/saturn.png"
+import arcadia from "../assets/arcadia-234.png";
 import crash from "../assets/crash.wav";
 import gun from "../assets/gun.wav";
 import rocket from "../assets/rocket.wav";
@@ -134,6 +137,15 @@ class Game extends Component {
             frameHeight: 700
           });
 
+          this.load.image("mars", "assets/mars.png");
+          this.textures.addBase64("mars", mars);
+
+          this.load.image("saturn", "assets/saturn.png");
+          this.textures.addBase64("saturn", saturn);
+
+          this.load.image("arcadia", "assets/arcadia-234.png");
+          this.textures.addBase64("arcadia", arcadia);
+
           this.load.audio("rocket", rocket);
           this.load.audio("gun", gun);
           this.load.audio("crash", crash);
@@ -179,6 +191,18 @@ class Game extends Component {
 
           this.cameras.main.setBounds(0, 0, mapWidth, mapHeight);
 
+          this.cursors = this.input.keyboard.createCursorKeys();
+
+          this.player = this.impact.add
+            .sprite(200, 350, "ship")
+            .setBodyScale(0.6)
+            .setDepth(4);
+
+          this.player
+            .setMaxVelocity(1000)
+            .setFriction(400, 300)
+            .setPassiveCollision();
+
           this.bullets = this.add.group({
             classType: Bullet,
             runChildUpdate: true
@@ -196,27 +220,30 @@ class Game extends Component {
 
           this.anims.create(config);
 
-          this.cursors = this.input.keyboard.createCursorKeys();
-
           this.spaceStation = this.impact.add
             .sprite(1686, 350, "spaceStation")
             .play("lights")
-            .setDepth(1);
+            .setDepth(2);
 
           this.finishLine = this.impact.add
             .sprite(mapWidth - 1686, 350, "spaceStation")
             .play("lights")
-            .setDepth(1);
+            .setDepth(2);
 
-          this.player = this.impact.add
-            .sprite(200, 350, "ship")
-            .setBodyScale(0.6)
-            .setDepth(3);
+            this.mars = this.impact.add
+            .sprite(1500, 200, "mars")
+            .setDepth(1)
+            .setScrollFactor(0.25).angle = 180;
 
-          this.player
-            .setMaxVelocity(1000)
-            .setFriction(400, 300)
-            .setPassiveCollision();
+            this.saturn = this.impact.add
+            .sprite(6000, 600, "saturn").setScale(.1)
+            .setDepth(1)
+            .setScrollFactor(0.25).angle = 350;
+
+          this.arcadia = this.impact.add
+            .sprite(10000, 800, "arcadia").setScale(1)
+            .setDepth(1)
+            .setScrollFactor(0.25).angle = 0;
 
           const textConfig = {
             font: "20px Orbitron",
@@ -225,27 +252,27 @@ class Game extends Component {
 
           this.timeText = this.add
             .text(20, 10, "", textConfig)
-            .setDepth(3)
+            .setDepth(5)
             .setScrollFactor(0);
 
           this.accelerationText = this.add
             .text(this.cameras.main.width - 350, 10, "", textConfig)
-            .setDepth(3)
+            .setDepth(5)
             .setScrollFactor(0);
 
           this.damageText = this.add
             .text(20, 660, "", textConfig)
-            .setDepth(3)
+            .setDepth(5)
             .setScrollFactor(0);
 
           this.penaltyText = this.add
             .text(this.cameras.main.width - 350, 660, "", textConfig)
-            .setDepth(3)
+            .setDepth(5)
             .setScrollFactor(0);
 
           this.levelComplete = this.add
             .text(this.cameras.main.width / 2 - 100, 250, "", textConfig)
-            .setDepth(3)
+            .setDepth(5)
             .setScrollFactor(0);
 
           const createHud = (x1, y1, x2, y2) => {
@@ -256,24 +283,43 @@ class Game extends Component {
             });
             graphics
               .strokeLineShape(line)
-              .setDepth(3)
+              .setDepth(5)
               .setScrollFactor(0);
           };
 
           createHud(0, 50, 350, 50);
-          createHud(this.cameras.main.width - 350, 50, this.cameras.main.width, 50);
+          createHud(
+            this.cameras.main.width - 350,
+            50,
+            this.cameras.main.width,
+            50
+          );
           createHud(0, 645, 350, 645);
-          createHud(this.cameras.main.width - 350, 645, this.cameras.main.width, 645);
+          createHud(
+            this.cameras.main.width - 350,
+            645,
+            this.cameras.main.width,
+            645
+          );
           createHud(350, 50, 400, 0);
-          createHud(this.cameras.main.width - 400, 0, this.cameras.main.width - 350, 50);
+          createHud(
+            this.cameras.main.width - 400,
+            0,
+            this.cameras.main.width - 350,
+            50
+          );
           createHud(350, 645, 400, 705);
-          createHud(this.cameras.main.width - 400, 705, this.cameras.main.width - 350, 645);
-
+          createHud(
+            this.cameras.main.width - 400,
+            705,
+            this.cameras.main.width - 350,
+            645
+          );
 
           const createBulletEmitter = () => {
             this.flares = this.add
               .particles("flares")
-              .setDepth(2)
+              .setDepth(3)
               .createEmitter({
                 x: 200,
                 y: 350,
@@ -288,7 +334,7 @@ class Game extends Component {
           const createThrustEmitter = () => {
             this.thrust = this.add
               .particles("jets")
-              .setDepth(2)
+              .setDepth(3)
               .createEmitter({
                 x: 200,
                 y: 350,
@@ -342,6 +388,7 @@ class Game extends Component {
               asteroid
                 .setActiveCollision()
                 .setBounce(1)
+                .setDepth(3)
                 .setBodyScale(size * 0.25);
               asteroid.setVelocity(
                 Phaser.Math.Between(20, 60),
@@ -473,7 +520,7 @@ class Game extends Component {
             let bullet = this.bullets.get();
             bullet.setActive(true);
             bullet.setVisible(true);
-            bullet.setDepth(1);
+            bullet.setDepth(3);
 
             if (bullet) {
               this.gunSound.play();
