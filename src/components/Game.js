@@ -140,13 +140,6 @@ class Game extends Component {
         },
 
         create: function() {
-          let line = new Phaser.Geom.Line(0, 50, 200, 50);
-
-          let graphics = this.add.graphics({
-            lineStyle: { width: 4, color: 0xff0000 }
-          });
-          graphics.strokeLineShape(line).setDepth(4);
-
           let Bullet = new Phaser.Class({
             Extends: Phaser.GameObjects.Image,
 
@@ -158,7 +151,8 @@ class Game extends Component {
             },
 
             fire: function(player) {
-              this.setPosition(player.x + 100, player.y); // 100 cuz account for ship length
+              // 100 cuz account for ship length
+              this.setPosition(player.x + 100, player.y);
 
               if (player.flipX) {
                 //  Facing left
@@ -224,45 +218,57 @@ class Game extends Component {
             .setFriction(400, 300)
             .setPassiveCollision();
 
+          const textConfig = {
+            font: "20px Orbitron",
+            fill: "#ff0000"
+          };
+
           this.timeText = this.add
-            .text(20, 10, "", {
-              font: "20px Orbitron",
-              fill: "#ff0000"
-            })
+            .text(20, 10, "", textConfig)
             .setDepth(3)
             .setScrollFactor(0);
 
           this.accelerationText = this.add
-            .text(this.cameras.main.width - 350, 10, "", {
-              font: "20px Orbitron",
-              fill: "#ff0000"
-            })
+            .text(this.cameras.main.width - 350, 10, "", textConfig)
             .setDepth(3)
             .setScrollFactor(0);
 
           this.damageText = this.add
-            .text(20, 660, "", {
-              font: "20px Orbitron",
-              fill: "#ff0000"
-            })
+            .text(20, 660, "", textConfig)
             .setDepth(3)
             .setScrollFactor(0);
 
           this.penaltyText = this.add
-            .text(this.cameras.main.width - 350, 660, "", {
-              font: "20px Orbitron",
-              fill: "#ff0000"
-            })
+            .text(this.cameras.main.width - 350, 660, "", textConfig)
             .setDepth(3)
             .setScrollFactor(0);
 
           this.levelComplete = this.add
-            .text(this.cameras.main.width / 2 - 100, 250, "", {
-              font: "20px Orbitron",
-              fill: "#ff0000"
-            })
+            .text(this.cameras.main.width / 2 - 100, 250, "", textConfig)
             .setDepth(3)
             .setScrollFactor(0);
+
+          const createHud = (x1, y1, x2, y2) => {
+            let line = new Phaser.Geom.Line(x1, y1, x2, y2);
+
+            let graphics = this.add.graphics({
+              lineStyle: { width: 4, color: 0xff0000 }
+            });
+            graphics
+              .strokeLineShape(line)
+              .setDepth(3)
+              .setScrollFactor(0);
+          };
+
+          createHud(0, 50, 350, 50);
+          createHud(this.cameras.main.width - 350, 50, this.cameras.main.width, 50);
+          createHud(0, 645, 350, 645);
+          createHud(this.cameras.main.width - 350, 645, this.cameras.main.width, 645);
+          createHud(350, 50, 400, 0);
+          createHud(this.cameras.main.width - 400, 0, this.cameras.main.width - 350, 50);
+          createHud(350, 645, 400, 705);
+          createHud(this.cameras.main.width - 400, 705, this.cameras.main.width - 350, 645);
+
 
           const createBulletEmitter = () => {
             this.flares = this.add
