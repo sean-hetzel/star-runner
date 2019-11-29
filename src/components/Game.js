@@ -585,8 +585,6 @@ class Game extends Component {
       <>
         <IonPhaser id="phaserGame" game={game} initialize={initialize} />
         <div id="red_line_button"></div>
-        <div className="stripe-1"></div>
-        <div id="red_line_button"></div>
       </>
     );
   }
