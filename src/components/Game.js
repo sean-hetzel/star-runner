@@ -10,7 +10,7 @@ import flares from "../assets/yellow.png";
 import asteroid from "../assets/asteroid.png";
 import spaceStation from "../assets/space-station-sprite-sheet.png";
 import mars from "../assets/mars.png";
-import saturn from "../assets/saturn.png"
+import saturn from "../assets/saturn.png";
 import arcadia from "../assets/arcadia-234.png";
 import crash from "../assets/crash.wav";
 import gun from "../assets/gun.wav";
@@ -230,18 +230,20 @@ class Game extends Component {
             .play("lights")
             .setDepth(2);
 
-            this.mars = this.impact.add
+          this.mars = this.impact.add
             .sprite(1500, 200, "mars")
             .setDepth(1)
             .setScrollFactor(0.25).angle = 180;
 
-            this.saturn = this.impact.add
-            .sprite(6000, 600, "saturn").setScale(.1)
+          this.saturn = this.impact.add
+            .sprite(6000, 600, "saturn")
+            .setScale(0.1)
             .setDepth(1)
             .setScrollFactor(0.25).angle = 350;
 
           this.arcadia = this.impact.add
-            .sprite(10000, 800, "arcadia").setScale(1)
+            .sprite(10000, 800, "arcadia")
+            .setScale(1)
             .setDepth(1)
             .setScrollFactor(0.25).angle = 0;
 
@@ -270,6 +272,11 @@ class Game extends Component {
             .setDepth(5)
             .setScrollFactor(0);
 
+          this.distanceText = this.add
+            .text(this.cameras.main.width / 2 - 50, 660, "DISTANCE", textConfig)
+            .setDepth(5)
+            .setScrollFactor(0);
+
           this.levelComplete = this.add
             .text(this.cameras.main.width / 2 - 100, 250, "", textConfig)
             .setDepth(5)
@@ -286,6 +293,25 @@ class Game extends Component {
               .setDepth(5)
               .setScrollFactor(0);
           };
+
+          let graphics = this.add.graphics({
+            lineStyle: { width: 2, color: 0x00ff00 },
+            fillStyle: { color: 0xff0000 }
+          });
+
+          let triangle = new Phaser.Geom.Triangle(
+            this.cameras.main.width / 2 - 210,
+            620,
+            this.cameras.main.width / 2 - 200,
+            635,
+            this.cameras.main.width / 2 - 190,
+            620
+          );
+
+          graphics
+            .fillTriangleShape(triangle)
+            .setDepth(5)
+            .setScrollFactor(-.0105); // super janky way to display distance on HUD
 
           createHud(0, 50, 350, 50);
           createHud(
@@ -313,6 +339,12 @@ class Game extends Component {
             this.cameras.main.width - 400,
             705,
             this.cameras.main.width - 350,
+            645
+          );
+          createHud(
+            this.cameras.main.width / 2 - 200,
+            645,
+            this.cameras.main.width / 2 + 200,
             645
           );
 
