@@ -10,7 +10,7 @@ import flares from "../assets/yellow.png";
 import asteroid from "../assets/asteroid.png";
 import spaceStation from "../assets/space-station-sprite-sheet.png";
 import crash from "../assets/crash.wav";
-import machineGun from "../assets/machineGun.wav";
+import gun from "../assets/gun.wav";
 import rocket from "../assets/rocket.wav";
 
 const mapWidth = 40000; // 3200
@@ -70,6 +70,8 @@ class Game extends Component {
           let width = this.cameras.main.width;
           let height = this.cameras.main.height;
 
+          const line = this.add.graphics({ lineStyle: { width: 4, color: 0xaa00aa } });
+          
           let progressBar = this.add.graphics();
 
           let loadingText = this.make.text({
@@ -134,7 +136,9 @@ class Game extends Component {
             frameHeight: 700
           });
 
-          // this.load.audio("rocket", "assets/rocket.wav")
+          this.load.audio("rocket", rocket);
+          this.load.audio("gun", gun);
+          this.load.audio("crash", crash);
         },
 
         create: function() {
@@ -190,8 +194,8 @@ class Game extends Component {
             runChildUpdate: true
           });
 
-          // this.startZone = this.impact.add.sprite(1250, 350, "spaceStation").setDepth(1);
-          // this.add.image(0,0, "spaceStation")
+          // this.startZone = this.impact.add.sprite(1250, 350, 'spaceStation').setDepth(1);
+          // this.add.image(0,0, 'spaceStation')
 
           const config = {
             key: "lights",
@@ -215,12 +219,12 @@ class Game extends Component {
             .play("lights")
             .setDepth(1);
 
-          // var spaceStation = this.add.sprite(1250, 350, "spaceStation");
-          // this.spaceStation.anims.play("lights");
+          // var spaceStation = this.add.sprite(1250, 350, 'spaceStation');
+          // this.spaceStation.anims.play('lights');
 
           // var config = {
-          //   key: "metaleyes",
-          //   frames: this.anims.generateFrameNumbers("asteroid", {
+          //   key: 'metaleyes',
+          //   frames: this.anims.generateFrameNumbers('asteroid', {
           //     start: 0,
           //     end: 4
           //   }),
@@ -228,8 +232,8 @@ class Game extends Component {
           //   repeat: -1
           // };
 
-          // this.temp = this.impact.add.sprite(100, 350, "spaceStation").setDepth(1)
-          // this.add.image(0,0, "spaceStation")
+          // this.temp = this.impact.add.sprite(100, 350, 'spaceStation').setDepth(1)
+          // this.add.image(0,0, 'spaceStation')
           //  Add a player ship
 
           this.player = this.impact.add
@@ -243,8 +247,32 @@ class Game extends Component {
 
           this.cursors = this.input.keyboard.createCursorKeys();
 
-          this.text = this.add
-            .text(10, 10, "", {
+          this.timeText = this.add
+            .text(20, 10, "", {
+              font: "20px Orbitron",
+              fill: "#ff0000"
+            })
+            .setDepth(3)
+            .setScrollFactor(0);
+
+          this.accelerationText = this.add
+            .text(this.cameras.main.width - 350, 10, "", {
+              font: "20px Orbitron",
+              fill: "#ff0000"
+            })
+            .setDepth(3)
+            .setScrollFactor(0);
+
+          this.damageText = this.add
+            .text(20, 660, "", {
+              font: "20px Orbitron",
+              fill: "#ff0000"
+            })
+            .setDepth(3)
+            .setScrollFactor(0);
+
+          this.penaltyText = this.add
+            .text(this.cameras.main.width - 350, 660, "", {
               font: "20px Orbitron",
               fill: "#ff0000"
             })
@@ -252,7 +280,7 @@ class Game extends Component {
             .setScrollFactor(0);
 
           this.levelComplete = this.add
-            .text(this.cameras.main.width / 2 - 100, 350 - 100, "", {
+            .text(this.cameras.main.width / 2 - 100, 250, "", {
               font: "20px Orbitron",
               fill: "#ff0000"
             })
@@ -344,7 +372,7 @@ class Game extends Component {
 
               var asteroid = this.impact.add
                 .sprite(x, y, "asteroid")
-                // .play("metaleyes")
+                // .play('metaleyes')
                 .setTypeA()
                 .setCheckAgainstA()
                 .setActiveCollision()
@@ -373,12 +401,11 @@ class Game extends Component {
           // this.asteroid.setTypeB().setCheckAgainstA().setFixedCollision();
 
           const hitAstroid = (player, asteroid, axis) => {
-            // player.gameObject.tint = 0xff0000;
-            // delay(10000);
-            // player.gameObject.tint = 0x0000ff;
             if (this.gameOver === false) {
               this.damage += 1000;
               this.cameras.main.flash(500, "25", "000", "000", true);
+              // this.sound.play('crash')
+              this.crashSound.play();
             }
           };
 
@@ -409,14 +436,31 @@ class Game extends Component {
           // ).setPassiveCollision()
 
           // const crossEndZone = (player, endZone, axis) => {
-          //     console.log("GAME ENDED")
+          //     console.log('GAME ENDED')
           // }
 
           // // let endZone = Phaser.GameObjects.zone(38000, 400, 10, 800)
 
           // endZone.setCollideCallback(crossEndZone, this)
 
-          // this.sound.add("rocket")
+          //   const gunConfig = {
+          //     mute: false,
+          //     volume: .1,
+          //     rate: 1,
+          //     detune: 0,
+          //     seek: 0,
+          //     loop: false,
+          //     delay: 0
+          // }
+          this.rocketSound = this.sound.add("rocket");
+          this.rocketSound.volume = 0.25;
+          this.rocketSound.duration = 0.1;
+
+          this.gunSound = this.sound.add("gun");
+          this.gunSound.volume = 0.25;
+          this.gunSound.duration = 0.01;
+
+          this.crashSound = this.sound.add("crash");
         },
 
         update: function(time, delta) {
@@ -432,15 +476,18 @@ class Game extends Component {
           }
           let timeElapsed = Math.floor(this.timer.getElapsed());
 
-          this.text.setText(
-            `ACCELERATION, m/s/s >> ${(
-              this.player.vel.x * 50
-            ).toLocaleString()}\nTIME ELAPSED, SECONDS >> ` +
-              `${time_convert(timeElapsed)}\nDAMAGE >> ` +
-              `${this.damage.toLocaleString()}\nPENALTY >> ` +
-              `${this.penalty.toLocaleString()}\n` +
-              `${this.player.x}`
+          this.timeText.setText(`TIME >> ${time_convert(timeElapsed)}`);
+
+          this.accelerationText.setText(
+            `ACCELERATION >> ${(this.player.vel.x * 50).toLocaleString()}`
           );
+
+          this.damageText.setText(`DAMAGE >> ${this.damage.toLocaleString()}`);
+
+          this.penaltyText.setText(
+            `PENALTY >> ${this.penalty.toLocaleString()}`
+          );
+
           if (this.player.x > mapWidth - 2000) {
             this.gameOver = true;
             this.levelComplete.setText(
@@ -461,7 +508,8 @@ class Game extends Component {
             this.player.setAccelerationX(-1200);
             this.player.flipX = true;
           } else if (this.cursors.right.isDown) {
-            // this.sound.play("rocket")
+            // this.sound.play('rocket')
+            this.rocketSound.play();
             this.player.setAccelerationX(1200);
             this.player.flipX = false;
           } else {
@@ -497,7 +545,11 @@ class Game extends Component {
             bullet.setVisible(true);
             bullet.setDepth(1);
 
+            // play gun sound
+            // this.sound.play('gun')
+
             if (bullet) {
+              this.gunSound.play();
               bullet.fire(this.player);
 
               this.lastFired = time + 100;
@@ -525,7 +577,7 @@ class Game extends Component {
           // console.log(Math.floor(this.timer.getElapsed()))
           // this.info.setText('\nTime: ' + Math.floor(this.timer.getElapsed()));
           this.penalty = timeElapsed + this.damage;
-          // console.log("penalty: ", this.penalty)
+          // console.log('penalty: ', this.penalty)
         }
       }
     }
@@ -536,7 +588,7 @@ class Game extends Component {
 
     return (
       <>
-        {/* <div id="black_box"></div> */}
+        {/* <div id='black_box'></div> */}
         <IonPhaser id="phaserGame" game={game} initialize={initialize} />
         <div id="red_line_button"></div>
         <div className="stripe-1"></div>

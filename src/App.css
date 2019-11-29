@@ -172,6 +172,7 @@ th {
     text-transform: uppercase;
     text-decoration: none;
     border: 0.2em solid red;
+    /* border-bottom-right-radius: 25px; */
     padding: 0.5em 1em;
     margin-left: 1em;
     margin-right: 1em;
@@ -394,7 +395,7 @@ html {
     background: repeating-linear-gradient(
       -55deg,
       red,
-      red 80px,
+      red 110px,
       black 80px,
       black 160px
     );
