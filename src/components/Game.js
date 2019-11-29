@@ -13,8 +13,8 @@ import crash from "../assets/crash.wav";
 import gun from "../assets/gun.wav";
 import rocket from "../assets/rocket.wav";
 
-const mapWidth = 40000; // 3200
-const mapHeight = 700; // 600
+const mapWidth = 40000;
+const mapHeight = 700;
 console.log("map width: ", mapWidth);
 console.log("map height: ", mapHeight);
 
@@ -70,8 +70,6 @@ class Game extends Component {
           let width = this.cameras.main.width;
           let height = this.cameras.main.height;
 
-          const line = this.add.graphics({ lineStyle: { width: 4, color: 0xaa00aa } });
-          
           let progressBar = this.add.graphics();
 
           let loadingText = this.make.text({
@@ -142,6 +140,13 @@ class Game extends Component {
         },
 
         create: function() {
+          let line = new Phaser.Geom.Line(0, 50, 200, 50);
+
+          let graphics = this.add.graphics({
+            lineStyle: { width: 4, color: 0xff0000 }
+          });
+          graphics.strokeLineShape(line).setDepth(4);
+
           let Bullet = new Phaser.Class({
             Extends: Phaser.GameObjects.Image,
 
@@ -178,24 +183,12 @@ class Game extends Component {
             }
           });
 
-          //  The world is 3200 x 600 in size
           this.cameras.main.setBounds(0, 0, mapWidth, mapHeight);
-
-          //  The miniCam is 400px wide, so can display the whole world at a zoom of 0.2
-          // this.minimap = this.cameras.add(200, 10, 400, 100).setZoom(0.2);
-          // this.minimap.setBackgroundColor(0x002244);
-          // this.minimap.scrollX = mapWidth;
-          // this.minimap.scrollY = mapHeight;
-
-          //  Bullets
 
           this.bullets = this.add.group({
             classType: Bullet,
             runChildUpdate: true
           });
-
-          // this.startZone = this.impact.add.sprite(1250, 350, 'spaceStation').setDepth(1);
-          // this.add.image(0,0, 'spaceStation')
 
           const config = {
             key: "lights",
@@ -209,6 +202,8 @@ class Game extends Component {
 
           this.anims.create(config);
 
+          this.cursors = this.input.keyboard.createCursorKeys();
+
           this.spaceStation = this.impact.add
             .sprite(1686, 350, "spaceStation")
             .play("lights")
@@ -219,33 +214,15 @@ class Game extends Component {
             .play("lights")
             .setDepth(1);
 
-          // var spaceStation = this.add.sprite(1250, 350, 'spaceStation');
-          // this.spaceStation.anims.play('lights');
-
-          // var config = {
-          //   key: 'metaleyes',
-          //   frames: this.anims.generateFrameNumbers('asteroid', {
-          //     start: 0,
-          //     end: 4
-          //   }),
-          //   frameRate: 20,
-          //   repeat: -1
-          // };
-
-          // this.temp = this.impact.add.sprite(100, 350, 'spaceStation').setDepth(1)
-          // this.add.image(0,0, 'spaceStation')
-          //  Add a player ship
-
           this.player = this.impact.add
             .sprite(200, 350, "ship")
             .setBodyScale(0.6)
             .setDepth(3);
+
           this.player
             .setMaxVelocity(1000)
             .setFriction(400, 300)
             .setPassiveCollision();
-
-          this.cursors = this.input.keyboard.createCursorKeys();
 
           this.timeText = this.add
             .text(20, 10, "", {
@@ -301,7 +278,6 @@ class Game extends Component {
                 on: false
               });
           };
-          // this.flares.setDepth(2)
 
           const createThrustEmitter = () => {
             this.thrust = this.add
@@ -318,11 +294,7 @@ class Game extends Component {
               });
           };
           const createStarfield = () => {
-            //  Starfield background
-
-            //  Note the scrollFactor values which give them their 'parallax' effect
-
-            var group = this.add.group({
+            let group = this.add.group({
               key: "star",
               frameQuantity: mapWidth / 4
             });
@@ -332,47 +304,30 @@ class Game extends Component {
               frameQuantity: mapWidth / 200
             });
 
-            var rect = new Phaser.Geom.Rectangle(0, 0, mapWidth, 1000);
+            let rect = new Phaser.Geom.Rectangle(0, 0, mapWidth, 1000);
 
             Phaser.Actions.RandomRectangle(group.getChildren(), rect);
 
             group.children.iterate(function(child, index) {
-              var sf = Math.max(0.3, Math.random());
+              let sf = Math.max(0.3, Math.random());
 
               if (child.texture.key === "redGiant") {
                 sf = 0.1;
               }
 
               child.setScrollFactor(sf);
-
-              // this.minimap.ignore(child);
             }, this);
           };
 
-          const createAliens = () => {
-            //  Create some random aliens moving slowly around
-
-            var config = {
-              key: "metaleyes",
-              frames: this.anims.generateFrameNumbers("asteroid", {
-                start: 0,
-                end: 4
-              }),
-              frameRate: 20,
-              repeat: -1
-            };
-
-            this.anims.create(config);
-
-            for (var i = 0; i < mapWidth / 400; i++) {
-              var x = Phaser.Math.Between(4000, mapWidth);
-              var y = Phaser.Math.Between(100, 300);
+          const createAsteroids = () => {
+            for (let i = 0; i < mapWidth / 400; i++) {
+              let x = Phaser.Math.Between(4000, mapWidth);
+              let y = Phaser.Math.Between(100, 300);
               let angle = Phaser.Math.Between(0, 360);
               let size = Phaser.Math.Between(1, 2);
 
-              var asteroid = this.impact.add
+              let asteroid = this.impact.add
                 .sprite(x, y, "asteroid")
-                // .play('metaleyes')
                 .setTypeA()
                 .setCheckAgainstA()
                 .setActiveCollision()
@@ -397,61 +352,16 @@ class Game extends Component {
             }
           };
 
-          // this.player.setTypeA().setCheckAgainstB().setActiveCollision().setMaxVelocity(300);
-          // this.asteroid.setTypeB().setCheckAgainstA().setFixedCollision();
-
           const hitAstroid = (player, asteroid, axis) => {
             if (this.gameOver === false) {
               this.damage += 1000;
               this.cameras.main.flash(500, "25", "000", "000", true);
-              // this.sound.play('crash')
               this.crashSound.play();
             }
           };
 
-          // this.physics.add.overlap(
-          //     this.player,
-          //     asteroid,
-          //     hitAstroid,
-          //     null,
-          //     this
-          // );
           this.player.setCollideCallback(hitAstroid, this);
 
-          createStarfield();
-          createAliens();
-          createThrustEmitter();
-          createBulletEmitter();
-
-          this.timer = this.time.addEvent({
-            delay: 1000000,
-            callbackScope: this
-          });
-
-          // const endZone = this.game.scene.zone(
-          //     38000,
-          //     400,
-          //     10,
-          //     800
-          // ).setPassiveCollision()
-
-          // const crossEndZone = (player, endZone, axis) => {
-          //     console.log('GAME ENDED')
-          // }
-
-          // // let endZone = Phaser.GameObjects.zone(38000, 400, 10, 800)
-
-          // endZone.setCollideCallback(crossEndZone, this)
-
-          //   const gunConfig = {
-          //     mute: false,
-          //     volume: .1,
-          //     rate: 1,
-          //     detune: 0,
-          //     seek: 0,
-          //     loop: false,
-          //     delay: 0
-          // }
           this.rocketSound = this.sound.add("rocket");
           this.rocketSound.volume = 0.25;
           this.rocketSound.duration = 0.1;
@@ -461,6 +371,16 @@ class Game extends Component {
           this.gunSound.duration = 0.01;
 
           this.crashSound = this.sound.add("crash");
+
+          this.timer = this.time.addEvent({
+            delay: 1000000,
+            callbackScope: this
+          });
+
+          createStarfield();
+          createAsteroids();
+          createThrustEmitter();
+          createBulletEmitter();
         },
 
         update: function(time, delta) {
@@ -474,7 +394,10 @@ class Game extends Component {
               .toLocaleString()
               .substr(0, 2)}`;
           }
+
           let timeElapsed = Math.floor(this.timer.getElapsed());
+
+          this.penalty = timeElapsed + this.damage;
 
           this.timeText.setText(`TIME >> ${time_convert(timeElapsed)}`);
 
@@ -501,14 +424,15 @@ class Game extends Component {
                 `Submit`
             );
           }
-          this.thrust.setPosition(this.player.x - 80, this.player.y); // 80 cuz account for ship length
+
+          // 80 cuz account for ship length
+          this.thrust.setPosition(this.player.x - 80, this.player.y);
 
           if (this.cursors.left.isDown) {
             this.thrust.setPosition(this.player.x + 80, this.player.y);
             this.player.setAccelerationX(-1200);
             this.player.flipX = true;
           } else if (this.cursors.right.isDown) {
-            // this.sound.play('rocket')
             this.rocketSound.play();
             this.player.setAccelerationX(1200);
             this.player.flipX = false;
@@ -540,13 +464,10 @@ class Game extends Component {
           }
 
           if (this.cursors.space.isDown && time > this.lastFired) {
-            var bullet = this.bullets.get();
+            let bullet = this.bullets.get();
             bullet.setActive(true);
             bullet.setVisible(true);
             bullet.setDepth(1);
-
-            // play gun sound
-            // this.sound.play('gun')
 
             if (bullet) {
               this.gunSound.play();
@@ -566,18 +487,7 @@ class Game extends Component {
             }
           }, this);
 
-          //  Position the center of the camera on the player
-          //  We -400 because the camera width is 800px and
-          //  we want the center of the camera on the player, not the left-hand side of it
           this.cameras.main.scrollX = this.player.x - 400;
-          // this.cameras.main.startFollow(this.player, true, 0.02, 0.02);
-
-          //  And this camera is 400px wide, so -200
-          // this.minimap.scrollX = Phaser.Math.Clamp(this.player.x - 200, 800, mapWidth);
-          // console.log(Math.floor(this.timer.getElapsed()))
-          // this.info.setText('\nTime: ' + Math.floor(this.timer.getElapsed()));
-          this.penalty = timeElapsed + this.damage;
-          // console.log('penalty: ', this.penalty)
         }
       }
     }
@@ -588,7 +498,6 @@ class Game extends Component {
 
     return (
       <>
-        {/* <div id='black_box'></div> */}
         <IonPhaser id="phaserGame" game={game} initialize={initialize} />
         <div id="red_line_button"></div>
         <div className="stripe-1"></div>
