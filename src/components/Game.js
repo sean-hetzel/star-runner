@@ -3,7 +3,7 @@ import Phaser from "phaser";
 import { IonPhaser } from "@ion-phaser/react";
 import star from "../assets/star-1.png";
 import redGiant from "../assets/star-2.png";
-import ship from "../assets/spaceship-4a.png";
+import ship from "../assets/star-fighter.png";
 import bullet from "../assets/bullet6.png";
 import jets from "../assets/blue.png";
 import flares from "../assets/yellow.png";
@@ -117,7 +117,7 @@ class Game extends Component {
           this.load.image("redGiant", "assets/star-2.png");
           this.textures.addBase64("redGiant", redGiant);
 
-          this.load.image("ship", "assets/ship.png");
+          this.load.image("ship", "assets/star-fighter.png");
           this.textures.addBase64("ship", ship);
 
           this.load.image("bullet", "assets/bullet6.png");
@@ -132,11 +132,6 @@ class Game extends Component {
           this.load.image("asteroid", "assets/asteroid.png");
           this.textures.addBase64("asteroid", asteroid);
 
-          this.load.spritesheet("spaceStation", spaceStation, {
-            frameWidth: 3372,
-            frameHeight: 700
-          });
-
           this.load.image("mars", "assets/mars.png");
           this.textures.addBase64("mars", mars);
 
@@ -145,6 +140,11 @@ class Game extends Component {
 
           this.load.image("arcadia", "assets/arcadia-234.png");
           this.textures.addBase64("arcadia", arcadia);
+
+          this.load.spritesheet("spaceStation", spaceStation, {
+            frameWidth: 3372,
+            frameHeight: 700
+          });
 
           this.load.audio("rocket", rocket);
           this.load.audio("gun", gun);
@@ -164,7 +164,7 @@ class Game extends Component {
 
             fire: function(player) {
               // 100 cuz account for ship length
-              this.setPosition(player.x + 100, player.y);
+              this.setPosition(player.x + 115, player.y + 10);
 
               if (player.flipX) {
                 //  Facing left
@@ -195,7 +195,7 @@ class Game extends Component {
 
           this.player = this.impact.add
             .sprite(200, 350, "ship")
-            .setBodyScale(0.6)
+            .setBodyScale(.7)
             .setDepth(4);
 
           this.player
@@ -510,11 +510,11 @@ class Game extends Component {
             );
           }
 
-          // 80 cuz account for ship length
-          this.thrust.setPosition(this.player.x - 80, this.player.y);
+          // 90 cuz account for ship length
+          this.thrust.setPosition(this.player.x - 90, this.player.y + 4);
 
           if (this.cursors.left.isDown) {
-            this.thrust.setPosition(this.player.x + 80, this.player.y);
+            this.thrust.setPosition(this.player.x + 90, this.player.y + 4);
             this.player.setAccelerationX(-1200);
             this.player.flipX = true;
           } else if (this.cursors.right.isDown) {
