@@ -163,14 +163,13 @@ class Game extends Component {
             },
 
             fire: function(player) {
-              // 100 cuz account for ship length
-              this.setPosition(player.x + 115, player.y + 10);
-
               if (player.flipX) {
                 //  Facing left
+                this.setPosition(player.x - 120, player.y + 10);
                 this.speed = Phaser.Math.GetSpeed(-2000 + player.vel.x, 1);
               } else {
                 //  Facing right
+                this.setPosition(player.x + 120, player.y + 10);
                 this.speed = Phaser.Math.GetSpeed(2000 + player.vel.x, 1);
               }
 
@@ -195,7 +194,7 @@ class Game extends Component {
 
           this.player = this.impact.add
             .sprite(200, 350, "ship")
-            .setBodyScale(.7)
+            .setBodyScale(0.7)
             .setDepth(4);
 
           this.player
@@ -311,7 +310,7 @@ class Game extends Component {
           graphics
             .fillTriangleShape(triangle)
             .setDepth(5)
-            .setScrollFactor(-.0105); // super janky way to display distance on HUD
+            .setScrollFactor(-0.0105); // super janky way to display distance on HUD
 
           createHud(0, 50, 350, 50);
           createHud(
@@ -447,13 +446,35 @@ class Game extends Component {
 
           this.player.setCollideCallback(hitAstroid, this);
 
-          this.rocketSound = this.sound.add("rocket");
-          this.rocketSound.volume = 0.25;
-          this.rocketSound.duration = 0.1;
+          this.rocketSound = this.sound.add("rocket", {
+            volume: 0.75,
+            loop: true
+          });
 
-          this.gunSound = this.sound.add("gun");
-          this.gunSound.volume = 0.25;
-          this.gunSound.duration = 0.01;
+          // const marker = {
+          //   name: "rocket",
+          //   start: 0,
+          //   duration: rocket.duration,
+          //   config: {
+          //     mute: false,
+          //     volume: 1,
+          //     rate: 1,
+          //     detune: 0,
+          //     seek: 0,
+          //     loop: false,
+          //     delay: 0
+          //   }
+          // };
+
+          // this.rocketSound.volume = 0.25;
+          // this.rocketSound.duration = 0.1;
+
+          // this.sound.add('rocket').volume = .25
+
+          this.gunSound = this.sound.add("gun", {
+            volume: 0.25,
+            loop: false
+          });
 
           this.crashSound = this.sound.add("crash");
 
@@ -462,10 +483,23 @@ class Game extends Component {
             callbackScope: this
           });
 
+          this.flying = this.time.addEvent({
+            duration: 10000,
+            repeat: -1,
+            callbackScope: this,
+            callback: function () {
+              if(this.player.isFlying) {
+                this.rocketSound.play()
+              }
+            }
+          });
+          // this.rocketSound.play();
+
           createStarfield();
           createAsteroids();
           createThrustEmitter();
           createBulletEmitter();
+          // this.rocketSound.play();
         },
 
         update: function(time, delta) {
@@ -510,18 +544,20 @@ class Game extends Component {
             );
           }
 
-          // 90 cuz account for ship length
-          this.thrust.setPosition(this.player.x - 90, this.player.y + 4);
+          // 80 cuz account for ship length
+          this.thrust.setPosition(this.player.x - 80, this.player.y + 4);
 
           if (this.cursors.left.isDown) {
-            this.thrust.setPosition(this.player.x + 90, this.player.y + 4);
+            this.thrust.setPosition(this.player.x + 80, this.player.y + 4);
             this.player.setAccelerationX(-1200);
             this.player.flipX = true;
           } else if (this.cursors.right.isDown) {
             this.rocketSound.play();
+            this.player.isFlying = true;
             this.player.setAccelerationX(1200);
             this.player.flipX = false;
           } else {
+            this.player.isFlying = false;
             this.player.setAccelerationX(0);
           }
           if (this.cursors.up.isDown) {
@@ -590,3 +626,4 @@ class Game extends Component {
   }
 }
 export default Game;
+
