@@ -238,7 +238,7 @@ class Game extends Component {
             .setScrollFactor(0.25).angle = 180;
 
           this.saturn = this.impact.add
-            .sprite(6000, 600, "saturn")
+            .sprite(6000, 350, "saturn")
             .setScale(0.1)
             .setDepth(1)
             .setScrollFactor(0.25).angle = 350;
@@ -406,7 +406,7 @@ class Game extends Component {
           };
 
           const createAsteroids = () => {
-            for (let i = 0; i < mapWidth / 400; i++) {
+            for (let i = 0; i < mapWidth / 4000; i++) {
               let x = Phaser.Math.Between(4000, mapWidth);
               let y = Phaser.Math.Between(100, 300);
               let angle = Phaser.Math.Between(0, 360);
@@ -480,6 +480,10 @@ class Game extends Component {
         },
 
         update: function(time, delta) {
+          if (this.gameOver) {
+            return;
+          }
+
           if (
             (this.player.vel.x > 0 || this.player.vel.x < 0) &&
             this.isFlying === false
@@ -493,9 +497,6 @@ class Game extends Component {
             this.isFlying = false;
           }
 
-          if (this.gameOver) {
-            return;
-          }
           function time_convert(num) {
             const seconds = Math.floor(num / 1000);
             const miliSeconds = num % 1000;
