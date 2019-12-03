@@ -12,9 +12,9 @@ import spaceStation from "../assets/space-station-sprite-sheet.png";
 import mars from "../assets/mars.png";
 import saturn from "../assets/saturn.png";
 import arcadia from "../assets/arcadia-234.png";
-import crash from "../assets/crash.wav";
-import gun from "../assets/gun.wav";
-import rocket from "../assets/rocket.wav";
+import rocket from "../assets/rocket.mp3";
+import gun from "../assets/gun.mp3";
+import crash from "../assets/crash.mp3";
 
 const mapWidth = 40000;
 const mapHeight = 700;
