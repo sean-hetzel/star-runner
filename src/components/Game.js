@@ -223,13 +223,11 @@ class Game extends Component {
           this.spaceStation = this.impact.add
             .sprite(1686, 350, "spaceStation")
             .play("lights")
-            .setMaxVelocity(0)
             .setDepth(2);
 
           this.finishLine = this.impact.add
             .sprite(mapWidth - 1686, 350, "spaceStation")
             .play("lights")
-            .setMaxVelocity(0)
             .setDepth(2);
 
           this.mars = this.impact.add
@@ -238,7 +236,7 @@ class Game extends Component {
             .setScrollFactor(0.25).angle = 180;
 
           this.saturn = this.impact.add
-            .sprite(6000, 350, "saturn")
+            .sprite(6000, 500, "saturn")
             .setScale(0.1)
             .setDepth(1)
             .setScrollFactor(0.25).angle = 350;
@@ -449,10 +447,6 @@ class Game extends Component {
 
           this.player.setCollideCallback(hitAstroid, this);
 
-          this.spaceStation.setPassiveCollision(asteroid);
-
-          this.finishLine.setPassiveCollision(asteroid);
-
           this.rocketSound = this.sound.add("rocket", {
             volume: 1,
             loop: true
@@ -523,6 +517,7 @@ class Game extends Component {
 
           if (this.player.x > mapWidth - 2000) {
             this.gameOver = true;
+            this.sound.stopAll();
             this.levelComplete.setText(
               `> Mission Acomplished <\n\n1,000,000\n- TIME >> ` +
                 `${time_convert(timeElapsed)}\n- DAMAGE >> ` +
