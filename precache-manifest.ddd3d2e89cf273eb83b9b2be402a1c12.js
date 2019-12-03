@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "7bc82796f88a46f8ed025219f4657b40",
+    "revision": "e7e2dc7733a318dce8d2e942b12d8c8a",
     "url": "/star-runner/index.html"
   },
   {
-    "revision": "0044a2b558119420acdf",
+    "revision": "ba7f94c5b57dded80c33",
     "url": "/star-runner/static/css/main.afea5b0e.chunk.css"
   },
   {
@@ -36,8 +36,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/star-runner/static/js/8.4400af76.chunk.js"
   },
   {
-    "revision": "0044a2b558119420acdf",
-    "url": "/star-runner/static/js/main.e0329320.chunk.js"
+    "revision": "ba7f94c5b57dded80c33",
+    "url": "/star-runner/static/js/main.b47c6727.chunk.js"
   },
   {
     "revision": "d914220268367337cc8d",
@@ -60,24 +60,24 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/star-runner/static/media/blue.431b99d2.png"
   },
   {
-    "revision": "f5f8c8eb2374295a6ebcff110900847d",
-    "url": "/star-runner/static/media/crash.f5f8c8eb.wav"
+    "revision": "6fd30c288f2d47da7de5a20807ad2534",
+    "url": "/star-runner/static/media/crash.6fd30c28.mp3"
   },
   {
     "revision": "fddd4e2e1afeff699fa15c1e2d6518d0",
     "url": "/star-runner/static/media/github-logo-red.fddd4e2e.png"
   },
   {
-    "revision": "24184c8218978863be1c43b20754493c",
-    "url": "/star-runner/static/media/gun.24184c82.wav"
+    "revision": "fba7327385db3fab63e6043ca39aa436",
+    "url": "/star-runner/static/media/gun.fba73273.mp3"
   },
   {
     "revision": "ee263858d07453fcfc56a93f44e3efe9",
     "url": "/star-runner/static/media/mars.ee263858.png"
   },
   {
-    "revision": "ab06dbcb9cc4cbac031d4068f9fe43d9",
-    "url": "/star-runner/static/media/rocket.ab06dbcb.wav"
+    "revision": "8870999c61ac5afbeed7d2572e1b2763",
+    "url": "/star-runner/static/media/rocket.8870999c.mp3"
   },
   {
     "revision": "c6987c22f7bcf7b3b97e2f05b452f174",
