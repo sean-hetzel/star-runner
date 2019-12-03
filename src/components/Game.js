@@ -223,11 +223,13 @@ class Game extends Component {
           this.spaceStation = this.impact.add
             .sprite(1686, 350, "spaceStation")
             .play("lights")
+            .setMaxVelocity(0)
             .setDepth(2);
 
           this.finishLine = this.impact.add
             .sprite(mapWidth - 1686, 350, "spaceStation")
             .play("lights")
+            .setMaxVelocity(0)
             .setDepth(2);
 
           this.mars = this.impact.add
@@ -447,17 +449,24 @@ class Game extends Component {
 
           this.player.setCollideCallback(hitAstroid, this);
 
+          this.spaceStation.setPassiveCollision(asteroid);
+
+          this.finishLine.setPassiveCollision(asteroid);
+
           this.rocketSound = this.sound.add("rocket", {
-            volume: 0.75,
+            volume: 1,
             loop: true
           });
 
           this.gunSound = this.sound.add("gun", {
-            volume: 0.25,
+            volume: 1,
             loop: true
           });
 
-          this.crashSound = this.sound.add("crash");
+          this.crashSound = this.sound.add("crash", {
+            volume: 1,
+            loop: false
+          });
 
           this.timer = this.time.addEvent({
             delay: 1000000,
@@ -577,8 +586,8 @@ class Game extends Component {
               this.gunSound.play();
               this.firingGun = true;
             }
-          } 
-          if(!this.cursors.space.isDown) {
+          }
+          if (!this.cursors.space.isDown) {
             this.gunSound.stop();
             this.firingGun = false;
           }
