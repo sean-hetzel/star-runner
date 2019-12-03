@@ -58,8 +58,9 @@ class Game extends Component {
           timer: 0,
           damage: 0,
           penalty: 0,
-          gameOver: false,
-          endZone: null
+          isFlying: false,
+          firingGun: false,
+          gameOver: false
         },
 
         init: function() {
@@ -451,29 +452,9 @@ class Game extends Component {
             loop: true
           });
 
-          // const marker = {
-          //   name: "rocket",
-          //   start: 0,
-          //   duration: rocket.duration,
-          //   config: {
-          //     mute: false,
-          //     volume: 1,
-          //     rate: 1,
-          //     detune: 0,
-          //     seek: 0,
-          //     loop: false,
-          //     delay: 0
-          //   }
-          // };
-
-          // this.rocketSound.volume = 0.25;
-          // this.rocketSound.duration = 0.1;
-
-          // this.sound.add('rocket').volume = .25
-
           this.gunSound = this.sound.add("gun", {
             volume: 0.25,
-            loop: false
+            loop: true
           });
 
           this.crashSound = this.sound.add("crash");
@@ -483,26 +464,26 @@ class Game extends Component {
             callbackScope: this
           });
 
-          this.flying = this.time.addEvent({
-            duration: 10000,
-            repeat: -1,
-            callbackScope: this,
-            callback: function () {
-              if(this.player.isFlying) {
-                this.rocketSound.play()
-              }
-            }
-          });
-          // this.rocketSound.play();
-
           createStarfield();
           createAsteroids();
           createThrustEmitter();
           createBulletEmitter();
-          // this.rocketSound.play();
         },
 
         update: function(time, delta) {
+          if (
+            (this.player.vel.x > 0 || this.player.vel.x < 0) &&
+            this.isFlying === false
+          ) {
+            this.rocketSound.play();
+            this.isFlying = true;
+          }
+
+          if (this.player.vel.x === 0) {
+            this.rocketSound.stop();
+            this.isFlying = false;
+          }
+
           if (this.gameOver) {
             return;
           }
@@ -546,18 +527,14 @@ class Game extends Component {
 
           // 80 cuz account for ship length
           this.thrust.setPosition(this.player.x - 80, this.player.y + 4);
-
           if (this.cursors.left.isDown) {
             this.thrust.setPosition(this.player.x + 80, this.player.y + 4);
             this.player.setAccelerationX(-1200);
             this.player.flipX = true;
           } else if (this.cursors.right.isDown) {
-            this.rocketSound.play();
-            this.player.isFlying = true;
             this.player.setAccelerationX(1200);
             this.player.flipX = false;
           } else {
-            this.player.isFlying = false;
             this.player.setAccelerationX(0);
           }
           if (this.cursors.up.isDown) {
@@ -588,14 +565,22 @@ class Game extends Component {
             let bullet = this.bullets.get();
             bullet.setActive(true);
             bullet.setVisible(true);
-            bullet.setDepth(3);
+            bullet.setDepth(3).setScale(0.75);
 
             if (bullet) {
-              this.gunSound.play();
               bullet.fire(this.player);
 
               this.lastFired = time + 100;
             }
+
+            if (this.firingGun === false) {
+              this.gunSound.play();
+              this.firingGun = true;
+            }
+          } 
+          if(!this.cursors.space.isDown) {
+            this.gunSound.stop();
+            this.firingGun = false;
           }
 
           //  Emitters to bullets
@@ -626,4 +611,3 @@ class Game extends Component {
   }
 }
 export default Game;
-
