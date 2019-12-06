@@ -445,7 +445,7 @@ class Game extends Component {
 
           const createAsteroids = () => {
             for (let i = 0; i < mapWidth / 600; i++) {
-              let x = Phaser.Math.Between(4000, mapWidth - 1686);
+              let x = Phaser.Math.Between(4000, mapWidth - 4000);
               let y = Phaser.Math.Between(100, 300);
               let angle = Phaser.Math.Between(0, 360);
               let size = Phaser.Math.Between(1, 2);
