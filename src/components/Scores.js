@@ -4,9 +4,9 @@ import PreLoader from "./PreLoader";
 class Scores extends React.Component {
   componentDidMount() {
     this.props.showStars();
-    if (this.props.loaded === true) {
-      document.getElementById("pre_loader").style.display = "none";
-    }
+    // if (this.props.loaded === true) {
+    //   document.getElementById("pre_loader").style.display = "none";
+    // }
   }
 
   renderTableData(i) {
@@ -38,7 +38,7 @@ class Scores extends React.Component {
             {this.renderTableData(i)}
           </tbody>
         </table>
-        <PreLoader />
+        {/* <PreLoader /> */}
       </>
     );
   }

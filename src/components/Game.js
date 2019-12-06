@@ -8,7 +8,9 @@ import bullet from "../assets/bullet6.png";
 import jets from "../assets/blue.png";
 import flares from "../assets/yellow.png";
 import asteroid from "../assets/asteroid.png";
-import spaceStation from "../assets/space-station-sprite-sheet.png";
+import marsStation from "../assets/mars-station-sprite-sheet.png";
+import arcadiaStationInside from "../assets/arcadia-station-interior.png";
+import arcadiaStation from "../assets/arcadia-station-sprite-sheet.png";
 import mars from "../assets/mars.png";
 import saturn from "../assets/saturn.png";
 import arcadia from "../assets/arcadia-234.png";
@@ -16,14 +18,24 @@ import rocket from "../assets/rocket.mp3";
 import gun from "../assets/gun.mp3";
 import crash from "../assets/crash.mp3";
 
-const mapWidth = 40000;
+const mapWidth = 60000;
 const mapHeight = 700;
+const API = "https://agile-atoll-75530.herokuapp.com/api/v1/scores";
+
 console.log("map width: ", mapWidth);
 console.log("map height: ", mapHeight);
 
 class Game extends Component {
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
   componentDidMount() {
     this.props.hideStars();
+  }
+
+  handleSubmit(event) {
+    console.log(event);
   }
 
   state = {
@@ -142,8 +154,19 @@ class Game extends Component {
           this.load.image("arcadia", "assets/arcadia-234.png");
           this.textures.addBase64("arcadia", arcadia);
 
-          this.load.spritesheet("spaceStation", spaceStation, {
+          this.load.image(
+            "arcadiaStationInside",
+            "assets/arcadia-station-inside.png"
+          );
+          this.textures.addBase64("arcadiaStationInside", arcadiaStationInside);
+
+          this.load.spritesheet("marsStation", marsStation, {
             frameWidth: 3372,
+            frameHeight: 700
+          });
+
+          this.load.spritesheet("arcadiaStation", arcadiaStation, {
+            frameWidth: 2947,
             frameHeight: 700
           });
 
@@ -200,7 +223,7 @@ class Game extends Component {
 
           this.player
             .setMaxVelocity(1000)
-            .setFriction(400, 300)
+            .setFriction(300, 300)
             .setPassiveCollision();
 
           this.bullets = this.add.group({
@@ -208,9 +231,9 @@ class Game extends Component {
             runChildUpdate: true
           });
 
-          const config = {
-            key: "lights",
-            frames: this.anims.generateFrameNumbers("spaceStation", {
+          const marsConfig = {
+            key: "marsStationLights",
+            frames: this.anims.generateFrameNumbers("marsStation", {
               start: 0,
               end: 6
             }),
@@ -218,20 +241,36 @@ class Game extends Component {
             repeat: -1
           };
 
-          this.anims.create(config);
+          this.anims.create(marsConfig);
 
-          this.spaceStation = this.impact.add
-            .sprite(1686, 350, "spaceStation")
-            .play("lights")
+          this.marsStation = this.impact.add
+            .sprite(1686, 350, "marsStation")
+            .play("marsStationLights")
             .setDepth(2);
 
-          this.finishLine = this.impact.add
-            .sprite(mapWidth - 1686, 350, "spaceStation")
-            .play("lights")
-            .setDepth(2);
+          const arcadiaConfig = {
+            key: "arcadiaStationLights",
+            frames: this.anims.generateFrameNumbers("arcadiaStation", {
+              start: 0,
+              end: 4
+            }),
+            frameRate: 3,
+            repeat: -1
+          };
+
+          this.anims.create(arcadiaConfig);
+
+          this.arcadiaStation = this.impact.add
+            .sprite(mapWidth - 1474, 350, "arcadiaStation")
+            .play("arcadiaStationLights")
+            .setDepth(5);
+
+          this.arcadiaStationInside = this.impact.add
+            .sprite(mapWidth - 1474, 350, "arcadiaStationInside")
+            .setDepth(3);
 
           this.mars = this.impact.add
-            .sprite(1500, 200, "mars")
+            .sprite(1500, 250, "mars")
             .setDepth(1)
             .setScrollFactor(0.25).angle = 180;
 
@@ -242,7 +281,7 @@ class Game extends Component {
             .setScrollFactor(0.25).angle = 350;
 
           this.arcadia = this.impact.add
-            .sprite(10000, 800, "arcadia")
+            .sprite(15000, 800, "arcadia")
             .setScale(1)
             .setDepth(1)
             .setScrollFactor(0.25).angle = 0;
@@ -254,32 +293,32 @@ class Game extends Component {
 
           this.timeText = this.add
             .text(20, 10, "", textConfig)
-            .setDepth(5)
+            .setDepth(6)
             .setScrollFactor(0);
 
           this.accelerationText = this.add
             .text(this.cameras.main.width - 350, 10, "", textConfig)
-            .setDepth(5)
+            .setDepth(6)
             .setScrollFactor(0);
 
           this.damageText = this.add
             .text(20, 660, "", textConfig)
-            .setDepth(5)
+            .setDepth(6)
             .setScrollFactor(0);
 
           this.penaltyText = this.add
             .text(this.cameras.main.width - 350, 660, "", textConfig)
-            .setDepth(5)
+            .setDepth(6)
             .setScrollFactor(0);
 
           this.distanceText = this.add
             .text(this.cameras.main.width / 2 - 50, 660, "DISTANCE", textConfig)
-            .setDepth(5)
+            .setDepth(6)
             .setScrollFactor(0);
 
           this.levelComplete = this.add
             .text(this.cameras.main.width / 2 - 100, 250, "", textConfig)
-            .setDepth(5)
+            .setDepth(6)
             .setScrollFactor(0);
 
           const createHud = (x1, y1, x2, y2) => {
@@ -290,7 +329,7 @@ class Game extends Component {
             });
             graphics
               .strokeLineShape(line)
-              .setDepth(5)
+              .setDepth(6)
               .setScrollFactor(0);
           };
 
@@ -308,10 +347,11 @@ class Game extends Component {
             620
           );
 
+          // super janky way to display distance on HUD
           graphics
             .fillTriangleShape(triangle)
-            .setDepth(5)
-            .setScrollFactor(-0.0105); // super janky way to display distance on HUD
+            .setDepth(6)
+            .setScrollFactor(-0.007);
 
           createHud(0, 50, 350, 50);
           createHud(
@@ -404,8 +444,8 @@ class Game extends Component {
           };
 
           const createAsteroids = () => {
-            for (let i = 0; i < mapWidth / 4000; i++) {
-              let x = Phaser.Math.Between(4000, mapWidth);
+            for (let i = 0; i < mapWidth / 600; i++) {
+              let x = Phaser.Math.Between(4000, mapWidth - 1686);
               let y = Phaser.Math.Between(100, 300);
               let angle = Phaser.Math.Between(0, 360);
               let size = Phaser.Math.Between(1, 2);
@@ -515,19 +555,31 @@ class Game extends Component {
             `PENALTY >> ${this.penalty.toLocaleString()}`
           );
 
-          if (this.player.x > mapWidth - 2000) {
+          if (this.player.x > mapWidth - 1000) {
             this.gameOver = true;
             this.sound.stopAll();
+            let score = 1000000 - this.penalty;
             this.levelComplete.setText(
               `> Mission Acomplished <\n\n1,000,000\n- TIME >> ` +
                 `${time_convert(timeElapsed)}\n- DAMAGE >> ` +
                 `${this.damage.toLocaleString()}\n- PENALTY >> ` +
                 `${this.penalty.toLocaleString()}\n` +
                 `------------------------\n` +
-                `Score >> ${(1000000 - this.penalty).toLocaleString()}\n` +
+                `Score >> ${score.toLocaleString()}\n` +
                 `\nEnter Your Name: __________` +
                 `Submit`
             );
+            fetch(API, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+              },
+              body: JSON.stringify({
+                display_name: "Mariette",
+                high_score: score
+              })
+            });
           }
 
           // 80 cuz account for ship length
@@ -543,9 +595,9 @@ class Game extends Component {
             this.player.setAccelerationX(0);
           }
           if (this.cursors.up.isDown) {
-            this.player.setAccelerationY(-1200);
+            this.player.setAccelerationY(-2000);
           } else if (this.cursors.down.isDown) {
-            this.player.setAccelerationY(1200);
+            this.player.setAccelerationY(2000);
           } else {
             this.player.setAccelerationY(0);
           }
