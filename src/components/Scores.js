@@ -2,12 +2,6 @@ import React, { Component } from "react";
 import PreLoader from "./PreLoader";
 
 class Scores extends React.Component {
-  componentDidMount() {
-    this.props.showStars();
-    // if (this.props.loaded === true) {
-    //   document.getElementById("pre_loader").style.display = "none";
-    // }
-  }
 
   renderTableData(i) {
     return this.props.scores.map(score => {
@@ -24,6 +18,7 @@ class Scores extends React.Component {
   }
 
   render() {
+    console.log("scores", this.props.scores.length);
     let i = 1;
     return (
       <>
@@ -38,7 +33,7 @@ class Scores extends React.Component {
             {this.renderTableData(i)}
           </tbody>
         </table>
-        {/* <PreLoader /> */}
+        {this.props.scores.length > 0 ? null : <PreLoader />}
       </>
     );
   }
