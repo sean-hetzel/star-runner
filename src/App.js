@@ -19,7 +19,6 @@ class App extends Component {
         super();
         this.state = {
             scores: [],
-            loaded: false,
         };
     }
 
@@ -36,7 +35,6 @@ class App extends Component {
             .then(resp => resp.json())
             .then(
                 json => this.setState({ scores: json }, console.log(json)),
-                this.setState({ loaded: true })
             );
     }
 
@@ -68,7 +66,6 @@ class App extends Component {
                         render={props => (
                             <Scores
                                 {...props}
-                                loaded={this.state.loaded}
                                 scores={this.state.scores}
                                 showStars={this.showStars}
                             />
