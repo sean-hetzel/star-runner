@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import PreLoader from "./PreLoader";
 
 class Scores extends React.Component {
-
+  
   renderTableData(i) {
     return this.props.scores.map(score => {
       const { id, display_name, high_score } = score;
@@ -18,7 +18,7 @@ class Scores extends React.Component {
   }
 
   render() {
-    console.log("scores", this.props.scores.length);
+
     let i = 1;
     return (
       <>

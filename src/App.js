@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import {
-    HashRouter as Router,
-    Route,
-    Switch
-} from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import StarField from "./components/StarField";
 import Navbar from "./components/NavBar";
@@ -15,67 +11,59 @@ import NotFound from "./components/NotFound";
 const API = "https://agile-atoll-75530.herokuapp.com/api/v1/scores";
 
 class App extends Component {
-    constructor() {
-        super();
-        this.state = {
-            scores: [],
-        };
-    }
-
-    hideStars = () => {
-        document.getElementById("star_field").style.visibility = "hidden";
+  constructor() {
+    super();
+    this.state = {
+      scores: []
     };
+  }
 
-    showStars = () => {
-        document.getElementById("star_field").style.visibility = "visible";
-    };
+  hideStars = () => {
+    document.getElementById("star_field").style.visibility = "hidden";
+  };
 
-    componentDidMount() {
-        fetch(API)
-            .then(resp => resp.json())
-            .then(
-                json => this.setState({ scores: json }, console.log(json)),
-            );
-    }
+  showStars = () => {
+    document.getElementById("star_field").style.visibility = "visible";
+  };
 
-    render() {
-        console.log("app state", this.state);
+  componentDidMount() {
+    fetch(API)
+      .then(resp => resp.json())
+      .then(json => this.setState({ scores: json }));
+  }
 
-        return (
-            <Router>
-                <StarField />
-                <Navbar />
-                <Switch>
-                    <Route
-                        path="/"
-                        exact
-                        render={props => (
-                            <Home {...props} showStars={this.showStars} />
-                        )}
-                    />
-                    <Route
-                        path="/game"
-                        exact
-                        render={props => (
-                            <Game {...props} hideStars={this.hideStars} />
-                        )}
-                    />
-                    <Route
-                        path="/scores"
-                        exact
-                        render={props => (
-                            <Scores
-                                {...props}
-                                scores={this.state.scores}
-                                showStars={this.showStars}
-                            />
-                        )}
-                    />
-                    <Route path="*" component={NotFound} />
-                </Switch>
-            </Router>
-        );
-    }
+  render() {
+    return (
+      <Router>
+        <StarField />
+        <Navbar />
+        <Switch>
+          <Route
+            path="/"
+            exact
+            render={props => <Home {...props} showStars={this.showStars} />}
+          />
+          <Route
+            path="/game"
+            exact
+            render={props => <Game {...props} hideStars={this.hideStars} />}
+          />
+          <Route
+            path="/scores"
+            exact
+            render={props => (
+              <Scores
+                {...props}
+                scores={this.state.scores}
+                showStars={this.showStars}
+              />
+            )}
+          />
+          <Route path="*" component={NotFound} />
+        </Switch>
+      </Router>
+    );
+  }
 }
 
 export default App;

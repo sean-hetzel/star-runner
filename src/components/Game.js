@@ -22,9 +22,6 @@ const mapWidth = 60000;
 const mapHeight = 700;
 const API = "https://agile-atoll-75530.herokuapp.com/api/v1/scores";
 
-console.log("map width: ", mapWidth);
-console.log("map height: ", mapHeight);
-
 class Game extends Component {
   constructor() {
     super();

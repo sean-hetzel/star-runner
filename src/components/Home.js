@@ -10,7 +10,7 @@ class Home extends React.Component {
     return (
       <>
         <h4 className="home_info">STAR DATE: JULY 2, 2154</h4>
-        <h4 className="home_info">LOGS: PRE-FLIGHT BREIF</h4>
+        <h4 className="home_info">LOGS: PRE-FLIGHT BRIEF</h4>
         <h4 className="home_info">STATUS: URGENT</h4>
         <h4 className="home_info">>_</h4>
         <br></br>
