@@ -17,16 +17,31 @@ import arcadia from "../assets/arcadia-234.png";
 import rocket from "../assets/rocket.mp3";
 import gun from "../assets/gun.mp3";
 import crash from "../assets/crash.mp3";
+import MissionReport from "./MissionReport";
 
 const mapWidth = 60000;
 const mapHeight = 700;
 const API = "https://agile-atoll-75530.herokuapp.com/api/v1/scores";
+
+// let statusReport = () => {
+//   console.log("status report",report);
+//   render(){
+//     return(
+
+//       <MissionReport report={report}/>
+//     )
+//   }
+
+// };
+
+let report = 0;
 
 class Game extends Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   componentDidMount() {
     this.props.hideStars();
   }
@@ -36,6 +51,7 @@ class Game extends Component {
   }
 
   state = {
+    showReport: false,
     redirect: false,
     initialize: true,
     game: {
@@ -56,7 +72,6 @@ class Game extends Component {
       },
       scene: {
         extend: {
-          minimap: null,
           player: null,
           cursors: null,
           thrust: null,
@@ -69,6 +84,7 @@ class Game extends Component {
           penalty: 0,
           isFlying: false,
           firingGun: false,
+          showReport: false,
           gameOver: false
         },
 
@@ -555,7 +571,13 @@ class Game extends Component {
           if (this.player.x > mapWidth - 1000) {
             this.gameOver = true;
             this.sound.stopAll();
+            // report();
             let score = 1000000 - this.penalty;
+            report = score;
+            console.log(report);
+            // this.state.game.scene.extend.showReport
+            // statusReport(report)
+            this.showReport = true
             this.levelComplete.setText(
               `> Mission Acomplished <\n\n1,000,000\n- TIME >> ` +
                 `${time_convert(timeElapsed)}\n- DAMAGE >> ` +
@@ -660,6 +682,11 @@ class Game extends Component {
       <>
         <IonPhaser id="phaserGame" game={game} initialize={initialize} />
         <div id="red_line_button"></div>
+        {console.log("game report", this.state.game.scene.extend.time)}
+        {console.log("show report?", this.state.showReport)}
+        {this.state.showReport ? (
+          <MissionReport report={report} />
+        ) : null}
       </>
     );
   }

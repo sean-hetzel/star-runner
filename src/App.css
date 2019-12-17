@@ -370,3 +370,22 @@ html {
 #lost {
   font-size: 40pt;
 }
+
+.report{
+  position: absolute;
+  width: 400px;
+  height: 500px;
+  top: 50%;
+  left: 50%;
+  color: red;
+  border: 4px solid red;
+  background-color: black;
+  margin-top: -500px;
+  z-index: 7;
+
+}
+
+.report-text{
+  text-align: center;
+  color: red;
+}
