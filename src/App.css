@@ -5,6 +5,7 @@
 }
 h1 {
   color: white;
+  font-family: "Orbitron", sans-serif;
 }
 
 body {
@@ -25,21 +26,28 @@ body {
   margin-top: 0.5em;
 }
 
-#soundcloud {
+.player{
   float: right;
-  margin-top: -1em;
+  margin-right: 120px;
+  margin-top: -110px;
+}
+
+.player .player-control .music-info .title {
+  margin-bottom: 0;
+  color: red;
+  font-size: 1.5em;
 }
 
 h2,
 h4 {
   font-family: "Orbitron", sans-serif;
-
   color: white;
   margin-left: 10%;
   margin-right: 10%;
 }
 
 table {
+  font-family: "Orbitron", sans-serif;
   position: relative;
   width: 50em;
   margin-left: auto;
@@ -49,6 +57,7 @@ table {
 
 td,
 th {
+  font-family: "Orbitron", sans-serif;
   color: white;
   font-size: 24pt;
   position: relative;
@@ -56,6 +65,7 @@ th {
 }
 
 th {
+  font-family: "Orbitron", sans-serif;
   border-bottom: 2px solid red;
 }
 
@@ -177,6 +187,7 @@ th {
 }
 
 .brk-btn {
+  font-family: "Orbitron", sans-serif;
   font-size: 20px;
   font-weight: 400;
   position: relative;
@@ -435,3 +446,4 @@ html {
 
 button:focus {outline:0;}
 input:focus {outline: 0;}
+

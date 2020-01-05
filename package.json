@@ -11,6 +11,7 @@
         "react-bootstrap": "^1.0.0-beta.12",
         "react-dom": "^16.9.0",
         "react-phaser": "^0.1.6",
+        "react-responsive-music-player": "^0.4.3",
         "react-router": "^5.0.1",
         "react-router-dom": "^5.0.1",
         "react-script-tag": "^1.1.2",

@@ -1,8 +1,45 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import MusicPlayer from "react-responsive-music-player";
 import githubLogo from "../assets/github-logo-red.png";
+import WolfAndRaven from "../music/Wolf-and-Raven-On-the-Run.mp3";
+import MADES from "../music/M.A.D.E.S-1989.mp3";
+import Stilz from "../music/Stilz-See-You-Soon.mp3";
+import Neuroc from "../music/Neuroc-Jacked-In.mp3";
+
+const playlist = [
+  {
+    url: WolfAndRaven,
+    cover: "",
+    title: "On The Run",
+    artist: ["Wolf And Raven"]
+  },
+  {
+    url: MADES,
+    cover: "",
+    title: "1989",
+    artist: ["M.A.D.E.S"]
+  },
+  {
+    url: Stilz,
+    cover: "",
+    title: "See You Soon",
+    artist: ["Stilz"]
+  },
+  {
+    url: Neuroc,
+    cover: "",
+    title: "Jacked In",
+    artist: ["Neuroc"]
+  }
+];
 
 class NavBar extends React.Component {
+  componentDidMount() {
+    var context = new AudioContext();
+    context.resume();
+  }
+
   render() {
     return (
       <nav id="nav_bar">
@@ -19,16 +56,14 @@ class NavBar extends React.Component {
           Rank
         </Link>
 
-        <iframe
-          id="soundcloud"
-          title="SoundCloud"
-          width="300"
-          height="105"
-          scrolling="no"
-          frameBorder="no"
-          allow="autoplay" // autoplay
-          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/862763829&color=%23000000&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
-        ></iframe>
+        <MusicPlayer
+          playlist={playlist}
+          width={100}
+          btnColor="red"
+          progressColor="red"
+          autoplay={false}
+        />
+
         <a
           href="https://github.com/Seanhetzel/star-runner"
           target="_blank"
