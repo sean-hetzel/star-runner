@@ -30,10 +30,16 @@ body {
   float: right;
   margin-right: 130px;
   margin-top: -15px;
+  margin-bottom: 0 !important;
+  height: 100px !important;
 }
 
 .controls {
   margin: 10px !important;
+}
+
+.player-control{
+height: 100px;
 }
 
 .player .player-control .music-info .title {

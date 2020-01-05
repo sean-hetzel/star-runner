@@ -35,10 +35,6 @@ const playlist = [
 ];
 
 class NavBar extends React.Component {
-  componentDidMount() {
-    var context = new AudioContext();
-    context.resume();
-  }
 
   render() {
     return (
