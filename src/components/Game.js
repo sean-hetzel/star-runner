@@ -109,6 +109,7 @@ class Game extends Component {
           });
           // end loading screen
 
+          // load all assets
           this.load.image("star", "assets/star-1.png");
           this.textures.addBase64("star", star);
 
@@ -162,7 +163,7 @@ class Game extends Component {
 
         ///////////////////////////// CREATE //////////////////////////////////
         create: function() {
-          // create mission report and hide it until game over
+          // create mission report and hide it until game is over
           this.missionReport = document.getElementById("mission_report");
           this.missionReport.style.display = "none";
 
@@ -202,10 +203,12 @@ class Game extends Component {
             }
           });
 
+          // set up camera
           this.cameras.main.setBounds(0, 0, mapWidth, mapHeight);
 
           this.cursors = this.input.keyboard.createCursorKeys();
 
+          // add player (ship) into game
           this.player = this.impact.add
             .sprite(200, 350, "ship")
             .setBodyScale(0.7)
@@ -429,7 +432,7 @@ class Game extends Component {
           };
 
           const createAsteroids = () => {
-            for (let i = 0; i < mapWidth / 600; i++) {
+            for (let i = 0; i < mapWidth / 500; i++) {
               let x = Phaser.Math.Between(4000, mapWidth - 4000);
               let y = Phaser.Math.Between(100, 300);
               let angle = Phaser.Math.Between(0, 360);
@@ -501,7 +504,6 @@ class Game extends Component {
         ///////////////////////////// UPDATE //////////////////////////////////
         update: function(time, delta) {
           if (this.gameOver) {
-            this.missionReport.style.display = "block";
             return;
           }
 
@@ -527,27 +529,22 @@ class Game extends Component {
           }
 
           let timeElapsed = Math.floor(this.timer.getElapsed());
-
           this.penalty = timeElapsed + this.damage;
-
           this.timeText.setText(`TIME >> ${time_convert(timeElapsed)}`);
-
           this.accelerationText.setText(
             `ACCELERATION >> ${(this.player.vel.x * 50).toLocaleString()}`
           );
-
           this.damageText.setText(`DAMAGE >> ${this.damage.toLocaleString()}`);
-
           this.penaltyText.setText(
             `PENALTY >> ${this.penalty.toLocaleString()}`
           );
 
-          if (this.player.x > 3000) {
-            // mapWidth - 1000
+          // end game when player crosses finish line
+          if (this.player.x > mapWidth - 1000) {
             this.gameOver = true;
             this.sound.stopAll();
+            this.missionReport.style.display = "block";
             let score = 1000000 - this.penalty;
-
             let missionStats = {
               time: time_convert(timeElapsed),
               damage: this.damage,
@@ -555,11 +552,12 @@ class Game extends Component {
               score: score
             };
 
+            // send missionStats to MissionReport
             EventEmitter.dispatch("updateScore", missionStats);
             this.missionReport.style.display = "block";
           }
 
-          // 80 cuz account for ship length
+          // player movement
           this.thrust.setPosition(this.player.x - 80, this.player.y + 4);
           if (this.cursors.left.isDown) {
             this.thrust.setPosition(this.player.x + 80, this.player.y + 4);

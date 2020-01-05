@@ -18,6 +18,7 @@ Users can:
 
 1. Add rouge replicant enemies that shoot back and subtract from your penalty killed. If they hit you, your penalty will increase just like hitting an asteroid. 
 2. Add collisions between bullets, asteroids and enemies.
+3. Add chamfer to bottom right corner of Mission Complete div
 
 # Attributions
 1. Buttons<br>

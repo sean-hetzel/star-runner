@@ -21,7 +21,6 @@ class MissionReport extends React.Component {
   }
 
   handleSubmit(event) {
-    // alert("A name was submitted: " + this.state.pilotName);
     event.preventDefault();
     this.props.postScore(this.state);
     this.props.history.push("/scores");
