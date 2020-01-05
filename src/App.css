@@ -371,7 +371,7 @@ html {
   font-size: 40pt;
 }
 
-.report{
+#mission_report{
   position: absolute;
   width: 400px;
   height: 500px;
@@ -382,7 +382,7 @@ html {
   background-color: black;
   margin-top: -500px;
   z-index: 7;
-
+  display: none;
 }
 
 .report-text{

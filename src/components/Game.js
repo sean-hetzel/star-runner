@@ -18,23 +18,11 @@ import rocket from "../assets/rocket.mp3";
 import gun from "../assets/gun.mp3";
 import crash from "../assets/crash.mp3";
 import MissionReport from "./MissionReport";
+import {EventEmitter} from "../events.js";
 
 const mapWidth = 60000;
 const mapHeight = 700;
-const API = "https://agile-atoll-75530.herokuapp.com/api/v1/scores";
-
-// let statusReport = () => {
-//   console.log("status report",report);
-//   render(){
-//     return(
-
-//       <MissionReport report={report}/>
-//     )
-//   }
-
-// };
-
-let report = 0;
+// const API = "https://agile-atoll-75530.herokuapp.com/api/v1/scores";
 
 class Game extends Component {
   constructor() {
@@ -51,7 +39,6 @@ class Game extends Component {
   }
 
   state = {
-    showReport: false,
     redirect: false,
     initialize: true,
     game: {
@@ -84,7 +71,6 @@ class Game extends Component {
           penalty: 0,
           isFlying: false,
           firingGun: false,
-          showReport: false,
           gameOver: false
         },
 
@@ -94,6 +80,8 @@ class Game extends Component {
           console.log(this.game);
           console.log("this", this);
         },
+
+        ///////////////////////////// PRELOAD /////////////////////////////////
         preload: function() {
           // loading screen start
           let width = this.cameras.main.width;
@@ -188,7 +176,12 @@ class Game extends Component {
           this.load.audio("crash", crash);
         },
 
+        ///////////////////////////// CREATE //////////////////////////////////
         create: function() {
+          // create mission report and hide it until game over
+          this.missionReport = document.getElementById("mission_report");
+          this.missionReport.style.display = "none";
+
           let Bullet = new Phaser.Class({
             Extends: Phaser.GameObjects.Image,
 
@@ -526,8 +519,10 @@ class Game extends Component {
           createBulletEmitter();
         },
 
+        ///////////////////////////// UPDATE //////////////////////////////////
         update: function(time, delta) {
           if (this.gameOver) {
+            this.missionReport.style.display = "block";
             return;
           }
 
@@ -568,37 +563,24 @@ class Game extends Component {
             `PENALTY >> ${this.penalty.toLocaleString()}`
           );
 
-          if (this.player.x > mapWidth - 1000) {
+          if (this.player.x > 3000) { // mapWidth - 1000
             this.gameOver = true;
             this.sound.stopAll();
-            // report();
             let score = 1000000 - this.penalty;
-            report = score;
-            console.log(report);
-            // this.state.game.scene.extend.showReport
-            // statusReport(report)
-            this.showReport = true
-            this.levelComplete.setText(
-              `> Mission Acomplished <\n\n1,000,000\n- TIME >> ` +
-                `${time_convert(timeElapsed)}\n- DAMAGE >> ` +
-                `${this.damage.toLocaleString()}\n- PENALTY >> ` +
-                `${this.penalty.toLocaleString()}\n` +
-                `------------------------\n` +
-                `Score >> ${score.toLocaleString()}\n` +
-                `\nEnter Your Name: __________` +
-                `Submit`
-            );
-            fetch(API, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json"
-              },
-              body: JSON.stringify({
-                display_name: "Mariette",
-                high_score: score
-              })
-            });
+
+            EventEmitter.dispatch("updateScore", score);
+            this.missionReport.style.display = "block";
+
+            // this.levelComplete.setText(
+            //   `> Mission Acomplished <\n\n1,000,000\n- TIME >> ` +
+            //     `${time_convert(timeElapsed)}\n- DAMAGE >> ` +
+            //     `${this.damage.toLocaleString()}\n- PENALTY >> ` +
+            //     `${this.penalty.toLocaleString()}\n` +
+            //     `------------------------\n` +
+            //     `Score >> ${score.toLocaleString()}\n` +
+            //     `\nEnter Your Name: __________` +
+            //     `Submit`
+            // );
           }
 
           // 80 cuz account for ship length
@@ -660,7 +642,6 @@ class Game extends Component {
           }
 
           //  Emitters to bullets
-
           this.bullets.children.each(function(b) {
             if (b.active) {
               this.flares.setPosition(b.x, b.y);
@@ -681,12 +662,8 @@ class Game extends Component {
     return (
       <>
         <IonPhaser id="phaserGame" game={game} initialize={initialize} />
+        <MissionReport penalty={this.state.game.scene.extend.penalty} />
         <div id="red_line_button"></div>
-        {console.log("game report", this.state.game.scene.extend.time)}
-        {console.log("show report?", this.state.showReport)}
-        {this.state.showReport ? (
-          <MissionReport report={report} />
-        ) : null}
       </>
     );
   }

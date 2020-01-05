@@ -26,6 +26,11 @@ class App extends Component {
     document.getElementById("star_field").style.visibility = "visible";
   };
 
+  fin = penalty => {
+    console.log("pennnalty", penalty)
+
+  }
+
   componentDidMount() {
     fetch(API)
       .then(resp => resp.json())
@@ -46,7 +51,7 @@ class App extends Component {
           <Route
             path="/game"
             exact
-            render={props => <Game {...props} hideStars={this.hideStars} />}
+            render={props => <Game {...props} hideStars={this.hideStars} fin={this.fin}/>}
           />
           <Route
             path="/scores"
