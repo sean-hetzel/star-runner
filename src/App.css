@@ -26,16 +26,29 @@ body {
   margin-top: 0.5em;
 }
 
-.player{
+.player {
   float: right;
-  margin-right: 120px;
-  margin-top: -110px;
+  margin-right: 130px;
+  margin-top: -15px;
+}
+
+.controls {
+  margin: 10px !important;
 }
 
 .player .player-control .music-info .title {
-  margin-bottom: 0;
-  color: red;
-  font-size: 1.5em;
+  font-family: "Orbitron", sans-serif;
+  margin: 0;
+  color: red !important;
+  font-size: 10pt !important;
+}
+
+.player .player-control .music-info .artist {
+  font-family: "Orbitron", sans-serif;
+  color: red !important;
+  font-size: 10pt !important;
+  margin: 0 !important;
+  display: inline;
 }
 
 h2,
@@ -434,16 +447,19 @@ html {
   padding: 22px;
 }
 
-::placeholder{
+::placeholder {
   color: red;
   font-family: "Orbitron", sans-serif;
 }
 
-#submit_button{
+#submit_button {
   font-family: "Orbitron", sans-serif;
   margin-right: 0;
 }
 
-button:focus {outline:0;}
-input:focus {outline: 0;}
-
+button:focus {
+  outline: 0;
+}
+input:focus {
+  outline: 0;
+}

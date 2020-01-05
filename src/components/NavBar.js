@@ -61,7 +61,7 @@ class NavBar extends React.Component {
           width={100}
           btnColor="red"
           progressColor="red"
-          autoplay={false}
+          autoplay={true}
         />
 
         <a
