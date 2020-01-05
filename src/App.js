@@ -26,16 +26,30 @@ class App extends Component {
     document.getElementById("star_field").style.visibility = "visible";
   };
 
-  fin = penalty => {
-    console.log("pennnalty", penalty)
-
-  }
-
   componentDidMount() {
     fetch(API)
       .then(resp => resp.json())
       .then(json => this.setState({ scores: json }));
   }
+
+  postScore = missionStats => {
+    const { pilotName, score } = missionStats;
+    fetch(API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        display_name: pilotName,
+        high_score: score
+      })
+    });
+    // ya I know it's super lazy and not very dry
+    fetch(API)
+      .then(resp => resp.json())
+      .then(json => this.setState({ scores: json }));
+  };
 
   render() {
     return (
@@ -51,7 +65,13 @@ class App extends Component {
           <Route
             path="/game"
             exact
-            render={props => <Game {...props} hideStars={this.hideStars} fin={this.fin}/>}
+            render={props => (
+              <Game
+                {...props}
+                hideStars={this.hideStars}
+                postScore={this.postScore}
+              />
+            )}
           />
           <Route
             path="/scores"

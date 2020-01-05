@@ -1,35 +1,88 @@
 import React from "react";
 import { EventEmitter } from "../events.js";
-
-const API = "https://agile-atoll-75530.herokuapp.com/api/v1/scores";
+import wings from "../assets/report-wings.png";
 
 class MissionReport extends React.Component {
   constructor() {
     super();
     this.state = {
-      score: 0
+      time: 0,
+      damage: 0,
+      penalty: 0,
+      score: 0,
+      pilotName: ""
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ pilotName: event.target.value });
+  }
+
+  handleSubmit(event) {
+    // alert("A name was submitted: " + this.state.pilotName);
+    event.preventDefault();
+    this.props.postScore(this.state);
+    this.props.history.push("/scores");
   }
 
   render() {
-    EventEmitter.subscribe("updateScore", score =>
-      this.setState({ score: score })
-    );
-    fetch(API, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({
-        display_name: "K",
-        high_score: this.state.score
+    EventEmitter.subscribe("updateScore", missionStats =>
+      this.setState({
+        time: missionStats.time,
+        damage: missionStats.damage,
+        penalty: missionStats.penalty,
+        score: missionStats.score
       })
-    });
+    );
+
     return (
       <div id="mission_report">
-        <h1 className="report-text">Report</h1>
-        <p>{this.state.score}</p>
+        <h1 className="report-text">MISSION COMPLETE</h1>
+        <img src={wings} alt="wings" height={50} width="auto" />
+        <table id="report_table">
+          <tbody>
+            <tr>
+              <td className="report_td"> TIME</td>
+              <td className="report_td"> {this.state.time}</td>
+            </tr>
+            <tr>
+              <td className="report_td"> DAMAGE</td>
+              <td className="report_td">
+                {this.state.damage.toLocaleString()}
+              </td>
+            </tr>
+            <tr>
+              <td className="report_td"> PENALTY</td>
+              <td className="report_td">
+                {this.state.penalty.toLocaleString()}
+              </td>
+            </tr>
+            <tr>
+              <td className="report_td"> SCORE</td>
+              <td className="report_td">{this.state.score.toLocaleString()}</td>
+            </tr>
+          </tbody>
+        </table>
+        <form onSubmit={this.handleSubmit}>
+          <input
+            id="report_input"
+            type="text"
+            required
+            placeholder="ENTER PILOT NAME"
+            value={this.state.pilotName}
+            onChange={this.handleChange}
+          />
+          <button
+            id="submit_button"
+            className="brk-btn"
+            type="submit"
+            value="Submit"
+          >
+            ENTER
+          </button>
+        </form>
       </div>
     );
   }

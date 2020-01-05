@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Phaser from "phaser";
 import { IonPhaser } from "@ion-phaser/react";
+import { EventEmitter } from "../events.js";
 import star from "../assets/star-1.png";
 import redGiant from "../assets/star-2.png";
 import ship from "../assets/star-fighter.png";
@@ -18,24 +19,14 @@ import rocket from "../assets/rocket.mp3";
 import gun from "../assets/gun.mp3";
 import crash from "../assets/crash.mp3";
 import MissionReport from "./MissionReport";
-import {EventEmitter} from "../events.js";
 
 const mapWidth = 60000;
 const mapHeight = 700;
-// const API = "https://agile-atoll-75530.herokuapp.com/api/v1/scores";
 
 class Game extends Component {
-  constructor() {
-    super();
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
 
   componentDidMount() {
     this.props.hideStars();
-  }
-
-  handleSubmit(event) {
-    console.log(event);
   }
 
   state = {
@@ -72,13 +63,6 @@ class Game extends Component {
           isFlying: false,
           firingGun: false,
           gameOver: false
-        },
-
-        init: function() {
-          //For Testing Purposes
-          console.log(this.scene);
-          console.log(this.game);
-          console.log("this", this);
         },
 
         ///////////////////////////// PRELOAD /////////////////////////////////
@@ -322,11 +306,6 @@ class Game extends Component {
             .setDepth(6)
             .setScrollFactor(0);
 
-          this.levelComplete = this.add
-            .text(this.cameras.main.width / 2 - 100, 250, "", textConfig)
-            .setDepth(6)
-            .setScrollFactor(0);
-
           const createHud = (x1, y1, x2, y2) => {
             let line = new Phaser.Geom.Line(x1, y1, x2, y2);
 
@@ -563,24 +542,21 @@ class Game extends Component {
             `PENALTY >> ${this.penalty.toLocaleString()}`
           );
 
-          if (this.player.x > 3000) { // mapWidth - 1000
+          if (this.player.x > 3000) {
+            // mapWidth - 1000
             this.gameOver = true;
             this.sound.stopAll();
             let score = 1000000 - this.penalty;
 
-            EventEmitter.dispatch("updateScore", score);
-            this.missionReport.style.display = "block";
+            let missionStats = {
+              time: time_convert(timeElapsed),
+              damage: this.damage,
+              penalty: this.penalty,
+              score: score
+            };
 
-            // this.levelComplete.setText(
-            //   `> Mission Acomplished <\n\n1,000,000\n- TIME >> ` +
-            //     `${time_convert(timeElapsed)}\n- DAMAGE >> ` +
-            //     `${this.damage.toLocaleString()}\n- PENALTY >> ` +
-            //     `${this.penalty.toLocaleString()}\n` +
-            //     `------------------------\n` +
-            //     `Score >> ${score.toLocaleString()}\n` +
-            //     `\nEnter Your Name: __________` +
-            //     `Submit`
-            // );
+            EventEmitter.dispatch("updateScore", missionStats);
+            this.missionReport.style.display = "block";
           }
 
           // 80 cuz account for ship length
@@ -662,7 +638,7 @@ class Game extends Component {
     return (
       <>
         <IonPhaser id="phaserGame" game={game} initialize={initialize} />
-        <MissionReport penalty={this.state.game.scene.extend.penalty} />
+        <MissionReport {...this.props} postScore={this.props.postScore} />
         <div id="red_line_button"></div>
       </>
     );

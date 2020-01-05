@@ -63,6 +63,24 @@ th {
   color: red;
 }
 
+#report_table {
+  position: relative;
+  width: 25em;
+  height: 15em;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 3;
+  margin-left: 150px;
+}
+
+.report_td {
+  color: red;
+  font-size: 16pt;
+  position: relative;
+  z-index: 3;
+  text-align: left;
+}
+
 #star_runner_logo {
   font-family: Alien Encounters;
   font-size: 4em;
@@ -371,21 +389,49 @@ html {
   font-size: 40pt;
 }
 
-#mission_report{
+#mission_report {
   position: absolute;
-  width: 400px;
+  width: 600px;
   height: 500px;
-  top: 50%;
   left: 50%;
+  margin-left: -300px;
   color: red;
   border: 4px solid red;
   background-color: black;
-  margin-top: -500px;
+  margin-top: -650px;
   z-index: 7;
   display: none;
+  --corner-radius: 42px;
+  --corner-shape: bevel;
 }
 
-.report-text{
+.report-text {
   text-align: center;
   color: red;
 }
+
+#report_input {
+  background-color: black;
+  border: 4px solid red;
+  width: 300px;
+  color: red;
+  box-sizing: border-box;
+  height: 50px;
+  font-size: 16pt;
+  font-family: "Orbitron", sans-serif;
+  margin-top: 10px;
+  padding: 22px;
+}
+
+::placeholder{
+  color: red;
+  font-family: "Orbitron", sans-serif;
+}
+
+#submit_button{
+  font-family: "Orbitron", sans-serif;
+  margin-right: 0;
+}
+
+button:focus {outline:0;}
+input:focus {outline: 0;}
