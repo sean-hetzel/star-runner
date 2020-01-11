@@ -24,7 +24,6 @@ const mapWidth = 60000;
 const mapHeight = 700;
 
 class Game extends Component {
-
   componentDidMount() {
     this.props.hideStars();
   }
@@ -170,6 +169,9 @@ class Game extends Component {
           let Bullet = new Phaser.Class({
             Extends: Phaser.GameObjects.Image,
 
+            // tryna get bullet collisions to work:
+            // Extends: Phaser.Physics.Impact.Sprite,
+
             initialize: function Bullet(scene) {
               Phaser.GameObjects.Image.call(this, scene, 0, 0, "bullet");
 
@@ -221,8 +223,14 @@ class Game extends Component {
 
           this.bullets = this.add.group({
             classType: Bullet,
+            // tryna get bullet collisions to work:
+            // classType: Phaser.Physics.Impact.Sprite,
             runChildUpdate: true
           });
+
+          // tryna get bullet collisions to work:
+          // this.bullets.add(new Bullet())
+          // this.physics.add.collider(this.bullets, asteroid);
 
           const marsConfig = {
             key: "marsStationLights",
@@ -543,13 +551,13 @@ class Game extends Component {
           if (this.player.x > mapWidth - 1000) {
             this.gameOver = true;
             this.sound.stopAll();
-            this.missionReport.style.display = "block";
             let score = 1000000 - this.penalty;
             let missionStats = {
               time: time_convert(timeElapsed),
               damage: this.damage,
               penalty: this.penalty,
-              score: score
+              score: score,
+              gameOver: this.gameOver
             };
 
             // send missionStats to MissionReport

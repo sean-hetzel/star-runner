@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Component } from "react";
 import { EventEmitter } from "../events.js";
 import wings from "../assets/report-wings.png";
 
-class MissionReport extends React.Component {
+class MissionReport extends Component {
   constructor() {
     super();
     this.state = {
@@ -10,10 +10,19 @@ class MissionReport extends React.Component {
       damage: 0,
       penalty: 0,
       score: 0,
-      pilotName: ""
+      pilotName: "",
+      gameOver: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.pilotNameRef = React.createRef();
+  }
+
+  // idk why this isn't working
+  componentDidUpdate() {
+    if (this.state.gameOver) {
+      this.pilotNameRef.current.focus();
+    }
   }
 
   handleChange(event) {
@@ -32,7 +41,8 @@ class MissionReport extends React.Component {
         time: missionStats.time,
         damage: missionStats.damage,
         penalty: missionStats.penalty,
-        score: missionStats.score
+        score: missionStats.score,
+        gameOver: missionStats.gameOver
       })
     );
 
@@ -72,6 +82,7 @@ class MissionReport extends React.Component {
             placeholder="ENTER PILOT NAME"
             value={this.state.pilotName}
             onChange={this.handleChange}
+            ref={this.pilotNameRef}
           />
           <button
             id="submit_button"
