@@ -1,6 +1,6 @@
 # STAR RUNNER
 
-80s inspired space shooter game built with the Phaser game engine. Players fly through an asteroid field in a race against time. Do you have what it takes?
+Retro 80's inspired space shooter game built with the Phaser game engine. Players fly through an asteroid field in a race against time. Do you have what it takes?
 
 https://sean-hetzel.github.io/star-runner/#/
 
