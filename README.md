@@ -4,7 +4,7 @@
 
 https://sean-hetzel.github.io/star-runner/#/
 
-![STAR RUNNER](star-runner-screenshot-2.PNG)
+![STAR RUNNER](./public/star-runner-screenshot-3.png)
 
 # Usage
 
